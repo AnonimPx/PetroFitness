@@ -361,7 +361,58 @@ textarea:focus{border-color:var(--green)}
 /* ── OBIETTIVO PESO ── */
 .goal-progress{height:10px;background:#e8e3d8;border-radius:5px;overflow:hidden;margin:6px 0}
 .goal-progress-fill{height:100%;border-radius:5px;background:linear-gradient(90deg,#16a34a,#22c55e);transition:width .5s}
-
+/* ══ WORKOUT EXTRA: LIBRERIA ESERCIZI & SCHEDE ══ */
+.wo-quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px 12px 6px}
+.wo-quick-btn{border-radius:var(--rk);padding:13px 8px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;border:1.5px solid #e8e3d8;background:var(--card);transition:transform .1s;box-shadow:0 2px 6px rgba(0,0,0,.07)}
+.wo-quick-btn:active{transform:scale(.95);background:var(--greenl)}
+.wo-quick-ico{font-size:26px}
+.wo-quick-lbl{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;text-align:center;text-transform:uppercase;letter-spacing:.3px;color:var(--ink);line-height:1.3}
+.muscle-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px}
+.muscle-btn{border-radius:var(--rk);padding:14px 10px 12px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;transition:transform .1s;box-shadow:0 2px 8px rgba(0,0,0,.08);border:1.5px solid #e8e3d8;background:var(--card)}
+.muscle-btn:active{transform:scale(.95)}
+.muscle-ico{font-size:30px}
+.muscle-lbl{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.5px;text-align:center;text-transform:uppercase;color:var(--ink)}
+.muscle-cnt{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--ink3);margin-top:1px}
+.ex-card{margin:0 12px 7px;border:1.5px solid #e8e3d8;border-radius:var(--rk);overflow:hidden;background:var(--card);cursor:pointer;transition:background .15s}
+.ex-card:active{background:var(--greenl)}
+.ex-card-body{padding:10px 12px;display:flex;align-items:center;gap:10px}
+.ex-card-ico{font-size:22px;flex-shrink:0;width:28px;text-align:center}
+.ex-card-info{flex:1;min-width:0}
+.ex-card-name{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ex-card-tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px}
+.ex-tag{font-family:'IBM Plex Mono',monospace;font-size:8px;font-weight:700;padding:2px 5px;border-radius:4px;letter-spacing:.3px;white-space:nowrap}
+.ex-tag-muscle{background:#f0fdf4;color:#16a34a;border:1px solid #86efac}
+.ex-tag-equip{background:#eff6ff;color:#2563eb;border:1px solid #93c5fd}
+.ex-tag-sec{background:#f5f3ff;color:#6d28d9;border:1px solid #c4b5fd}
+.ex-tag-diff-p{background:#f0fdf4;color:#166534;border:1px solid #86efac}
+.ex-tag-diff-i{background:#fffbeb;color:#92400e;border:1px solid #fde047}
+.ex-tag-diff-a{background:#fff1f2;color:#991b1b;border:1px solid #fecdd3}
+.ex-chevron{font-size:14px;color:var(--ink3);flex-shrink:0}
+.scheda-card{margin:0 12px 10px;border:1.5px solid #e8e3d8;border-radius:var(--rk);overflow:hidden;cursor:pointer;transition:transform .1s;box-shadow:0 2px 6px rgba(0,0,0,.07)}
+.scheda-card:active{transform:scale(.98)}
+.scheda-hdr{padding:12px 14px;color:#fff;display:flex;align-items:center;justify-content:space-between}
+.scheda-nm{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:700}
+.scheda-sub{font-size:10px;opacity:.8;font-family:'IBM Plex Mono',monospace;margin-top:2px}
+.scheda-body{padding:10px 14px;background:var(--card);display:flex;flex-wrap:wrap;gap:5px}
+.scheda-badge{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;padding:3px 8px;border-radius:20px;border:1.5px solid var(--ink);color:var(--ink);background:var(--paper)}
+.ex-detail-section{margin:8px 12px;border:1.5px solid #e8e3d8;border-radius:var(--rk);overflow:hidden}
+.ex-detail-hdr{background:var(--ink);color:#fff;padding:9px 12px;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+.ex-detail-body{padding:12px;background:var(--card);font-size:13px;color:var(--ink2);line-height:1.7}
+.ex-tips-list{list-style:none;padding:0;margin:6px 0 0}
+.ex-tips-list li{padding:5px 0;border-bottom:1px solid #ede8dc;font-family:'IBM Plex Mono',monospace;font-size:11px;display:flex;gap:8px;align-items:flex-start;line-height:1.5}
+.ex-tips-list li::before{content:'→';color:var(--green);font-weight:700;flex-shrink:0;margin-top:1px}
+.ex-tips-list li:last-child{border:none}
+.day-card{margin:0 12px 8px;border:1.5px solid #e8e3d8;border-radius:var(--rk);overflow:hidden}
+.day-hdr{background:var(--ink);color:#fff;padding:9px 12px;display:flex;align-items:center;justify-content:space-between;cursor:pointer}
+.day-hdr-nm{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700}
+.day-ex-row{padding:8px 12px;border-bottom:1px solid #ede8dc;background:var(--card);display:flex;align-items:center;gap:8px}
+.day-ex-row:last-child{border:none}
+.day-ex-ico{font-size:18px;flex-shrink:0;width:24px;text-align:center}
+.day-ex-info{flex:1;min-width:0}
+.day-ex-name{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.day-ex-meta{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--ink3);margin-top:1px}
+.lib-filter-bar{display:flex;gap:6px;padding:8px 12px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid #ede8dc;background:var(--card);position:sticky;top:0;z-index:8}
+.lib-filter-bar::-webkit-scrollbar{display:none}
 </style>
 </head>
 <body>
@@ -1753,6 +1804,153 @@ function toggleWater(i){S.water=(S.water===i+1)?i:i+1;saveState();navReplace(sho
 /* ════════ SPORT / CALORIE ════════ */
 const WT=['Tutti','Forza','Cardio','HIIT','Stretching','Yoga','Calcio','Nuoto','Ciclismo','Tennis','Basket','Corsa','Camminata','Boxe','Pilates','Altro'];
 const WI={Forza:'🏋️',Cardio:'🏃',HIIT:'⚡',Stretching:'🧘',Yoga:'🌿',Calcio:'⚽',Nuoto:'🏊',Ciclismo:'🚴',Tennis:'🎾',Basket:'🏀',Corsa:'🏃',Camminata:'🚶',Boxe:'🥊',Pilates:'🤸',Altro:'🏅'};
+
+/* ══════════════════════════════════════════════════
+   DATABASE ESERCIZI (ispirato a MuscleWiki)
+   ══════════════════════════════════════════════════ */
+const EXDB=[
+// ── PETTO ──
+{id:1,name:'Panca Piana con Bilanciere',muscle:'Petto',sec:['Tricipiti','Spalle'],equip:'Bilanciere',diff:'i',sets:'3-4',reps:'6-10',rest:'90-120s',emoji:'🏋️',desc:'Il fondamentale per il petto. Stenditi sulla panca, afferra il bilanciere con presa larga, abbassa lentamente al petto e spingi verso l\'alto in modo esplosivo. Mantieni i piedi piatti a terra e un arco lombare naturale.',tips:['Tieni i piedi piatti a terra per stabilità','Arco lombare naturale, non esagerato','Presa larga quanto spalle o leggermente più','Abbassa controllato, spingi esplosivo']},
+{id:2,name:'Panca Inclinata con Manubri',muscle:'Petto',sec:['Tricipiti','Spalle'],equip:'Manubri',diff:'i',sets:'3',reps:'8-12',rest:'60-90s',emoji:'🏋️',desc:'Sviluppa il petto superiore (clavicolare). Panca inclinata 30-45°. Il range of motion maggiore rispetto al bilanciere permette una contrazione più intensa.',tips:['Angolo 30-45° per massimizzare il petto superiore','Non bloccare i gomiti in estensione','Porta i manubri quasi a toccarsi in cima']},
+{id:3,name:'Croci ai Cavi',muscle:'Petto',sec:['Spalle'],equip:'Cavi',diff:'p',sets:'3',reps:'12-15',rest:'60s',emoji:'🔌',desc:'Isola il petto con tensione costante. Stai al centro del cavo incrociato, porta le mani verso il basso e al centro incrociando leggermente le braccia.',tips:['Tieni un leggero arco al gomito','Focalizzati sulla contrazione del petto','Controlla la fase di ritorno']},
+{id:4,name:'Piegamenti Sulle Braccia',muscle:'Petto',sec:['Tricipiti','Spalle','Addome'],equip:'Corpo Libero',diff:'p',sets:'3-4',reps:'8-20',rest:'60s',emoji:'🤸',desc:'Classico esercizio a corpo libero. Mani leggermente più larghe delle spalle, corpo rigido. Perfetto per tutti i livelli.',tips:['Mantieni il core teso durante tutto il movimento','Punta le dita in avanti o leggermente verso fuori','Scendi fino a quasi toccare il pavimento']},
+{id:5,name:'Dip alle Parallele',muscle:'Petto',sec:['Tricipiti','Spalle'],equip:'Sbarra',diff:'i',sets:'3-4',reps:'8-12',rest:'90s',emoji:'💪',desc:'Esercizio composito eccellente. Inclina leggermente il busto in avanti (15-30°) per enfatizzare il petto rispetto ai tricipiti.',tips:['Inclina il corpo in avanti per più petto','Scendi fino a quando le braccia formano 90°','Controlla bene la fase di discesa']},
+{id:6,name:'Panca Piana con Manubri',muscle:'Petto',sec:['Tricipiti','Spalle'],equip:'Manubri',diff:'p',sets:'3',reps:'8-12',rest:'90s',emoji:'🏋️',desc:'Variante con range of motion maggiore rispetto al bilanciere. Permette di scendere più in basso per un allungamento ottimale del petto.',tips:['Porta i manubri in basso quasi all\'altezza del petto','Stringi in cima per massimizzare la contrazione']},
+{id:7,name:'Pullover con Manubrio',muscle:'Petto',sec:['Schiena','Tricipiti'],equip:'Manubri',diff:'i',sets:'3',reps:'10-12',rest:'60s',emoji:'🏋️',desc:'Allarga la cassa toracica e sviluppa la parte bassa del petto. Schiena sulla panca, porta il manubrio dietro la testa e riportalo sopra.',tips:['Gomiti leggermente piegati','Senti l\'allungamento del petto e dei dorsali','Respira profondamente durante il movimento']},
+{id:8,name:'Chest Press alla Macchina',muscle:'Petto',sec:['Tricipiti','Spalle'],equip:'Macchine',diff:'p',sets:'3',reps:'10-15',rest:'60s',emoji:'🔩',desc:'Versione sicura e guidata della panca piana, ideale per principianti o per finire l\'allenamento con volume aggiuntivo.',tips:['Regola il sedile per avere maniglie all\'altezza del petto','Tieni la schiena incollata allo schienale']},
+// ── SCHIENA ──
+{id:10,name:'Stacco da Terra',muscle:'Schiena',sec:['Gambe','Glutei','Addome'],equip:'Bilanciere',diff:'a',sets:'3-5',reps:'3-8',rest:'3-4min',emoji:'🏋️',desc:'Il re degli esercizi. Afferra il bilanciere, schiena dritta e neutra, spingi i piedi a terra e solleva il bilanciere radendolo alle gambe. Lavora quasi tutto il corpo.',tips:['Schiena SEMPRE neutra, mai curvata','Torace alto, addome contratto prima di sollevare','Bilanciere vicino al corpo durante tutto il movimento','Impara la tecnica prima di aggiungere peso']},
+{id:11,name:'Trazioni alla Sbarra',muscle:'Schiena',sec:['Bicipiti','Spalle'],equip:'Sbarra',diff:'i',sets:'3-4',reps:'5-12',rest:'90s',emoji:'🏅',desc:'Fondamentale per la schiena. Afferra la sbarra con presa prona, tira su finché il mento supera la sbarra. Presa larga = più dorsali.',tips:['Presa larga lavora più dorsali, stretta più bicipiti','Non oscillare: usa i muscoli della schiena','Abbassa completamente le braccia nella fase di rilascio']},
+{id:12,name:'Lat Machine',muscle:'Schiena',sec:['Bicipiti','Spalle'],equip:'Macchine',diff:'p',sets:'3-4',reps:'8-12',rest:'60-90s',emoji:'🔩',desc:'Alternativa alle trazioni per chi non riesce a farle. Tira la barra verso il petto/mento enfatizzando il lavoro dei dorsali.',tips:['Inclinati leggermente all\'indietro (10-15°)','Porta la barra verso il petto superiore','Spingi i gomiti verso il basso e verso le anche']},
+{id:13,name:'Rematore con Bilanciere',muscle:'Schiena',sec:['Bicipiti','Spalle Post.'],equip:'Bilanciere',diff:'i',sets:'3-4',reps:'6-10',rest:'90s',emoji:'🏋️',desc:'Costruisce spessore della schiena. Busto parallelo al pavimento, tira il bilanciere verso l\'ombelico contraendo le scapole.',tips:['Schiena dritta, inclinata in avanti ~45°','Non usare le gambe per aiutarti','Porta i gomiti vicino al corpo']},
+{id:14,name:'Rematore con Manubrio',muscle:'Schiena',sec:['Bicipiti','Spalle Post.'],equip:'Manubri',diff:'p',sets:'3',reps:'8-12',rest:'60s',emoji:'🏋️',desc:'Variante unilaterale per un lavoro isolato su ogni lato. Ottimo per correggere asimmetrie muscolari.',tips:['Appoggia ginocchio e mano sulla panca','Tira il manubrio verso l\'anca','Ruota leggermente il busto per più range of motion']},
+{id:15,name:'Rematore ai Cavi (Pulley)',muscle:'Schiena',sec:['Bicipiti','Spalle Post.'],equip:'Cavi',diff:'p',sets:'3',reps:'10-15',rest:'60s',emoji:'🔌',desc:'Il cavo mantiene tensione costante. Siediti al pulley basso, porta la maniglia verso l\'ombelico contraendo le scapole.',tips:['Schiena dritta durante tutto il movimento','Porta la maniglia verso l\'ombelico','Stringi la schiena nella contrazione massima per 1s']},
+{id:16,name:'Face Pull ai Cavi',muscle:'Schiena',sec:['Spalle Post.','Rotatori'],equip:'Cavi',diff:'p',sets:'3',reps:'15-20',rest:'60s',emoji:'🔌',desc:'Essenziale per la salute delle spalle. Tira la corda verso il viso aprendo i gomiti verso l\'esterno. Ottimo per bilanciare il lavoro di petto.',tips:['Usa un peso leggero e molte reps','Porta le mani all\'altezza delle orecchie','Esegui lentamente per sentire i deltodi posteriori']},
+{id:17,name:'Iperextensioni',muscle:'Schiena',sec:['Glutei','Femorali'],equip:'Macchine',diff:'p',sets:'3',reps:'12-15',rest:'60s',emoji:'🔩',desc:'Rinforza la zona lombare essenziale. Piega e estendi il busto tenendo la schiena sempre neutra. Fondamentale per prevenire infortuni.',tips:['Non iperestendere la colonna in cima','Contrai i glutei salendo','Aggiungi un peso al petto per aumentare la difficoltà']},
+{id:18,name:'Chin-Up (Presa Supina)',muscle:'Schiena',sec:['Bicipiti'],equip:'Sbarra',diff:'i',sets:'3-4',reps:'5-10',rest:'90s',emoji:'🏅',desc:'Variante delle trazioni con presa supina (palmi verso di te). Coinvolge maggiormente i bicipiti rispetto alle trazioni classiche.',tips:['Presa alla larghezza delle spalle','Massimo range of motion','Parte alta molto coinvolge i bicipiti']},
+// ── SPALLE ──
+{id:20,name:'Military Press con Bilanciere',muscle:'Spalle',sec:['Tricipiti','Schiena'],equip:'Bilanciere',diff:'a',sets:'3-4',reps:'5-8',rest:'2-3min',emoji:'🏋️',desc:'Il principale esercizio per le spalle. Spingi il bilanciere sopra la testa partendo dal mento/collo. Eseguito in piedi per massimizzare il coinvolgimento del core.',tips:['Core contratto per proteggere la schiena','Non inarcare troppo la schiena in basso','La barra scorre vicino al viso salendo']},
+{id:21,name:'Alzate Laterali con Manubri',muscle:'Spalle',sec:[],equip:'Manubri',diff:'p',sets:'3-4',reps:'12-20',rest:'60s',emoji:'🏋️',desc:'Fondamentale per spalle larghe. Isola il deltoide mediale. Alza i manubri lateralmente fino all\'altezza delle spalle con gomiti leggermente piegati.',tips:['Gomiti leggermente piegati','Non alzare oltre l\'altezza delle spalle','Usa peso leggero con tecnica perfetta','Controlla bene la fase di discesa']},
+{id:22,name:'Alzate Frontali',muscle:'Spalle',sec:['Petto'],equip:'Manubri',diff:'p',sets:'3',reps:'12-15',rest:'60s',emoji:'🏋️',desc:'Lavora il deltoide anteriore. Alza le braccia dritte in avanti fino all\'altezza delle spalle. Puoi usare un disco per variare.',tips:['Non oscillare il corpo','Puoi fare alternando i bracci o insieme','Peso moderato per mantenere la tecnica']},
+{id:23,name:'Overhead Press con Manubri',muscle:'Spalle',sec:['Tricipiti'],equip:'Manubri',diff:'i',sets:'3-4',reps:'8-12',rest:'90s',emoji:'🏋️',desc:'Alternativa alla military press con manubri. Parti con i manubri all\'altezza delle orecchie e spingi sopra la testa.',tips:['Seduto per maggiore stabilità e focus','Non inclinare il collo','Contrai bene al punto più alto']},
+{id:24,name:'Alzate per Deltoide Posteriore',muscle:'Spalle',sec:['Schiena Sup.'],equip:'Manubri',diff:'p',sets:'3',reps:'12-15',rest:'60s',emoji:'🏋️',desc:'Isola il deltoide posteriore spesso trascurato. Busto inclinato in avanti, alza i manubri lateralmente portando i gomiti verso l\'alto.',tips:['Busto quasi parallelo al pavimento','Non usare troppo peso','Immagina di voler toccare il soffitto con i gomiti']},
+{id:25,name:'Scrollate (Shrug) con Bilanciere',muscle:'Spalle',sec:['Trapezio'],equip:'Bilanciere',diff:'p',sets:'3-4',reps:'10-15',rest:'60s',emoji:'🏋️',desc:'Sviluppa il trapezio superiore. Tieni il bilanciere davanti a te e alza le spalle verso le orecchie nel modo più alto possibile.',tips:['Movimento verticale puro, non rotare le spalle','Contrai al punto più alto per 1 secondo','Controlla la fase di discesa']},
+{id:26,name:'Arnold Press',muscle:'Spalle',sec:['Tricipiti','Petto'],equip:'Manubri',diff:'i',sets:'3',reps:'10-12',rest:'90s',emoji:'🏋️',desc:'Inventato da Arnold. Combina rotazione e spinta per lavorare tutti i capi del deltoide in un unico movimento fluido.',tips:['Parti con i palmi verso di te all\'altezza del mento','Ruota i polsi verso l\'esterno mentre spingi','Movimento lento e controllato']},
+// ── BICIPITI ──
+{id:30,name:'Curl con Bilanciere',muscle:'Bicipiti',sec:['Avambracci'],equip:'Bilanciere',diff:'p',sets:'3-4',reps:'8-12',rest:'60-90s',emoji:'💪',desc:'Esercizio classico per i bicipiti. Tieni i gomiti fissi ai fianchi, solleva il bilanciere verso le spalle in modo controllato.',tips:['Non oscillare il corpo — imbrogliare non aiuta','Gomiti fissi durante tutto il movimento','Abbassa lentamente per massimizzare il tempo sotto tensione']},
+{id:31,name:'Curl con Manubri Alternati',muscle:'Bicipiti',sec:['Avambracci'],equip:'Manubri',diff:'p',sets:'3',reps:'10-15',rest:'60s',emoji:'💪',desc:'Versione alternata per concentrarsi su un braccio alla volta. La supinazione del polso durante il movimento aumenta la contrazione del bicipite.',tips:['Gira il polso (supinazione) durante il movimento','Porta il manubrio alla spalla completamente','Non usare l\'impulso del corpo']},
+{id:32,name:'Hammer Curl',muscle:'Bicipiti',sec:['Avambracci','Brachiale'],equip:'Manubri',diff:'p',sets:'3',reps:'10-15',rest:'60s',emoji:'🔨',desc:'Lavora anche brachioradiale e brachiale oltre ai bicipiti. Presa neutra (pollice verso l\'alto) durante tutto il movimento. Aumenta lo spessore del braccio.',tips:['Presa martello dall\'inizio alla fine','Ottimo per aumentare lo spessore del braccio','Eseguilo seduto per isolare meglio']},
+{id:33,name:'Curl su Panca Scott',muscle:'Bicipiti',sec:[],equip:'Macchine',diff:'i',sets:'3',reps:'10-12',rest:'60s',emoji:'🔩',desc:'Isola perfettamente i bicipiti eliminando qualsiasi aiuto del corpo. Le braccia appoggiate sul pad inclinato.',tips:['Non bloccare i gomiti in estensione completa','Abbassa lentamente per il massimo beneficio','Ottimo per sviluppare il picco del bicipite']},
+{id:34,name:'Curl ai Cavi',muscle:'Bicipiti',sec:['Avambracci'],equip:'Cavi',diff:'p',sets:'3',reps:'12-15',rest:'60s',emoji:'🔌',desc:'Il cavo mantiene tensione costante su tutto il range of motion, a differenza dei manubri. Ottimo per finire l\'allenamento.',tips:['Gomiti fissi ai fianchi','La tensione costante è il grande vantaggio','Prova slow negatives (4 secondi in discesa)']},
+{id:35,name:'Curl con Bilanciere EZ',muscle:'Bicipiti',sec:['Avambracci'],equip:'Bilanciere',diff:'p',sets:'3',reps:'8-12',rest:'60s',emoji:'💪',desc:'Usa il bilanciere EZ per ridurre lo stress sui polsi. Stessa esecuzione del curl normale ma più comodo per le articolazioni.',tips:['Presa sulla curva del bilanciere EZ','Meno stress articolare rispetto al bilanciere dritto','Ottima alternativa per chi ha fastidi ai polsi']},
+// ── TRICIPITI ──
+{id:40,name:'Pushdown ai Cavi',muscle:'Tricipiti',sec:[],equip:'Cavi',diff:'p',sets:'3-4',reps:'12-15',rest:'60s',emoji:'🔌',desc:'Isola perfettamente il tricipite. Usa barra dritta, corda o barra V. Gomiti fissi ai fianchi, spingi verso il basso.',tips:['Gomiti fissi — non muoverli','Tieni i polsi neutri','Contrai i tricipiti al punto più basso per 1s']},
+{id:41,name:'French Press (Skull Crusher)',muscle:'Tricipiti',sec:[],equip:'Bilanciere',diff:'i',sets:'3',reps:'8-12',rest:'90s',emoji:'🏋️',desc:'Eccellente per la testa lunga del tricipite. Steso sulla panca, abbassa il bilanciere verso la fronte piegando solo i gomiti.',tips:['Usa il bilanciere EZ per ridurre lo stress','Gomiti fissi durante tutto il movimento','Abbassa lentamente per sicurezza e controllo']},
+{id:42,name:'Estensione Tricipiti Overhead',muscle:'Tricipiti',sec:[],equip:'Cavi',diff:'p',sets:'3',reps:'12-15',rest:'60s',emoji:'🔌',desc:'Enfatizza la testa lunga del tricipite (la più grande). Girati con le spalle al cavo, estendi le braccia sopra la testa.',tips:['Ottimo per la testa lunga del tricipite','Mantieni i gomiti vicino alla testa','Allungamento completo nella fase di discesa']},
+{id:43,name:'Close Grip Bench Press',muscle:'Tricipiti',sec:['Petto','Spalle'],equip:'Bilanciere',diff:'i',sets:'3',reps:'6-10',rest:'90s',emoji:'🏋️',desc:'Variante della panca piana con presa stretta per enfatizzare i tricipiti. Permette di usare carichi maggiori rispetto ad altri esercizi.',tips:['Presa alla larghezza delle spalle (non troppo stretta)','Gomiti vicini al corpo durante la discesa','Ottimo per aggiungere carichi pesanti ai tricipiti']},
+{id:44,name:'Kickback per Tricipiti',muscle:'Tricipiti',sec:[],equip:'Manubri',diff:'p',sets:'3',reps:'12-15',rest:'60s',emoji:'🏋️',desc:'Isola il tricipite in modo efficace. Busto inclinato in avanti, braccio superiore parallelo al suolo, estendi il braccio indietro.',tips:['Parte superiore del braccio parallela al pavimento','Estensione completa nella fase concentrica','Usa peso moderato per mantenere la tecnica']},
+{id:45,name:'Dip alla Panca',muscle:'Tricipiti',sec:['Petto','Spalle'],equip:'Corpo Libero',diff:'p',sets:'3',reps:'10-15',rest:'60s',emoji:'🤸',desc:'Esercizio a corpo libero semplice ed efficace. Mani appoggiate alla panca, gambe estese, scendi e risali.',tips:['Più le gambe sono lontane, più è difficile','Tieni il corpo vicino alla panca','Non scendere troppo per proteggere le spalle']},
+// ── ADDOME / CORE ──
+{id:50,name:'Plank',muscle:'Addome',sec:['Spalle','Schiena'],equip:'Corpo Libero',diff:'p',sets:'3',reps:'30-60s',rest:'60s',emoji:'🏃',desc:'L\'isometrico fondamentale per il core. Posizione di piegamento su avambracci e punte dei piedi, corpo in linea perfetta.',tips:['Corpo in linea retta dalla testa ai piedi','Non abbassare i fianchi né alzare il sedere','Respira normalmente durante il plank']},
+{id:51,name:'Crunch',muscle:'Addome',sec:[],equip:'Corpo Libero',diff:'p',sets:'3-4',reps:'15-25',rest:'45-60s',emoji:'🤸',desc:'Il classico esercizio addominale. Supino con ginocchia piegate, porta le spalle verso le ginocchia contraendo i retti addominali.',tips:['Non tirare il collo con le mani','Lavora solo la parte alta — non il busto intero','Espira nella contrazione, inspira nella discesa']},
+{id:52,name:'Leg Raise',muscle:'Addome',sec:['Flessori Anca'],equip:'Corpo Libero',diff:'i',sets:'3',reps:'10-20',rest:'60s',emoji:'🤸',desc:'Ottimo per gli addominali bassi. Stai supino, porta le gambe dalla posizione orizzontale a verticale mantenendo le gambe tese.',tips:['Schiena incollata al pavimento','Versione facilitata: ginocchia piegate','Non atterrare le gambe: mantieni tensione continua']},
+{id:53,name:'Russian Twist',muscle:'Addome',sec:['Obliqui'],equip:'Corpo Libero',diff:'p',sets:'3',reps:'20-30',rest:'45s',emoji:'🔄',desc:'Lavora intensamente gli obliqui e la rotazione del tronco. Seduto con gambe sollevate, ruota il busto alternando i lati.',tips:['Più le gambe sono lontane dal pavimento più è difficile','Usa un disco o manubrio per aumentare l\'intensità','Controlla la rotazione, non eseguire veloce']},
+{id:54,name:'Ab Wheel Rollout',muscle:'Addome',sec:['Spalle','Schiena'],equip:'Corpo Libero',diff:'a',sets:'3',reps:'5-15',rest:'90s',emoji:'⚙️',desc:'Tra i migliori esercizi per il core. Rotola in avanti con la ruota addominale estendendo tutto il corpo verso il pavimento.',tips:['Inizia con movimenti parziali','Core contrattissimo durante tutto il movimento','Il ritorno è la fase più importante']},
+{id:55,name:'Cable Crunch',muscle:'Addome',sec:[],equip:'Cavi',diff:'p',sets:'3',reps:'12-20',rest:'60s',emoji:'🔌',desc:'Permette di aggiungere carico al lavoro addominale. Inginocchiato davanti al cavo, porta i gomiti verso le ginocchia arrotolando la colonna.',tips:['Il movimento parte dall\'addome, non dalle braccia','Arrotola vertebra per vertebra','Mantieni tensione sul cavo durante tutto il movimento']},
+{id:56,name:'Hanging Leg Raise',muscle:'Addome',sec:['Flessori Anca'],equip:'Sbarra',diff:'a',sets:'3',reps:'8-15',rest:'90s',emoji:'🏅',desc:'Versione avanzata appeso alla sbarra. Porta le ginocchia (o meglio le gambe dritte) verso il petto.',tips:['Inizia con ginocchia piegate (versione facile)','Controlla l\'oscillazione del corpo','Gambe dritte per la versione più difficile e efficace']},
+{id:57,name:'Side Plank',muscle:'Addome',sec:['Obliqui','Spalle'],equip:'Corpo Libero',diff:'p',sets:'3',reps:'20-45s',rest:'45s',emoji:'🏃',desc:'Versione laterale del plank per gli obliqui. Sosteniti su un avambraccio di lato tenendo il corpo in linea retta.',tips:['Corpo in linea retta senza abbassare i fianchi','Alza il braccio libero verso il soffitto per più difficoltà','Esegui su entrambi i lati']},
+{id:58,name:'Mountain Climbers',muscle:'Addome',sec:['Spalle','Flessori Anca'],equip:'Corpo Libero',diff:'p',sets:'3',reps:'20-40s',rest:'45s',emoji:'🏔️',desc:'Esercizio dinamico che combina core e cardio. In posizione di piegamento, porta alternatamente le ginocchia al petto.',tips:['Mantieni i fianchi bassi','Velocità moderata per mantenere la forma','Ottimo per riscaldamento o circuit training']},
+// ── GAMBE ──
+{id:60,name:'Squat con Bilanciere',muscle:'Gambe',sec:['Glutei','Schiena','Addome'],equip:'Bilanciere',diff:'i',sets:'3-5',reps:'5-10',rest:'2-3min',emoji:'🏋️',desc:'Il re degli esercizi per le gambe. Scendi fino a quando le cosce sono parallele al pavimento mantenendo schiena dritta, ginocchia in linea con le punte.',tips:['Ginocchia in linea con le punte dei piedi','Torace alto, schiena dritta','Spingi attraverso i talloni per risalire','Scendi almeno fino alle cosce parallele']},
+{id:61,name:'Leg Press',muscle:'Gambe',sec:['Glutei'],equip:'Macchine',diff:'p',sets:'3-4',reps:'10-15',rest:'90s',emoji:'🔩',desc:'Macchina eccellente per le gambe. Posiziona i piedi alla larghezza delle spalle e spingi la piattaforma. Sicura per chi ha problemi alla schiena.',tips:['Non bloccare completamente i ginocchi in cima','Piedi paralleli per quadricipiti bilanciati','Schiena e glutei incollati allo schienale']},
+{id:62,name:'Romanian Deadlift (RDL)',muscle:'Gambe',sec:['Glutei','Schiena'],equip:'Bilanciere',diff:'i',sets:'3-4',reps:'8-12',rest:'90s',emoji:'🏋️',desc:'Eccellente per femorali e glutei. Scendi portando il bilanciere lungo le gambe finché senti lo stretch nei femorali. Ginocchia quasi dritte.',tips:['Schiena dritta durante tutto il movimento','Senti lo stretch dei femorali, non schiacciare i glutei','Non piegare troppo le ginocchia — è diverso dallo stacco']},
+{id:63,name:'Affondi (Lunges)',muscle:'Gambe',sec:['Glutei','Addome'],equip:'Corpo Libero',diff:'p',sets:'3',reps:'10-15',rest:'60s',emoji:'🤸',desc:'Ottimo per gambe e glutei in modo unilaterale. Passo in avanti, scendi fino a quando il ginocchio posteriore sfiora il pavimento.',tips:['Il ginocchio anteriore non deve superare le punte del piede','Mantieni il busto eretto','Usa manubri per aumentare il carico']},
+{id:64,name:'Leg Extension',muscle:'Gambe',sec:[],equip:'Macchine',diff:'p',sets:'3-4',reps:'12-20',rest:'60s',emoji:'🔩',desc:'Isola i quadricipiti. Ideale come esercizio di finitura o per la riabilitazione del ginocchio. Non caricare troppo.',tips:['Non usare carichi troppo pesanti (stress sul ginocchio)','Contrai bene in cima mantenendo per 1s','Ottimo come finitura per i quadricipiti']},
+{id:65,name:'Leg Curl (Femorali)',muscle:'Gambe',sec:[],equip:'Macchine',diff:'p',sets:'3-4',reps:'12-15',rest:'60s',emoji:'🔩',desc:'Isola i femorali. Puoi eseguirlo prono (steso) o seduto. Piega le gambe verso i glutei in modo controllato.',tips:['Abbassa lentamente per massimizzare il beneficio','Non mollare nella fase di discesa','Contrai i glutei per stabilità nel curl prono']},
+{id:66,name:'Bulgarian Split Squat',muscle:'Gambe',sec:['Glutei'],equip:'Manubri',diff:'i',sets:'3',reps:'8-12',rest:'90s',emoji:'🏋️',desc:'Squat unilaterale con il piede posteriore su una panca. Eccellente per correggere asimmetrie muscolari e sviluppare gambe bilanciate.',tips:['Piede anteriore abbastanza avanti','Scendi verticalmente senza inclinarti in avanti','Inizia senza peso per imparare bene il movimento']},
+{id:67,name:'Goblet Squat',muscle:'Gambe',sec:['Glutei','Addome'],equip:'Kettlebell',diff:'p',sets:'3-4',reps:'12-15',rest:'60s',emoji:'🏋️',desc:'Ottimo per imparare il pattern dello squat. Tieni il kettlebell al petto, favorisce una postura verticale naturale.',tips:['I gomiti spingono le ginocchia verso l\'esterno','Ideale per imparare la profondità dello squat','Mantieni il kettlebell vicino al petto']},
+{id:68,name:'Hip Thrust con Bilanciere',muscle:'Glutei',sec:['Femorali','Addome'],equip:'Bilanciere',diff:'i',sets:'3-4',reps:'10-15',rest:'90s',emoji:'🏋️',desc:'Il migliore per sviluppare i glutei. Schiena appoggiata alla panca, bilanciere sulle anche protette da un pad, spingi i fianchi verso l\'alto.',tips:['Spingi i fianchi in alto fino a formare una linea retta','Contrai i glutei al massimo in cima per 2s','Piedi piatti a terra alla larghezza delle spalle']},
+{id:69,name:'Step Up con Manubri',muscle:'Gambe',sec:['Glutei'],equip:'Manubri',diff:'p',sets:'3',reps:'10-15',rest:'60s',emoji:'🤸',desc:'Salita su un gradino o panca alta tenendo dei manubri. Ottimo per gambe e glutei con basso impatto articolare.',tips:['Il piede intero deve salire sul gradino','Spingi attraverso il tallone del piede elevato','Altezza del gradino al ginocchio per maggiore difficoltà']},
+// ── GLUTEI ──
+{id:75,name:'Hip Thrust a Corpo Libero',muscle:'Glutei',sec:['Femorali'],equip:'Corpo Libero',diff:'p',sets:'3-4',reps:'15-25',rest:'60s',emoji:'🤸',desc:'Versione a corpo libero dell\'hip thrust. Ideale per principianti o come riscaldamento prima di aggiungere peso.',tips:['Aggiungi resistenza con un elastico tra le ginocchia','Contrai i glutei al massimo in cima','Mantieni la contrazione per 1-2 secondi']},
+{id:76,name:'Cable Kickback (Glutei)',muscle:'Glutei',sec:['Femorali'],equip:'Cavi',diff:'p',sets:'3',reps:'12-15',rest:'60s',emoji:'🔌',desc:'Isola il gluteo con tensione costante del cavo. In piedi con il cavo alla caviglia, porta la gamba indietro e in alto.',tips:['Core contratto per stabilità','Movimento controllato, non oscillare','Porta la gamba all\'altezza dei glutei in cima']},
+{id:77,name:'Glute Bridge',muscle:'Glutei',sec:['Femorali','Core'],equip:'Corpo Libero',diff:'p',sets:'3',reps:'15-20',rest:'45s',emoji:'🤸',desc:'Simile all\'hip thrust ma eseguito sul pavimento. Ottimo come attivazione dei glutei prima dell\'allenamento o per principianti.',tips:['Spingi attraverso i talloni','Contrai i glutei al massimo in cima','Versione unilaterale (single leg) per più difficoltà']},
+{id:78,name:'Donkey Kicks',muscle:'Glutei',sec:[],equip:'Corpo Libero',diff:'p',sets:'3',reps:'15-20',rest:'45s',emoji:'🤸',desc:'A quattro zampe, calcia un piede verso il soffitto contraendo il gluteo a ogni ripetizione. Ottimo isolamento.',tips:['Tieni il core contratto','Non ruotare il bacino','Aggiungi una cavigliera con peso per più resistenza']},
+{id:79,name:'Sumo Squat',muscle:'Glutei',sec:['Gambe','Adduttori'],equip:'Manubri',diff:'p',sets:'3',reps:'12-15',rest:'60s',emoji:'🏋️',desc:'Variante dello squat con piedi molto allargati e punte verso l\'esterno. Enfatizza i glutei e gli adduttori interni.',tips:['Piedi larghi, punte rivolte verso l\'esterno 45°','Ginocchia che seguono le punte dei piedi','Scendi mantenendo il busto eretto']},
+// ── POLPACCI ──
+{id:80,name:'Calf Raise in Piedi alla Macchina',muscle:'Polpacci',sec:[],equip:'Macchine',diff:'p',sets:'4-5',reps:'15-25',rest:'45-60s',emoji:'🔩',desc:'Fondamentale per sviluppare il gastrocnemio (polpaccio superiore). Stai in piedi sulla punta dei piedi, solleva e ridiscendi lentamente.',tips:['Range of motion completo dal basso verso l\'alto','Abbassa lentamente per massimizzare l\'allungamento','I polpacci hanno molte fibre lente: usa molte reps']},
+{id:81,name:'Calf Raise Seduto alla Macchina',muscle:'Polpacci',sec:[],equip:'Macchine',diff:'p',sets:'4',reps:'15-20',rest:'45s',emoji:'🔩',desc:'Con le ginocchia piegate si isola maggiormente il soleo (muscolo profondo sotto il gastrocnemio). Essenziale per polpacci completi.',tips:['Ginocchia piegate per isolare il soleo','Range of motion completo','Fondamentale perché il soleo è spesso trascurato']},
+{id:82,name:'Calf Raise su Gradino',muscle:'Polpacci',sec:[],equip:'Corpo Libero',diff:'p',sets:'4',reps:'15-25',rest:'45s',emoji:'🤸',desc:'Con i piedi sul bordo di un gradino si ottiene un range di movimento massimo, fondamentale per sviluppare i polpacci.',tips:['Piedi sul bordo del gradino per massimo allungamento','Può essere eseguito con un piede alla volta','Usa un manubrio per aggiungere resistenza']},
+// ── AVAMBRACCI ──
+{id:85,name:'Reverse Curl',muscle:'Avambracci',sec:['Bicipiti'],equip:'Bilanciere',diff:'p',sets:'3',reps:'12-15',rest:'60s',emoji:'💪',desc:'Presa pronata per lavorare il brachioradiale e gli estensori del polso. Eseguire come un normale curl con i palmi rivolti verso il basso.',tips:['Mantieni la presa pronata dall\'inizio alla fine','Gomiti fissi ai fianchi','Ottimo per avambracci più sviluppati e definiti']},
+{id:86,name:'Wrist Curl (Flessione del Polso)',muscle:'Avambracci',sec:[],equip:'Bilanciere',diff:'p',sets:'3',reps:'15-20',rest:'45s',emoji:'🏋️',desc:'Isola i flessori del polso. Avambracci appoggiati alle ginocchia (o a una panca), fletti ed estendi i polsi.',tips:['Usa un peso leggero','Range of motion completo','Esegui lentamente per sentire i muscoli']},
+{id:87,name:'Farmer\'s Walk',muscle:'Avambracci',sec:['Trapezio','Core','Gambe'],equip:'Manubri',diff:'p',sets:'3',reps:'20-40m',rest:'90s',emoji:'🚶',desc:'Cammina tenendo manubri pesanti ai fianchi. Eccellente per la forza della presa, stabilità del core e resistenza generale.',tips:['Schiena dritta durante la camminata','Testa alta, sguardo avanti','Prendi i pesi più pesanti che riesci a reggere con forma corretta']},
+];
+
+/* ═════════════════════════════════════════
+   SCHEDE DI ALLENAMENTO
+   ═════════════════════════════════════════ */
+const SCHEDE_DB=[
+{id:1,name:'Full Body 3x/Settimana',emoji:'💪',level:'Principiante',freq:3,goal:'Forza & Massa',color:'#16a34a',
+ desc:'Perfetto per chi inizia o non ha molto tempo. Allena tutto il corpo 3 volte a settimana con i movimenti fondamentali.',
+ days:[
+  {name:'Giorno A',exs:[{id:60,sets:'3',reps:'5×5',rest:'3 min'},{id:1,sets:'3',reps:'5×5',rest:'3 min'},{id:13,sets:'3',reps:'5×5',rest:'3 min'},{id:51,sets:'3',reps:'3×15',rest:'45s'}]},
+  {name:'Giorno B',exs:[{id:60,sets:'3',reps:'5×5',rest:'3 min'},{id:20,sets:'3',reps:'5×5',rest:'3 min'},{id:10,sets:'1',reps:'1×5',rest:'3 min'},{id:50,sets:'3',reps:'3×40s',rest:'45s'}]}
+ ]},
+{id:2,name:'Push / Pull / Legs (PPL)',emoji:'🔥',level:'Intermedio',freq:6,goal:'Ipertrofia',color:'#dc2626',
+ desc:'Split classico per massima ipertrofia. 6 giorni con 2 cicli Push/Pull/Legs. Uno dei più efficaci in assoluto.',
+ days:[
+  {name:'Push (Spinte)',exs:[{id:1,sets:'4',reps:'4×6-8',rest:'3 min'},{id:20,sets:'3',reps:'3×8-10',rest:'2 min'},{id:21,sets:'4',reps:'4×12-15',rest:'60s'},{id:40,sets:'3',reps:'3×12-15',rest:'60s'},{id:42,sets:'3',reps:'3×12-15',rest:'60s'}]},
+  {name:'Pull (Trazioni)',exs:[{id:11,sets:'4',reps:'4×5-8',rest:'3 min'},{id:13,sets:'4',reps:'4×6-8',rest:'2 min'},{id:16,sets:'3',reps:'3×15-20',rest:'60s'},{id:30,sets:'4',reps:'4×10-12',rest:'60s'},{id:32,sets:'3',reps:'3×12-15',rest:'60s'}]},
+  {name:'Legs (Gambe)',exs:[{id:60,sets:'4',reps:'4×6-8',rest:'3 min'},{id:62,sets:'3',reps:'3×8-10',rest:'2 min'},{id:63,sets:'3',reps:'3×12-15',rest:'90s'},{id:64,sets:'4',reps:'4×15-20',rest:'60s'},{id:80,sets:'4',reps:'4×20-25',rest:'45s'}]}
+ ]},
+{id:3,name:'Upper / Lower Split',emoji:'⚡',level:'Intermedio',freq:4,goal:'Forza & Massa',color:'#2563eb',
+ desc:'4 giorni: 2 Upper body e 2 Lower body. Bilanciato, scientifico e molto efficace per forza e massa.',
+ days:[
+  {name:'Upper A — Forza',exs:[{id:1,sets:'4',reps:'4×4-6',rest:'3 min'},{id:11,sets:'4',reps:'4×4-6',rest:'3 min'},{id:20,sets:'3',reps:'3×6-8',rest:'2 min'},{id:13,sets:'3',reps:'3×6-8',rest:'2 min'}]},
+  {name:'Lower A — Forza',exs:[{id:60,sets:'4',reps:'4×4-6',rest:'3 min'},{id:62,sets:'3',reps:'3×6-8',rest:'2 min'},{id:65,sets:'3',reps:'3×10-12',rest:'90s'},{id:80,sets:'4',reps:'4×15-20',rest:'60s'}]},
+  {name:'Upper B — Volume',exs:[{id:2,sets:'4',reps:'4×10-12',rest:'90s'},{id:12,sets:'4',reps:'4×10-12',rest:'90s'},{id:23,sets:'3',reps:'3×12-15',rest:'60s'},{id:21,sets:'4',reps:'4×15-20',rest:'45s'},{id:30,sets:'3',reps:'3×12-15',rest:'60s'},{id:41,sets:'3',reps:'3×12-15',rest:'60s'}]},
+  {name:'Lower B — Volume',exs:[{id:61,sets:'4',reps:'4×12-15',rest:'90s'},{id:63,sets:'3',reps:'3×12-15',rest:'90s'},{id:64,sets:'4',reps:'4×15-20',rest:'60s'},{id:65,sets:'3',reps:'3×12-15',rest:'60s'},{id:80,sets:'5',reps:'5×15-20',rest:'45s'}]}
+ ]},
+{id:4,name:'Tonificazione Femminile',emoji:'🍑',level:'Principiante',freq:3,goal:'Glutei & Tonificazione',color:'#db2777',
+ desc:'Pensata per tonificare il corpo femminile con particolare attenzione ai glutei, gambe e core.',
+ days:[
+  {name:'Lower Body — Glutei',exs:[{id:68,sets:'4',reps:'4×12-15',rest:'90s'},{id:60,sets:'3',reps:'3×10-12',rest:'2 min'},{id:66,sets:'3',reps:'3×10-12',rest:'90s'},{id:76,sets:'3',reps:'3×15-20',rest:'60s'},{id:80,sets:'4',reps:'4×20',rest:'45s'}]},
+  {name:'Upper Body',exs:[{id:4,sets:'3',reps:'3×8-15',rest:'60s'},{id:12,sets:'3',reps:'3×12-15',rest:'90s'},{id:21,sets:'3',reps:'3×15-20',rest:'60s'},{id:15,sets:'3',reps:'3×12-15',rest:'60s'},{id:3,sets:'3',reps:'3×15',rest:'60s'}]},
+  {name:'Full Body + Core',exs:[{id:63,sets:'3',reps:'3×12',rest:'90s'},{id:77,sets:'3',reps:'3×20',rest:'60s'},{id:50,sets:'3',reps:'3×45s',rest:'45s'},{id:53,sets:'3',reps:'3×20',rest:'45s'},{id:52,sets:'3',reps:'3×15',rest:'45s'}]}
+ ]},
+{id:5,name:'Allenamento a Casa (No Attrezzi)',emoji:'🏠',level:'Tutti i livelli',freq:3,goal:'Fitness Generale',color:'#d97706',
+ desc:'Scheda completa a corpo libero. Si esegue ovunque senza attrezzatura. Efficace per forza, resistenza e corpo in forma.',
+ days:[
+  {name:'Giorno A — Forza Superiore',exs:[{id:4,sets:'4',reps:'4×Max',rest:'90s'},{id:45,sets:'3',reps:'3×Max',rest:'90s'},{id:50,sets:'3',reps:'3×45s',rest:'45s'},{id:51,sets:'3',reps:'3×20',rest:'45s'},{id:57,sets:'3',reps:'3×30s/lato',rest:'45s'}]},
+  {name:'Giorno B — Forza Inferiore',exs:[{id:67,sets:'4',reps:'4×15',rest:'90s'},{id:63,sets:'3',reps:'3×12/lato',rest:'90s'},{id:77,sets:'4',reps:'4×20',rest:'60s'},{id:78,sets:'3',reps:'3×15/lato',rest:'45s'},{id:82,sets:'4',reps:'4×20',rest:'45s'}]},
+  {name:'Giorno C — HIIT Full Body',exs:[{id:4,sets:'3',reps:'3×10',rest:'30s'},{id:60,sets:'3',reps:'3×10',rest:'30s'},{id:50,sets:'3',reps:'3×30s',rest:'30s'},{id:58,sets:'3',reps:'3×30s',rest:'30s'},{id:51,sets:'3',reps:'3×15',rest:'30s'}]}
+ ]},
+{id:6,name:'Powerlifting Base',emoji:'🏆',level:'Avanzato',freq:4,goal:'Forza Massimale',color:'#7c3aed',
+ desc:'Focalizzato sui tre lift del powerlifting: squat, panca e stacco. Per chi vuole costruire forza massimale.',
+ days:[
+  {name:'Squat Day',exs:[{id:60,sets:'5',reps:'5×5',rest:'4 min'},{id:64,sets:'3',reps:'3×8-10',rest:'90s'},{id:1,sets:'3',reps:'3×8-10',rest:'2 min'},{id:40,sets:'3',reps:'3×12-15',rest:'60s'}]},
+  {name:'Panca Day',exs:[{id:1,sets:'5',reps:'5×5',rest:'4 min'},{id:20,sets:'3',reps:'3×6-8',rest:'3 min'},{id:13,sets:'3',reps:'3×8-10',rest:'2 min'},{id:21,sets:'3',reps:'3×15',rest:'60s'}]},
+  {name:'Stacco Day',exs:[{id:10,sets:'5',reps:'5×3-5',rest:'5 min'},{id:62,sets:'3',reps:'3×6-8',rest:'2 min'},{id:65,sets:'3',reps:'3×10-12',rest:'90s'},{id:80,sets:'4',reps:'4×15-20',rest:'60s'}]},
+  {name:'Upper Volume',exs:[{id:11,sets:'4',reps:'4×5-8',rest:'3 min'},{id:15,sets:'3',reps:'3×10-12',rest:'90s'},{id:3,sets:'3',reps:'3×12-15',rest:'60s'},{id:30,sets:'3',reps:'3×10-12',rest:'60s'},{id:16,sets:'3',reps:'3×15-20',rest:'60s'}]}
+ ]},
+];
+
+/* ═════════════════════════════════════════
+   DATI GRUPPI MUSCOLARI
+   ═════════════════════════════════════════ */
+const MUSCLE_GROUPS=[
+{name:'Petto',emoji:'💪',color:'#dc2626',bg:'#fff1f2',border:'#fecdd3'},
+{name:'Schiena',emoji:'🔙',color:'#2563eb',bg:'#eff6ff',border:'#93c5fd'},
+{name:'Spalle',emoji:'🙆',color:'#d97706',bg:'#fffbeb',border:'#fde047'},
+{name:'Bicipiti',emoji:'🦾',color:'#16a34a',bg:'#f0fdf4',border:'#86efac'},
+{name:'Tricipiti',emoji:'💥',color:'#7c3aed',bg:'#f5f3ff',border:'#c4b5fd'},
+{name:'Addome',emoji:'🫀',color:'#0891b2',bg:'#ecfeff',border:'#a5f3fc'},
+{name:'Gambe',emoji:'🦵',color:'#dc2626',bg:'#fff1f2',border:'#fecdd3'},
+{name:'Glutei',emoji:'🍑',color:'#db2777',bg:'#fdf2f8',border:'#f9a8d4'},
+{name:'Polpacci',emoji:'🦶',color:'#059669',bg:'#ecfdf5',border:'#6ee7b7'},
+{name:'Avambracci',emoji:'🤜',color:'#92400e',bg:'#fffbeb',border:'#fde68a'},
+];
 const SPORT_MET={Forza:5,Cardio:7,HIIT:10,Stretching:2.5,Yoga:2.5,Calcio:8,Nuoto:7,Ciclismo:8,Tennis:7.5,Basket:8,Corsa:9.5,Camminata:3.5,Boxe:9,Pilates:3,Altro:5};
 function calcBurnedKcal(type,duration,peso){
   const met=SPORT_MET[type]||5;
@@ -2703,7 +2901,15 @@ function renderWo(){
     <div style="font-size:9px;opacity:.5;font-family:'IBM Plex Mono',monospace">${wos.length} ALLENAMENTI</div></div>
   </div>
   <div style="overflow-x:auto;scrollbar-width:none;padding:8px 12px;display:flex;gap:5px;flex-wrap:nowrap;border-bottom:1px solid #ede8dc;background:var(--card)">${WT.map(t=>`<div class="cat-pill ${t===_wt?'on':''}" style="flex-shrink:0" onclick="snd();setWT('${t}')">${WI[t]||''} ${t}</div>`).join('')}</div>
-  <button class="big-btn success" onclick="snd();addWoModal()">+ AGGIUNGI ALLENAMENTO</button>`;
+  <button class="big-btn success" onclick="snd();addWoModal()">+ AGGIUNGI ALLENAMENTO</button>
+  <div style="padding:10px 12px 4px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--ink3);background:var(--paper);border-top:1px solid #ede8dc">STRUMENTI PALESTRA</div>
+  <div class="wo-quick-grid">
+    <div class="wo-quick-btn" onclick="snd();navPush(showLibreriaEsercizi)"><div class="wo-quick-ico">💪</div><div class="wo-quick-lbl">Libreria<br>Esercizi</div></div>
+    <div class="wo-quick-btn" onclick="snd();navPush(showSchede)"><div class="wo-quick-ico">📋</div><div class="wo-quick-lbl">Schede<br>Allenamento</div></div>
+    <div class="wo-quick-btn" onclick="snd();navPush(showMuscleGroups)"><div class="wo-quick-ico">🫀</div><div class="wo-quick-lbl">Muscoli<br>& Anatomia</div></div>
+    <div class="wo-quick-btn" onclick="snd();navPush(showWorkoutStorico)"><div class="wo-quick-ico">📜</div><div class="wo-quick-lbl">Storico<br>Workout</div></div>
+  </div>
+  <div style="padding:6px 14px 4px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--ink3);background:var(--paper);border-top:1px solid #ede8dc;border-bottom:1px solid #ede8dc">ALLENAMENTI DI OGGI</div>`;
   if(!filtered.length)html+=`<div class="empty"><div class="empty-ico">🏋️</div><div class="empty-txt">NESSUN ALLENAMENTO<br>REGISTRATO</div></div>`;
   else filtered.forEach((w,i)=>{
     const burned=calcBurnedKcal(w.type,w.duration,null);
@@ -2754,6 +2960,360 @@ function saveWo(){
   const wo={name:nameFld||type,type,duration:dur,burned,sets:document.getElementById('ws').value,reps:document.getElementById('wr').value,notes:document.getElementById('wno').value};
   if(!S.workouts[_wd])S.workouts[_wd]=[];
   S.workouts[_wd].push(wo);saveState();closeModal();renderWo();
+}
+
+/* ════════════════════════════════════════════════════
+   LIBRERIA ESERCIZI
+   ════════════════════════════════════════════════════ */
+let _libMuscle='Tutti',_libEquip='Tutti',_libSearch='';
+function showLibreriaEsercizi(fb){
+  resetScreen();setHdr('ESERCIZI','LIBRERIA MUSCLEWIKI',true);
+  if(!fb){_libMuscle='Tutti';_libEquip='Tutti';_libSearch='';}
+  renderLibreria();
+}
+function renderLibreria(){
+  const muscles=['Tutti','Petto','Schiena','Spalle','Bicipiti','Tricipiti','Addome','Gambe','Glutei','Polpacci','Avambracci'];
+  const equips=['Tutti','Bilanciere','Manubri','Cavi','Macchine','Corpo Libero','Sbarra','Kettlebell'];
+  let filtered=EXDB;
+  if(_libMuscle!=='Tutti')filtered=filtered.filter(e=>e.muscle===_libMuscle||e.sec.includes(_libMuscle));
+  if(_libEquip!=='Tutti')filtered=filtered.filter(e=>e.equip===_libEquip);
+  if(_libSearch)filtered=filtered.filter(e=>e.name.toLowerCase().includes(_libSearch.toLowerCase())||e.muscle.toLowerCase().includes(_libSearch.toLowerCase()));
+  const diffLabels={p:'Principiante',i:'Intermedio',a:'Avanzato'};
+  const diffTag={p:'ex-tag-diff-p',i:'ex-tag-diff-i',a:'ex-tag-diff-a'};
+  let html=`
+  <div style="position:sticky;top:0;z-index:10;background:var(--card);border-bottom:2px solid var(--ink)">
+    <div style="padding:8px 12px">
+      <input class="srch-inp" type="search" placeholder="🔍 Cerca esercizio..." value="${_libSearch}" oninput="libSearch(this.value)" autocomplete="off">
+    </div>
+    <div class="lib-filter-bar">${muscles.map(m=>`<div class="cat-pill ${m===_libMuscle?'on':''}" style="flex-shrink:0" onclick="snd();setLibMuscle('${m}')">${m}</div>`).join('')}</div>
+    <div style="display:flex;gap:6px;padding:4px 12px 8px;overflow-x:auto;scrollbar-width:none">${equips.map(eq=>`<div class="cat-pill ${eq===_libEquip?'on':''}" style="flex-shrink:0;font-size:9px" onclick="snd();setLibEquip('${eq}')">${eq}</div>`).join('')}</div>
+  </div>
+  <div style="padding:6px 14px 4px;font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--ink3)">${filtered.length} ESERCIZI TROVATI</div>`;
+  if(!filtered.length){
+    html+=`<div class="empty"><div class="empty-ico">🔍</div><div class="empty-txt">NESSUN ESERCIZIO<br>TROVATO</div></div>`;
+  } else {
+    filtered.forEach(ex=>{
+      html+=`<div class="ex-card" onclick="snd();navPush(()=>showEsercizio(${ex.id}))">
+        <div class="ex-card-body">
+          <div class="ex-card-ico">${ex.emoji}</div>
+          <div class="ex-card-info">
+            <div class="ex-card-name">${ex.name}</div>
+            <div class="ex-card-tags">
+              <span class="ex-tag ex-tag-muscle">${ex.muscle}</span>
+              ${ex.sec.length?`<span class="ex-tag ex-tag-sec">${ex.sec[0]}</span>`:''}
+              <span class="ex-tag ex-tag-equip">${ex.equip}</span>
+              <span class="ex-tag ${diffTag[ex.diff]}">${diffLabels[ex.diff]}</span>
+            </div>
+          </div>
+          <div class="ex-chevron">›</div>
+        </div>
+      </div>`;
+    });
+  }
+  html+=`<div class="home-pill"><button onclick="navGoHome()">← HOME</button></div>`;
+  document.getElementById('screen').innerHTML=html;
+}
+function setLibMuscle(m){_libMuscle=m;renderLibreria();}
+function setLibEquip(eq){_libEquip=eq;renderLibreria();}
+function libSearch(v){_libSearch=v;renderLibreria();}
+
+/* ════════════════════════════════════════════════════
+   DETTAGLIO ESERCIZIO
+   ════════════════════════════════════════════════════ */
+function showEsercizio(id,fb){
+  const ex=EXDB.find(e=>e.id===id);
+  if(!ex)return;
+  resetScreen();setHdr(ex.muscle.toUpperCase(),'ESERCIZIO',true);
+  const diffLabels={p:'🟢 Principiante',i:'🟡 Intermedio',a:'🔴 Avanzato'};
+  const muscleGroup=MUSCLE_GROUPS.find(mg=>mg.name===ex.muscle)||MUSCLE_GROUPS[0];
+  let html=`
+  <div style="background:var(--ink);color:#fff;padding:16px;text-align:center">
+    <div style="font-size:52px;margin-bottom:8px">${ex.emoji}</div>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:700">${ex.name}</div>
+    <div style="display:flex;justify-content:center;gap:8px;margin-top:10px;flex-wrap:wrap">
+      <span style="background:rgba(255,255,255,.15);padding:4px 10px;border-radius:20px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700">${ex.muscle}</span>
+      ${ex.sec.map(s=>`<span style="background:rgba(255,255,255,.1);padding:4px 10px;border-radius:20px;font-family:'IBM Plex Mono',monospace;font-size:9px">${s}</span>`).join('')}
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;border-bottom:1.5px solid #e8e3d8">
+    <div style="text-align:center;padding:12px 6px;border-right:1px solid #e8e3d8;background:var(--card)">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:700;color:var(--ink)">${ex.sets}</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px;margin-top:2px">Serie</div>
+    </div>
+    <div style="text-align:center;padding:12px 6px;border-right:1px solid #e8e3d8;background:var(--card)">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:700;color:var(--green)">${ex.reps}</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px;margin-top:2px">Rip.</div>
+    </div>
+    <div style="text-align:center;padding:12px 6px;background:var(--card)">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;color:#d97706">${ex.rest}</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px;margin-top:2px">Recupero</div>
+    </div>
+  </div>
+  <div style="padding:4px 14px 2px;background:var(--paper)">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--ink3);margin:4px 0">${diffLabels[ex.diff]} · Attrezzo: ${ex.equip}</div>
+  </div>
+  <div class="ex-detail-section">
+    <div class="ex-detail-hdr">📖 DESCRIZIONE</div>
+    <div class="ex-detail-body">${ex.desc}</div>
+  </div>
+  <div class="ex-detail-section">
+    <div class="ex-detail-hdr">✅ CONSIGLI TECNICI</div>
+    <div class="ex-detail-body">
+      <ul class="ex-tips-list">${ex.tips.map(t=>`<li>${t}</li>`).join('')}</ul>
+    </div>
+  </div>
+  ${ex.sec.length?`<div class="ex-detail-section">
+    <div class="ex-detail-hdr">🎯 MUSCOLI COINVOLTI</div>
+    <div class="ex-detail-body">
+      <div style="margin-bottom:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700">Principale: </span>
+        <span class="ex-tag ex-tag-muscle" style="font-size:11px;padding:3px 9px">${ex.muscle}</span>
+      </div>
+      <div><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700">Secondari: </span>
+        ${ex.sec.map(s=>`<span class="ex-tag ex-tag-sec" style="font-size:11px;padding:3px 9px;margin:0 3px">${s}</span>`).join('')}
+      </div>
+    </div>
+  </div>`:''}
+  <div style="padding:12px 12px 0">
+    <button class="big-btn success" onclick="snd();addEsercizioToWorkout(${ex.id})">+ AGGIUNGI A WORKOUT OGGI</button>
+  </div>
+  <div class="home-pill"><button onclick="navGoHome()">← HOME</button></div>`;
+  document.getElementById('screen').innerHTML=html;
+}
+
+function addEsercizioToWorkout(exId){
+  const ex=EXDB.find(e=>e.id===exId);
+  if(!ex)return;
+  const setsDefault=ex.sets.includes('-')?ex.sets.split('-')[0]:ex.sets.replace(/[^0-9]/g,'')||'3';
+  const repsDefault=ex.reps.split('×').pop().split('-')[0].replace(/[^0-9]/g,'')||'10';
+  document.getElementById('modal-box').innerHTML=`
+    <div class="modal-handle"></div>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:700;margin-bottom:4px">${ex.emoji} ${ex.name}</div>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--ink3);margin-bottom:14px">${ex.muscle} · ${ex.equip}</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+      <div><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;color:var(--ink3);margin-bottom:4px">SERIE</div><input class="gram-inp" id="ex-sets" type="number" inputmode="numeric" value="${setsDefault}" style="width:100%;text-align:center;padding:10px"></div>
+      <div><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;color:var(--ink3);margin-bottom:4px">RIPETIZIONI</div><input class="gram-inp" id="ex-reps" type="number" inputmode="numeric" value="${repsDefault}" style="width:100%;text-align:center;padding:10px"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+      <div><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;color:var(--ink3);margin-bottom:4px">DURATA (MIN)</div><input class="gram-inp" id="ex-dur" type="number" inputmode="numeric" value="45" style="width:100%;text-align:center;padding:10px" oninput="updWoBurnEx()"></div>
+      <div><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;color:var(--ink3);margin-bottom:4px">PESO KG (corpo)</div><input class="gram-inp" id="ex-kg" type="number" inputmode="decimal" value="${S.profile.entries?.slice(-1)[0]?.peso||70}" style="width:100%;text-align:center;padding:10px" oninput="updWoBurnEx()"></div>
+    </div>
+    <div id="ex-burn-prev" style="background:#fef3c7;border:1px solid #d97706;border-radius:var(--r);padding:8px 12px;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#92400e;margin-bottom:10px;text-align:center"></div>
+    <div style="margin-bottom:10px"><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;color:var(--ink3);margin-bottom:4px">NOTE</div><textarea id="ex-note" style="height:50px" placeholder="Carico usato, sensazioni..."></textarea></div>
+    <button class="conf-btn green-btn" onclick="snd('confirm');confirmAddEsercizio(${exId})">✓ AGGIUNGI AL DIARIO</button>`;
+  document.getElementById('modal').classList.add('open');
+  setTimeout(()=>{
+    const kg=parseFloat(document.getElementById('ex-kg').value)||70;
+    const dur=parseFloat(document.getElementById('ex-dur').value)||45;
+    const b=calcBurnedKcal('Forza',dur,kg);
+    document.getElementById('ex-burn-prev').textContent=`🔥 Stima: ${b} kcal bruciate`;
+  },50);
+}
+function updWoBurnEx(){
+  const dur=parseFloat(document.getElementById('ex-dur')?.value)||45;
+  const kg=parseFloat(document.getElementById('ex-kg')?.value)||70;
+  const el=document.getElementById('ex-burn-prev');if(!el)return;
+  el.textContent=`🔥 Stima: ${calcBurnedKcal('Forza',dur,kg)} kcal bruciate`;
+}
+function confirmAddEsercizio(exId){
+  const ex=EXDB.find(e=>e.id===exId);if(!ex)return;
+  const dur=document.getElementById('ex-dur').value||'45';
+  const kg=parseFloat(document.getElementById('ex-kg').value)||null;
+  const burned=calcBurnedKcal('Forza',dur,kg);
+  const sets=document.getElementById('ex-sets').value;
+  const reps=document.getElementById('ex-reps').value;
+  const note=document.getElementById('ex-note').value;
+  const wo={name:ex.name,type:'Forza',duration:dur,burned,sets,reps,notes:note+`${note?' · ':''}[${ex.muscle}]`};
+  if(!S.workouts[TODAY])S.workouts[TODAY]=[];
+  S.workouts[TODAY].push(wo);saveState();closeModal();
+  alert('✅ '+ex.name+' aggiunto al workout di oggi!');
+}
+
+/* ════════════════════════════════════════════════════
+   MUSCOLI & ANATOMIA
+   ════════════════════════════════════════════════════ */
+function showMuscleGroups(fb){
+  resetScreen();setHdr('ANATOMIA','MUSCOLI',true);
+  let html=`
+  <div style="background:var(--ink);color:#fff;padding:12px 16px;text-align:center">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;opacity:.6;margin-bottom:4px">SELEZIONA IL GRUPPO MUSCOLARE</div>
+    <div style="font-size:13px;opacity:.7;font-family:'IBM Plex Mono',monospace">per vedere gli esercizi specifici</div>
+  </div>
+  <div class="muscle-grid">`;
+  MUSCLE_GROUPS.forEach(mg=>{
+    const count=EXDB.filter(e=>e.muscle===mg.name||e.sec.includes(mg.name)).length;
+    html+=`<div class="muscle-btn" style="border-color:${mg.border};background:${mg.bg}" onclick="snd();showEserciziPerMuscolo('${mg.name}')">
+      <div class="muscle-ico">${mg.emoji}</div>
+      <div class="muscle-lbl" style="color:${mg.color}">${mg.name}</div>
+      <div class="muscle-cnt">${count} esercizi</div>
+    </div>`;
+  });
+  html+=`</div>
+  <div class="card">
+    <div class="card-hdr">📚 GUIDA AI GRUPPI MUSCOLARI</div>
+    <div class="card-body" style="font-size:12px;color:var(--ink2);line-height:1.9;font-family:'IBM Plex Mono',monospace">
+      <b>💪 Petto:</b> Grande e piccolo pettorale. Esercizi di spinta orizzontale e inclinata.<br>
+      <b>🔙 Schiena:</b> Dorsali, romboidei, trapezio. Esercizi di trazione e rowing.<br>
+      <b>🙆 Spalle:</b> 3 capi del deltoide (ant., med., post.). Overhead press e alzate.<br>
+      <b>🦾 Bicipiti:</b> Bicipite brachiale + brachiale. Curl in tutte le varianti.<br>
+      <b>💥 Tricipiti:</b> 3 capi (lungo, laterale, mediale). 2/3 del volume del braccio.<br>
+      <b>🫀 Addome:</b> Retto, obliqui, trasverso. Core = stabilizzatore globale.<br>
+      <b>🦵 Gambe:</b> Quadricipiti e femorali. I più grandi muscoli del corpo.<br>
+      <b>🍑 Glutei:</b> Grande, medio, piccolo. I muscoli più forti del corpo.<br>
+      <b>🦶 Polpacci:</b> Gastrocnemio e soleo. Resistono a carichi enormi quotidiani.
+    </div>
+  </div>
+  <div class="home-pill"><button onclick="navGoHome()">← HOME</button></div>`;
+  document.getElementById('screen').innerHTML=html;
+}
+
+function showEserciziPerMuscolo(muscleName,fb){
+  const mg=MUSCLE_GROUPS.find(m=>m.name===muscleName)||{color:'var(--ink)',emoji:'💪'};
+  resetScreen();setHdr(muscleName.toUpperCase(),'ESERCIZI',true);
+  const primari=EXDB.filter(e=>e.muscle===muscleName);
+  const secondari=EXDB.filter(e=>e.sec.includes(muscleName)&&e.muscle!==muscleName);
+  const diffLabels={p:'Principiante',i:'Intermedio',a:'Avanzato'};
+  const diffTag={p:'ex-tag-diff-p',i:'ex-tag-diff-i',a:'ex-tag-diff-a'};
+  function renderExList(list){
+    return list.map(ex=>`<div class="ex-card" onclick="snd();navPush(()=>showEsercizio(${ex.id}))">
+      <div class="ex-card-body">
+        <div class="ex-card-ico">${ex.emoji}</div>
+        <div class="ex-card-info">
+          <div class="ex-card-name">${ex.name}</div>
+          <div class="ex-card-tags">
+            <span class="ex-tag ex-tag-equip">${ex.equip}</span>
+            <span class="ex-tag ${diffTag[ex.diff]}">${diffLabels[ex.diff]}</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--ink3)">${ex.sets}×${ex.reps}</span>
+          </div>
+        </div>
+        <div class="ex-chevron">›</div>
+      </div>
+    </div>`).join('');
+  }
+  let html=`<div style="background:${mg.bg||'var(--card)'};border-bottom:2px solid ${mg.border||'#e8e3d8'};padding:14px 16px;display:flex;align-items:center;gap:12px">
+    <div style="font-size:36px">${mg.emoji}</div>
+    <div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:700;color:${mg.color}">${muscleName}</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--ink3);margin-top:2px">${primari.length} esercizi primari · ${secondari.length} secondari</div>
+    </div>
+  </div>`;
+  if(primari.length){
+    html+=`<div style="padding:8px 14px 4px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--ink3);background:var(--paper)">🎯 ESERCIZI PRIMARI (${primari.length})</div>`;
+    html+=renderExList(primari);
+  }
+  if(secondari.length){
+    html+=`<div style="padding:8px 14px 4px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--ink3);background:var(--paper);border-top:1px solid #ede8dc">🔸 COINVOLTO ANCHE IN (${secondari.length})</div>`;
+    html+=renderExList(secondari);
+  }
+  html+=`<div class="home-pill"><button onclick="navGoHome()">← HOME</button></div>`;
+  document.getElementById('screen').innerHTML=html;
+}
+
+/* ════════════════════════════════════════════════════
+   SCHEDE DI ALLENAMENTO
+   ════════════════════════════════════════════════════ */
+function showSchede(fb){
+  resetScreen();setHdr('SCHEDE','PROGRAMMI',true);
+  const levelOrder=['Principiante','Tutti i livelli','Intermedio','Avanzato'];
+  let html=`<div style="background:var(--ink);color:#fff;padding:10px 16px;text-align:center">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;opacity:.6">SCEGLI IL TUO PROGRAMMA DI ALLENAMENTO</div>
+  </div>`;
+  SCHEDE_DB.forEach(s=>{
+    html+=`<div class="scheda-card" onclick="snd();navPush(()=>showSchedaDetail(${s.id}))">
+      <div class="scheda-hdr" style="background:${s.color}">
+        <div>
+          <div class="scheda-nm">${s.emoji} ${s.name}</div>
+          <div class="scheda-sub">${s.level} · ${s.freq}×/sett. · ${s.goal}</div>
+        </div>
+        <div style="font-size:22px">›</div>
+      </div>
+      <div class="scheda-body">
+        ${s.days.map(d=>`<span class="scheda-badge">${d.name}</span>`).join('')}
+        <span class="scheda-badge">${s.days.reduce((a,d)=>a+d.exs.length,0)} esercizi totali</span>
+      </div>
+    </div>`;
+  });
+  html+=`<div class="home-pill"><button onclick="navGoHome()">← HOME</button></div>`;
+  document.getElementById('screen').innerHTML=html;
+}
+
+function showSchedaDetail(id,fb){
+  const s=SCHEDE_DB.find(x=>x.id===id);if(!s)return;
+  resetScreen();setHdr(s.name.toUpperCase(),'SCHEDA',true);
+  let html=`<div style="background:${s.color};color:#fff;padding:14px 16px">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div style="font-size:36px">${s.emoji}</div>
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:700">${s.name}</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;opacity:.8;margin-top:3px">${s.level} · ${s.freq} giorni/settimana · Obiettivo: ${s.goal}</div>
+      </div>
+    </div>
+    <div style="margin-top:10px;font-size:12px;opacity:.85;line-height:1.6">${s.desc}</div>
+  </div>`;
+  s.days.forEach((day,di)=>{
+    html+=`<div class="day-card" style="margin-top:${di===0?'12px':'0'}">
+      <div class="day-hdr" onclick="toggleDayScheda('scheda-day-${id}-${di}')">
+        <span class="day-hdr-nm">📅 ${day.name}</span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;opacity:.7">${day.exs.length} esercizi ▾</span>
+      </div>
+      <div id="scheda-day-${id}-${di}">`;
+    day.exs.forEach(item=>{
+      const ex=EXDB.find(e=>e.id===item.id);
+      if(!ex)return;
+      html+=`<div class="day-ex-row" onclick="snd();navPush(()=>showEsercizio(${ex.id}))">
+        <div class="day-ex-ico">${ex.emoji}</div>
+        <div class="day-ex-info">
+          <div class="day-ex-name">${ex.name}</div>
+          <div class="day-ex-meta">${item.sets} serie · ${item.reps} rip. · Recupero: ${item.rest}</div>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--green);font-weight:700;flex-shrink:0">›</div>
+      </div>`;
+    });
+    html+=`</div></div>`;
+  });
+  // Pulsante avvia scheda
+  html+=`<div style="padding:12px 12px 0">
+    <button class="big-btn success" onclick="snd();avviaScheda(${s.id})">🚀 AVVIA QUESTA SCHEDA</button>
+  </div>
+  <div class="home-pill"><button onclick="navGoHome()">← HOME</button></div>`;
+  document.getElementById('screen').innerHTML=html;
+}
+function toggleDayScheda(id){
+  const el=document.getElementById(id);
+  if(el)el.style.display=el.style.display==='none'?'':'none';
+}
+function avviaScheda(schedaId){
+  const s=SCHEDE_DB.find(x=>x.id===schedaId);if(!s)return;
+  // Determina il giorno della settimana e mostra il giorno appropriato
+  const weekDay=new Date().getDay();
+  const dayIdx=Math.min(Math.floor(weekDay%s.days.length),s.days.length-1);
+  const day=s.days[dayIdx];
+  document.getElementById('modal-box').innerHTML=`
+    <div class="modal-handle"></div>
+    <div class="modal-title">${s.emoji} ${s.name}</div>
+    <div class="modal-sub">Giorno suggerito oggi: ${day.name}</div>
+    <div style="background:var(--greenl);border:1px solid #86efac;border-radius:var(--r);padding:10px 12px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--greend);margin-bottom:12px">
+      ${day.exs.length} esercizi · Tempo stimato: ${day.exs.reduce((a,e)=>{const ex=EXDB.find(x=>x.id===e.id);return a+(ex?15:0);},0)} min
+    </div>
+    <div style="max-height:40vh;overflow-y:auto">
+      ${day.exs.map(item=>{const ex=EXDB.find(e=>e.id===item.id);return ex?`<div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid #ede8dc"><span style="font-size:18px">${ex.emoji}</span><div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700">${ex.name}</div><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--ink3)">${item.sets}×${item.reps} · ${item.rest}</div></div></div>`:''}).join('')}
+    </div>
+    <button class="conf-btn green-btn" onclick="snd('confirm');aggiungiSchedaADiario(${schedaId},${dayIdx})">✓ AGGIUNGI AL DIARIO OGGI</button>`;
+  document.getElementById('modal').classList.add('open');
+}
+function aggiungiSchedaADiario(schedaId,dayIdx){
+  const s=SCHEDE_DB.find(x=>x.id===schedaId);if(!s)return;
+  const day=s.days[dayIdx];
+  if(!S.workouts[TODAY])S.workouts[TODAY]=[];
+  day.exs.forEach(item=>{
+    const ex=EXDB.find(e=>e.id===item.id);if(!ex)return;
+    const dur=15;
+    const kg=S.profile.entries?.slice(-1)[0]?.peso||70;
+    const burned=calcBurnedKcal('Forza',dur,kg);
+    S.workouts[TODAY].push({name:ex.name,type:'Forza',duration:dur,burned,sets:item.sets,reps:item.reps,notes:`[Scheda: ${s.name} — ${day.name}]`});
+  });
+  saveState();closeModal();
+  alert(`✅ ${day.exs.length} esercizi di "${day.name}" aggiunti al workout di oggi!`);
+  navGoHome();
 }
 
 /* ════════ PROFILO ════════ */
