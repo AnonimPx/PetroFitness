@@ -27,8 +27,8 @@ html,body{height:100%;overflow:hidden;background:#1a1a2e;font-family:'IBM Plex S
 #app-wrap{position:fixed;top:0;left:0;right:0;bottom:0;max-width:430px;margin:0 auto;display:flex;flex-direction:column;background:var(--paper);padding-top:var(--safe-top);}
 .hdr{background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:10px 16px;min-height:54px;flex-shrink:0;}
 .hdr-left{display:flex;align-items:center;gap:10px}
-.back-btn{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.12);border:none;color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.back-btn:active{background:rgba(255,255,255,.3)}
+.back-btn{min-width:42px;height:42px;border-radius:10px;padding:0 12px;font-size:13px;background:rgba(255,255,255,.18);border:none;color:#fff;font-size:20px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;letter-spacing:-1px;padding-right:2px;}
+.back-btn:active{background:rgba(255,255,255,.35);transform:scale(.93)}
 .hdr-titles{line-height:1.2}
 .hdr-title{font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:700;letter-spacing:1px}
 .hdr-sub{font-size:9px;opacity:.5;font-family:'IBM Plex Mono',monospace;letter-spacing:.5px}
@@ -402,7 +402,7 @@ textarea:focus{border-color:var(--green)}
 <div id="app-wrap" style="display:none">
   <div class="hdr">
     <div class="hdr-left">
-      <button class="back-btn" id="back-btn" style="display:none" onclick="snd();navBack()">←</button>
+      <button class="back-btn" id="back-btn" style="display:none" onclick="snd();navBack()">‹ Indietro</button>
       <div class="hdr-titles">
         <div class="hdr-title" id="hdr-title">NUTRITRACK</div>
         <div class="hdr-sub" id="hdr-sub">PRO</div>
@@ -1267,6 +1267,93 @@ const DB=[
 {id:997,name:'Amaro Montenegro (4cl)',cat:'Bevande',brand:'Montenegro',e:120,p:0,c:10.5,s:10.5,f:0,fi:0,sa:0,na:2,emoji:'🥃'},
 {id:998,name:'Campari (4cl)',cat:'Bevande',brand:'Campari',e:115,p:0,c:9.5,s:9.5,f:0,fi:0,sa:0,na:2,emoji:'🍹'},
 {id:999,name:'Limoncello (4cl)',cat:'Bevande',e:112,p:0,c:14,s:14,f:0,fi:0,sa:0,na:1,emoji:'🍋'},
+/* ══ PASTA per tipo (cruda e cotta) ══ */
+{id:1001,name:'Pasta di semola cruda',cat:'Cereali',e:353,p:12.5,c:70.2,s:2,f:1.4,fi:2.7,sa:.2,na:6,emoji:'🍝'},
+{id:1002,name:'Pasta integrale cruda',cat:'Cereali',e:335,p:13.4,c:65.8,s:1.8,f:2.5,fi:8.4,sa:.4,na:8,emoji:'🍝'},
+{id:1003,name:'Pasta di mais cruda (senza glutine)',cat:'Cereali',e:356,p:4.2,c:79,s:1.5,f:1.2,fi:3.5,sa:.2,na:5,emoji:'🍝'},
+{id:1004,name:'Pasta di orzo cruda',cat:'Cereali',e:348,p:11.5,c:71,s:1.2,f:1.8,fi:5.5,sa:.3,na:4,emoji:'🍝'},
+{id:1005,name:'Pasta di farro cruda',cat:'Cereali',e:342,p:14,c:68,s:1,f:2.2,fi:5,sa:.3,na:5,emoji:'🍝'},
+{id:1006,name:'Pasta di lenticchie cruda',cat:'Cereali',e:340,p:22,c:57,s:2,f:2.5,fi:11,sa:.3,na:8,emoji:'🍝'},
+{id:1007,name:'Pasta di ceci cruda',cat:'Cereali',e:335,p:20,c:56,s:2,f:3,fi:10,sa:.4,na:10,emoji:'🍝'},
+{id:1008,name:'Pasta di kamut cruda',cat:'Cereali',e:350,p:13.5,c:70,s:1.5,f:2,fi:4,sa:.3,na:5,emoji:'🍝'},
+{id:1009,name:'Pasta di riso cruda',cat:'Cereali',e:360,p:7,c:80,s:.5,f:.8,fi:2,sa:.1,na:5,emoji:'🍝'},
+{id:1010,name:'Pasta di grano saraceno cruda',cat:'Cereali',e:338,p:12,c:70,s:1,f:2.5,fi:6,sa:.3,na:5,emoji:'🍝'},
+{id:1011,name:'Pasta di soia cruda',cat:'Cereali',e:338,p:22,c:52,s:3,f:4,fi:9,sa:.5,na:8,emoji:'🍝'},
+{id:1012,name:'Pasta di quinoa cruda',cat:'Cereali',e:358,p:11,c:72,s:1,f:2.5,fi:5,sa:.3,na:12,emoji:'🍝'},
+/* ══ PASTA CONDITA (piatti pronti per porzione 200g circa) ══ */
+{id:1020,name:'Pasta in bianco burro (porzione 200g)',cat:'Piatti IT.',e:460,p:12,c:70,s:2,f:14,fi:3,sa:8.5,na:180,emoji:'🍝'},
+{id:1021,name:'Pasta in bianco olio EVO (porzione 200g)',cat:'Piatti IT.',e:470,p:12,c:70,s:2,f:16,fi:3,sa:2.2,na:8,emoji:'🍝'},
+{id:1022,name:'Pasta al pomodoro (porzione 200g)',cat:'Piatti IT.',e:380,p:12,c:68,s:6,f:6,fi:4,sa:.9,na:380,emoji:'🍝'},
+{id:1023,name:'Pasta al pesto (porzione 200g)',cat:'Piatti IT.',e:580,p:14,c:68,s:2,f:26,fi:4,sa:7,na:520,emoji:'🍝'},
+{id:1024,name:'Pasta aglio olio (porzione 200g)',cat:'Piatti IT.',e:520,p:12,c:70,s:2,f:20,fi:3,sa:2.8,na:300,emoji:'🍝'},
+{id:1025,name:'Pasta integrale in bianco burro (200g)',cat:'Piatti IT.',e:440,p:13,c:66,s:2,f:14,fi:8,sa:8.5,na:180,emoji:'🍝'},
+{id:1026,name:'Pasta di mais in bianco burro (200g)',cat:'Piatti IT.',e:450,p:9,c:78,s:1.5,f:14,fi:4,sa:8.5,na:180,emoji:'🍝'},
+/* ══ SELVAGGINA ══ */
+{id:1030,name:'Cinghiale stufato',cat:'Carne',e:177,p:28,c:0,s:0,f:7,fi:0,sa:2,na:75,emoji:'🐗'},
+{id:1031,name:'Capriolo arrosto',cat:'Carne',e:158,p:29,c:0,s:0,f:4.5,fi:0,sa:1.4,na:65,emoji:'🦌'},
+{id:1032,name:'Capriolo stufato',cat:'Carne',e:164,p:28.5,c:1,s:0,f:5,fi:0,sa:1.5,na:70,emoji:'🦌'},
+{id:1033,name:'Cervo arrosto',cat:'Carne',e:158,p:30,c:0,s:0,f:4,fi:0,sa:1.2,na:58,emoji:'🦌'},
+{id:1034,name:'Lepre in salmì',cat:'Carne',e:192,p:25,c:2,s:0,f:9,fi:0,sa:2.5,na:80,emoji:'🐇'},
+{id:1035,name:'Lepre arrosto',cat:'Carne',e:162,p:28,c:0,s:0,f:5,fi:0,sa:1.5,na:65,emoji:'🐇'},
+{id:1036,name:'Coniglio arrosto',cat:'Carne',e:197,p:28,c:0,s:0,f:9.5,fi:0,sa:2.8,na:68,emoji:'🐇'},
+{id:1037,name:'Coniglio in umido',cat:'Carne',e:176,p:26,c:1,s:0,f:7.5,fi:0,sa:2.2,na:75,emoji:'🐇'},
+{id:1038,name:'Fagiano arrosto',cat:'Carne',e:180,p:27,c:0,s:0,f:8,fi:0,sa:2.3,na:60,emoji:'🦅'},
+{id:1039,name:'Pernice arrosto',cat:'Carne',e:170,p:27.5,c:0,s:0,f:6.5,fi:0,sa:1.9,na:58,emoji:'🦅'},
+{id:1040,name:'Daino arrosto',cat:'Carne',e:155,p:29.5,c:0,s:0,f:3.8,fi:0,sa:1.1,na:60,emoji:'🦌'},
+{id:1041,name:'Alce (carne magra)',cat:'Carne',e:131,p:23,c:0,s:0,f:4,fi:0,sa:1.4,na:52,emoji:'🦌'},
+{id:1042,name:'Bison / Bisonte',cat:'Carne',e:143,p:24,c:0,s:0,f:5,fi:0,sa:1.9,na:60,emoji:'🐃'},
+/* ══ CEREALI E RISO ══ */
+{id:1050,name:'Riso jasmine cotto',cat:'Cereali',e:129,p:2.7,c:27.5,s:.2,f:.4,fi:.4,sa:.1,na:5,emoji:'🍚'},
+{id:1051,name:'Riso parboiled cotto',cat:'Cereali',e:133,p:2.9,c:28.5,s:.1,f:.3,fi:.5,sa:.1,na:3,emoji:'🍚'},
+{id:1052,name:'Riso vialone nano cotto',cat:'Cereali',e:128,p:2.6,c:27.8,s:0,f:.3,fi:.4,sa:.1,na:2,emoji:'🍚'},
+{id:1053,name:'Riso carnaroli cotto',cat:'Cereali',e:130,p:2.7,c:28.2,s:0,f:.3,fi:.4,sa:.1,na:2,emoji:'🍚'},
+{id:1054,name:'Bulgur cotto',cat:'Cereali',e:83,p:3.1,c:18.6,s:.1,f:.2,fi:1.8,sa:.1,na:5,emoji:'🌾'},
+{id:1055,name:'Kamut (grano Khorasan) cotto',cat:'Cereali',e:127,p:5,c:26.5,s:.5,f:.8,fi:2,sa:.1,na:4,emoji:'🌾'},
+{id:1056,name:'Farro perlato cotto',cat:'Cereali',e:170,p:5.8,c:33.6,s:.4,f:.7,fi:3,sa:.1,na:4,emoji:'🌾'},
+{id:1057,name:'Freekeh (grano verde) cotto',cat:'Cereali',e:130,p:5,c:26,s:.5,f:.5,fi:3.5,sa:.1,na:8,emoji:'🌾'},
+/* ══ LEGUMI EXTRA ══ */
+{id:1060,name:'Edamame freschi cotti',cat:'Legumi',e:121,p:11.9,c:8.9,s:2.2,f:5.2,fi:5.2,sa:.7,na:6,emoji:'🫛'},
+{id:1061,name:'Lupini conservati',cat:'Legumi',e:114,p:15.6,c:9.9,s:.5,f:2.8,fi:5,sa:.4,na:400,emoji:'🟡'},
+{id:1062,name:'Piselli freschi cotti',cat:'Legumi',e:84,p:5.4,c:15.6,s:5.5,f:.4,fi:5.1,sa:.1,na:2,emoji:'🫛'},
+{id:1063,name:'Fave fresche cotte',cat:'Legumi',e:72,p:7.9,c:8.4,s:1.5,f:.5,fi:4.2,sa:.1,na:6,emoji:'🫘'},
+{id:1064,name:'Soia gialla cotta',cat:'Legumi',e:173,p:16.6,c:9.9,s:3,f:9,fi:6,sa:1.3,na:2,emoji:'🫘'},
+/* ══ VERDURE EXTRA ══ */
+{id:1070,name:'Bieta da coste cotta',cat:'Verdure',e:19,p:1.8,c:3.4,s:.5,f:.2,fi:1.4,sa:0,na:225,emoji:'🥬'},
+{id:1071,name:'Cavolo cappuccio crudo',cat:'Verdure',e:25,p:1.3,c:5.8,s:3.2,f:.1,fi:2.5,sa:0,na:18,emoji:'🥦'},
+{id:1072,name:'Cavolo rosso crudo',cat:'Verdure',e:31,p:1.4,c:7.4,s:3.8,f:.2,fi:2.1,sa:0,na:27,emoji:'🟣'},
+{id:1073,name:'Cavolo verza',cat:'Verdure',e:28,p:2,c:5.4,s:2.5,f:.3,fi:3.1,sa:0,na:12,emoji:'🥬'},
+{id:1074,name:'Indivia riccia',cat:'Verdure',e:17,p:1.3,c:3.3,s:.5,f:.2,fi:1.5,sa:0,na:22,emoji:'🥬'},
+{id:1075,name:'Sedano rapa cotto',cat:'Verdure',e:27,p:1.5,c:5.9,s:2.5,f:.3,fi:1.8,sa:0,na:88,emoji:'🟤'},
+{id:1076,name:'Navone (rapa svedese)',cat:'Verdure',e:37,p:1.1,c:8.7,s:4.5,f:.2,fi:2.3,sa:0,na:20,emoji:'🟡'},
+{id:1077,name:'Finocchi crudi',cat:'Verdure',e:31,p:1.2,c:7,s:3.9,f:.2,fi:3.1,sa:0,na:52,emoji:'🌿'},
+{id:1078,name:'Broccoletti di rapa cotti',cat:'Verdure',e:22,p:2.2,c:2.4,s:1,f:.4,fi:2.8,sa:.1,na:18,emoji:'🥦'},
+/* ══ CONDIMENTI E GRASSI ══ */
+{id:1080,name:'Olio di cocco',cat:'Condimenti',e:862,p:0,c:0,s:0,f:100,fi:0,sa:86,na:0,emoji:'🥥'},
+{id:1081,name:'Olio di avocado',cat:'Condimenti',e:884,p:0,c:0,s:0,f:100,fi:0,sa:14,na:0,emoji:'🥑'},
+{id:1082,name:'Olio di sesamo',cat:'Condimenti',e:884,p:0,c:0,s:0,f:100,fi:0,sa:14.2,na:0,emoji:'🌱'},
+{id:1083,name:'Aceto balsamico',cat:'Condimenti',e:88,p:.5,c:17.5,s:17,f:0,fi:0,sa:0,na:23,emoji:'🍶'},
+{id:1084,name:'Salsa di pesce (nam pla)',cat:'Condimenti',e:35,p:5.1,c:3.6,s:3.4,f:.1,fi:0,sa:0,na:7851,emoji:'🫙'},
+{id:1085,name:'Miso bianco',cat:'Condimenti',e:199,p:12,c:26,s:6,f:6,fi:3,sa:.8,na:3400,emoji:'🫙'},
+{id:1086,name:'Concentrato di pomodoro',cat:'Condimenti',e:82,p:4.5,c:16.5,s:10,f:.5,fi:2.5,sa:.1,na:59,emoji:'🍅'},
+/* ══ LATTICINI EXTRA ══ */
+{id:1090,name:'Latte di capra intero',cat:'Latticini',e:69,p:3.6,c:4.5,s:4.5,f:4.2,fi:0,sa:2.7,na:50,emoji:'🥛'},
+{id:1091,name:'Caciotta vaccina',cat:'Latticini',e:318,p:22,c:0,s:0,f:25.5,fi:0,sa:16,na:600,emoji:'🧀'},
+{id:1092,name:'Scamorza',cat:'Latticini',e:334,p:24,c:.5,s:0,f:26,fi:0,sa:16.5,na:680,emoji:'🧀'},
+{id:1093,name:'Burrata',cat:'Latticini',e:292,p:15,c:2,s:2,f:25,fi:0,sa:16,na:180,emoji:'🧀'},
+{id:1094,name:'Skyr naturale',cat:'Latticini',e:63,p:11,c:4,s:4,f:.2,fi:0,sa:.1,na:50,emoji:'🫙'},
+{id:1095,name:'Quark 0% grassi',cat:'Latticini',e:67,p:12,c:4,s:4,f:.2,fi:0,sa:.1,na:45,emoji:'🫙'},
+{id:1096,name:'Panna da cucina 18%',cat:'Latticini',e:188,p:2.8,c:3.5,s:3.5,f:18,fi:0,sa:11.2,na:40,emoji:'🥛'},
+{id:1097,name:'Panna montata 35%',cat:'Latticini',e:340,p:2.3,c:2.8,s:2.8,f:35,fi:0,sa:21.8,na:35,emoji:'🥛'},
+/* ══ INTEGRATORI EXTRA ══ */
+{id:1100,name:'Creatina monoidrato 5g',cat:'Sport',e:0,p:0,c:0,s:0,f:0,fi:0,sa:0,na:0,emoji:'💊'},
+{id:1101,name:'BCAA polvere 10g',cat:'Sport',e:38,p:8,c:0,s:0,f:.5,fi:0,sa:.1,na:30,emoji:'💊'},
+{id:1102,name:'Maltodestrine 30g',cat:'Sport',e:113,p:.3,c:27.6,s:.3,f:0,fi:0,sa:0,na:5,emoji:'⚡'},
+{id:1103,name:'Gel energetico 30g',cat:'Sport',e:96,p:0,c:22,s:14,f:0,fi:0,sa:0,na:55,emoji:'⚡'},
+/* ══ SALSE E SUGHI ══ */
+{id:1110,name:'Ragù di carne (100g)',cat:'Condimenti',e:140,p:9,c:5,s:2,f:9.5,fi:1,sa:3.5,na:380,emoji:'🍖'},
+{id:1111,name:'Sugo all\'arrabbiata (100g)',cat:'Condimenti',e:52,p:1.5,c:8,s:5,f:2,fi:1.5,sa:.3,na:480,emoji:'🍅'},
+{id:1112,name:'Sugo ai funghi (100g)',cat:'Condimenti',e:58,p:2,c:6,s:3,f:3,fi:1.5,sa:.4,na:350,emoji:'🍄'},
+{id:1113,name:'Crema di zucchine (100g)',cat:'Condimenti',e:45,p:1.5,c:4,s:2,f:2.5,fi:1,sa:.8,na:280,emoji:'🥒'},
 ]
 /* ════════ SVG ICONS ════════ */
 const ICO={
@@ -2364,6 +2451,7 @@ function showHome(fromBack){
       <div class="nk-btn ico-profilo" onclick="snd();navPush(showProfilo)"><div class="nk-ico-wrap">${ICO.profilo}</div><div class="nk-lbl">Profilo</div></div>
       <div class="nk-btn ico-setting" onclick="snd();navPush(showImpostazioni)"><div class="nk-ico-wrap">${ICO.setting}</div><div class="nk-lbl">Impostazioni</div></div>
       <div class="nk-btn" style="grid-column:span 2" onclick="snd();navPush(showRicette)"><div style="display:flex;align-items:center;gap:12px;width:100%;padding:0 8px"><div class="nk-ico-wrap" style="background:linear-gradient(135deg,#fb923c,#ea580c);width:48px;height:48px;border-radius:12px">👨‍🍳</div><div style="text-align:left"><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.5px;color:var(--ink)">LE MIE RICETTE</div><div style="font-size:10px;color:var(--ink3);margin-top:2px">${S.recipes?.length||0} ricette salvate</div></div></div></div>
+      <div class="nk-btn" style="grid-column:span 2" onclick="snd();navPush(showMieiAlimenti)"><div style="display:flex;align-items:center;gap:12px;width:100%;padding:0 8px"><div class="nk-ico-wrap" style="background:linear-gradient(135deg,#7c3aed,#6d28d9);width:48px;height:48px;border-radius:12px">➕</div><div style="text-align:left"><div style="font-family:IBM Plex Mono,monospace;font-size:12px;font-weight:700;letter-spacing:.5px;color:var(--ink)">I MIEI ALIMENTI</div><div style="font-size:10px;color:var(--ink3);margin-top:2px">${(S.customFoods||[]).length} alimenti personalizzati</div></div></div></div>
     </div>
     ${(()=>{const fb=getDailyFeedback(tot,burned,S.settings.kcal,Math.round(S.settings.kcal*S.settings.protPct/400));return fb.map(m=>`<div style="margin:0 12px 6px;padding:12px 14px;background:var(--card);border:1.5px solid ${m.col};border-radius:var(--rk);display:flex;align-items:flex-start;gap:10px"><span style="font-size:20px;flex-shrink:0">${m.ico}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink2);line-height:1.5">${m.txt}</span></div>`).join('');})()}
     <div style="padding:0 12px 4px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
@@ -2459,7 +2547,7 @@ function foodListHTML(){
       return recHtml+r.slice(0,60).map(f=>`<div class="food-row" onclick="snd();openFoodModal(${f.id})"><div class="food-emo">${f.emoji||'🍽'}</div><div class="food-inf"><div class="food-nm">${f.name}${f.brand?` <span style="font-weight:400;font-size:10px;color:var(--ink3)">· ${f.brand}</span>`:''}</div><div class="food-ct">${f.cat} · P:${f.p}g C:${f.c}g G:${f.f}g</div></div><div class="food-kk">${f.e}<span class="food-kk-u">kcal</span></div></div>`).join('');
     }
   }
-  if(!r.length)return`<div class="empty"><div class="empty-ico">🔍</div><div class="empty-txt">NESSUN RISULTATO</div></div>`;
+  if(!r.length)return`<div class="empty"><div class="empty-ico">🔍</div><div class="empty-txt">NESSUN RISULTATO</div><div style="margin-top:16px"><button onclick="snd();showAddCustomFood()" style="padding:12px 20px;background:var(--green);color:#fff;border:none;border-radius:var(--rk);font-family:IBM Plex Mono,monospace;font-size:11px;font-weight:700;cursor:pointer;letter-spacing:.5px">+ AGGIUNGI ALIMENTO PERSONALIZZATO</button></div></div>`;
   return r.slice(0,80).map(f=>`<div class="food-row" onclick="snd();openFoodModal(${f.id})"><div class="food-emo">${f.emoji||'🍽'}</div><div class="food-inf"><div class="food-nm">${f.name}${f.brand?` <span style="font-weight:400;font-size:10px;color:var(--ink3)">· ${f.brand}</span>`:''}</div><div class="food-ct">${f.cat} · P:${f.p}g C:${f.c}g G:${f.f}g</div></div><div class="food-kk">${f.e}<span class="food-kk-u">kcal</span></div></div>`).join('')+(r.length>80?`<div style="padding:10px;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink3)">+${r.length-80} · affina la ricerca</div>`:'');
 }
 function onSrch(v){_srch=v;_cat='Tutti';document.getElementById('fl').innerHTML=foodListHTML();document.querySelectorAll('#cr .cat-pill').forEach(p=>p.classList.toggle('on',p.textContent==='Tutti'));}
@@ -2955,6 +3043,80 @@ create policy "public read write"
     <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink3);margin-bottom:12px">Dopo aver eseguito lo script, torna qui e inserisci URL e API Key.</div>
     <button class="conf-btn" onclick="closeModal()">✓ CAPITO</button>`;
   document.getElementById('modal').classList.add('open');
+}
+
+
+/* ════════ I MIEI ALIMENTI ════════ */
+function showMieiAlimenti(fb){
+  resetScreen();setHdr('I MIEI ALIMENTI','PERSONALIZZATI',true);
+  const custom=S.customFoods||[];
+  let html=`<button class="big-btn success" onclick="snd();showAddCustomFood()">+ AGGIUNGI ALIMENTO</button>`;
+  if(!custom.length){
+    html+=`<div class="empty"><div class="empty-ico">🍽</div>
+      <div class="empty-txt">NESSUN ALIMENTO PERSONALIZZATO<br><br>
+        Aggiungi alimenti che non trovi nel database:<br>
+        ricette della nonna, prodotti specifici,<br>
+        alimenti regionali o di marca.
+      </div></div>`;
+  } else {
+    html+=`<div style="padding:8px 14px 4px;font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--ink3)">${custom.length} ALIMENTI PERSONALIZZATI</div>`;
+    custom.forEach((f,i)=>{
+      html+=`<div class="log-item">
+        <div class="log-emo">${f.emoji||'🍽'}</div>
+        <div class="log-inf">
+          <div class="log-nm">${f.name} <span class="custom-badge">MIO</span></div>
+          <div class="log-dt">${f.cat} · ${f.e} kcal · P:${f.p}g C:${f.c}g G:${f.f}g</div>
+        </div>
+        <div style="display:flex;gap:6px">
+          <button onclick="snd();editCustomFood(${i})" style="width:32px;height:32px;border-radius:50%;border:2px solid var(--green);background:none;color:var(--green);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center">✎</button>
+          <button class="log-del" onclick="snd('delete');delCustomFood(${i})">✕</button>
+        </div>
+      </div>`;
+    });
+  }
+  html+=`<div class="home-pill"><button onclick="navGoHome()">← HOME</button></div>`;
+  document.getElementById('screen').innerHTML=html;
+}
+
+function editCustomFood(i){
+  const f=(S.customFoods||[])[i];
+  if(!f)return;
+  document.getElementById('modal-box').innerHTML=`
+    <div class="modal-handle"></div>
+    <div class="modal-title">✎ Modifica Alimento</div>
+    <div style="margin-bottom:10px"><div style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;text-transform:uppercase;color:var(--ink3);margin-bottom:4px">NOME *</div>
+    <input class="gram-inp" id="ef-name" style="width:100%;text-align:left;font-size:14px" value="${f.name}"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+      ${[['KCAL /100g *','ef-e',f.e],['PROTEINE g','ef-p',f.p],['CARBOIDRATI g','ef-c',f.c],['GRASSI g','ef-f',f.f],['FIBRE g','ef-fi',f.fi],['CATEGORIA','ef-cat',f.cat]].map(([l,id,val])=>`
+      <div><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;color:var(--ink3);margin-bottom:4px">${l}</div>
+      <input class="gram-inp" id="${id}" type="${id==='ef-cat'?'text':'number'}" inputmode="decimal" style="width:100%;text-align:left;font-size:13px;padding:9px 10px" value="${val}"></div>`).join('')}
+    </div>
+    <button class="conf-btn green-btn" onclick="snd('confirm');saveEditCustomFood(${i})">✓ SALVA MODIFICHE</button>`;
+  document.getElementById('modal').classList.add('open');
+}
+
+function saveEditCustomFood(i){
+  const name=(document.getElementById('ef-name').value||'').trim();
+  const e=parseFloat(document.getElementById('ef-e').value);
+  if(!name||!e){alert('Nome e calorie obbligatori');return;}
+  if(!S.customFoods)S.customFoods=[];
+  S.customFoods[i]={
+    ...S.customFoods[i],
+    name,
+    cat:document.getElementById('ef-cat').value||'Personalizzati',
+    e,
+    p:parseFloat(document.getElementById('ef-p').value)||0,
+    c:parseFloat(document.getElementById('ef-c').value)||0,
+    f:parseFloat(document.getElementById('ef-f').value)||0,
+    fi:parseFloat(document.getElementById('ef-fi').value)||0,
+  };
+  saveState();closeModal();navReplace(showMieiAlimenti);
+}
+
+function delCustomFood(i){
+  if(!confirm('Eliminare questo alimento personalizzato?'))return;
+  S.customFoods.splice(i,1);
+  saveState();navReplace(showMieiAlimenti);
 }
 
 /* ════════ INSTALL GUIDE ════════ */
