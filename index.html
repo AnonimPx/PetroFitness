@@ -454,10 +454,13 @@ textarea:focus{border-color:var(--green)}
         <input class="l-pin-digit" id="pin2" type="password" inputmode="numeric" maxlength="1" oninput="pinFilter(this,2)" onkeydown="pinBack(event,2)">
         <input class="l-pin-digit" id="pin3" type="password" inputmode="numeric" maxlength="1" oninput="pinFilter(this,3)" onkeydown="pinBack(event,3)" onkeyup="if(this.value)doLogin()">
       </div>
-      <div class="l-pin-hint">Prima volta? Scegli 4 cifre che ricordi facilmente</div>
+      <div class="l-pin-hint" id="l-pin-hint">Prima volta? Scegli 4 cifre che ricordi facilmente</div>
       <div class="l-err" id="l-err"></div>
       <button class="l-start-btn" onclick="doLogin()">ACCEDI →</button>
-      <div style="margin-top:14px;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:9px;color:#374151">🔒 PIN cifrato sul dispositivo · nessun dato inviato in rete</div>
+      <div style="margin-top:12px;text-align:center">
+        <button onclick="showForgotPin()" style="background:none;border:none;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#6b7280;cursor:pointer;text-decoration:underline;letter-spacing:.3px;padding:4px 8px;">🔑 PIN dimenticato?</button>
+      </div>
+      <div style="margin-top:8px;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:9px;color:#374151">🔒 PIN cifrato sul dispositivo · nessun dato inviato in rete</div>
     </div>
   </div>
 </div>
@@ -1520,6 +1523,57 @@ async function doLogin(){
   }
   err.textContent='';
   loginOk(slug,profiles[slug].name);
+}
+
+
+// ── RECUPERO PIN ──
+function showForgotPin(){
+  const name=(document.getElementById('l-name').value||'').trim();
+  const slug=slugify(name);
+  const profiles=getProfiles();
+  let boxHTML='';
+  if(!name||name.length<2){
+    boxHTML=`<div class="modal-handle"></div>
+      <div class="modal-title">🔑 Ripristina PIN</div>
+      <div class="modal-sub">Inserisci prima il tuo nome nel campo in alto, poi tocca di nuovo "PIN dimenticato?".</div>
+      <button class="conf-btn" onclick="closeModal()">✓ OK</button>`;
+  } else if(!profiles[slug]){
+    boxHTML=`<div class="modal-handle"></div>
+      <div class="modal-title">🔑 Ripristina PIN</div>
+      <div class="modal-sub">Nessun profilo trovato per <b>${name}</b>.<br>Verifica di aver scritto il nome correttamente.</div>
+      <button class="conf-btn" onclick="closeModal()">✓ OK</button>`;
+  } else {
+    boxHTML=`<div class="modal-handle"></div>
+      <div class="modal-title">🔑 Ripristina PIN</div>
+      <div style="background:#fef3c7;border:1.5px solid #f59e0b;border-radius:var(--r);padding:12px 14px;margin-bottom:14px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#92400e;line-height:1.6">
+        ⚠️ Il PIN di <b>${name}</b> verrà azzerato.<br>
+        <span style="color:#16a34a;font-weight:700">✅ Tutti i tuoi dati NutriTrack rimarranno intatti.</span><br>
+        Al prossimo accesso potrai scegliere un nuovo PIN.
+      </div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink3);margin-bottom:14px;text-align:center">Il PIN è cifrato e non può essere recuperato, solo reimpostato.</div>
+      <button class="conf-btn green-btn" onclick="doResetPin('${slug}','${name}')">🔓 SÌ, REIMPOSTA IL PIN</button>
+      <button class="conf-btn" style="margin-top:8px;background:var(--paper);color:var(--ink);border:1.5px solid var(--ink)" onclick="closeModal()">✕ ANNULLA</button>`;
+  }
+  document.getElementById('modal-box').innerHTML=boxHTML;
+  document.getElementById('modal').classList.add('open');
+}
+function doResetPin(slug,name){
+  const profiles=getProfiles();
+  if(!profiles[slug]){closeModal();return;}
+  delete profiles[slug];
+  saveProfiles(profiles);
+  closeModal();
+  ['pin0','pin1','pin2','pin3'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  const err=document.getElementById('l-err');
+  if(err){
+    err.style.color='#4ade80';
+    err.textContent='✅ PIN azzerato! Scegli un nuovo PIN per '+name.split(' ')[0]+'.';
+    setTimeout(()=>{if(err){err.style.color='';err.textContent='';}},5000);
+  }
+  const hint=document.getElementById('l-pin-hint');
+  if(hint)hint.textContent='Scegli un nuovo PIN a 4 cifre';
+  document.getElementById('pin0')?.focus();
+  renderLoginProfiles();
 }
 
 // Login rapido dai profili salvati (richiede PIN)
