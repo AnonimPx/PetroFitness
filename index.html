@@ -71,7 +71,7 @@ html,body{height:100%;overflow:hidden;background:#1a1a2e;font-family:'IBM Plex S
 .bnav-dot{width:4px;height:4px;border-radius:50%;background:var(--green);margin-top:1px;opacity:0;transition:opacity .2s}
 .bnav-btn.active .bnav-dot{opacity:1}
 
-.credits{background:var(--ink);color:rgba(255,255,255,.4);text-align:center;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.3px;padding:4px 10px;flex-shrink:0;line-height:1.4;display:none;}
+.credits{background:var(--ink);color:rgba(255,255,255,.55);text-align:center;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.3px;padding:5px 10px;flex-shrink:0;line-height:1.6;display:block;border-top:1px solid rgba(255,255,255,.07);}
 .credits b{color:rgba(255,255,255,.7)}
 
 /* ══ KCAL PROGRESS BAR (sotto header) ══ */
@@ -327,6 +327,26 @@ mark{background:#fef3c7;color:var(--ink);border-radius:2px;padding:0 1px;}
 .meal-btn.pran{background:linear-gradient(160deg,#f0fdf4,#dcfce7);border:1.5px solid #22c55e}
 .meal-btn.cena{background:linear-gradient(160deg,#eff6ff,#dbeafe);border:1.5px solid #3b82f6}
 .meal-btn.mer{background:linear-gradient(160deg,#fff1f2,#ffe4e6);border:1.5px solid #ef4444}
+.meal-btn.spu{background:linear-gradient(160deg,#fffbeb,#fef3c7);border:1.5px solid #f59e0b}
+.meal-btn.exe{background:linear-gradient(160deg,#ecfdf5,#d1fae5);border:1.5px solid #10b981}
+.meal-btn.pes{background:linear-gradient(160deg,#f0f9ff,#e0f2fe);border:1.5px solid #0ea5e9}
+.meal-btn.acq{background:linear-gradient(160deg,#eff6ff,#dbeafe);border:1.5px solid #3b82f6}
+.meal-btn .meal-ico{font-size:30px;line-height:1}
+.meal-btn .meal-lbl{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;color:var(--ink);text-align:center;line-height:1.2}
+.meal-btn .meal-kk{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:700;text-align:center}
+.meal-btn .meal-n{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--ink3);text-align:center}
+.page-hero{background:var(--ink);color:#fff;padding:14px 16px 16px;flex-shrink:0}
+.page-hero-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.page-time{font-family:'IBM Plex Mono',monospace;font-size:10px;opacity:.45;letter-spacing:.5px}
+.page-kcal-row{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.page-kcal-info{flex:1;min-width:0}
+.page-kcal-big{font-family:'IBM Plex Mono',monospace;font-size:28px;font-weight:700;line-height:1}
+.page-kcal-sub{font-family:'IBM Plex Mono',monospace;font-size:10px;opacity:.5;margin-top:3px}
+.page-macro-row{display:flex;gap:7px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.page-macro-row::-webkit-scrollbar{display:none}
+.pmac{background:rgba(255,255,255,.1);border-radius:8px;padding:5px 9px;text-align:center;flex-shrink:0}
+.pmac-v{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;color:#fff}
+.pmac-l{font-size:8px;opacity:.5;font-family:'IBM Plex Mono',monospace;letter-spacing:.3px;color:#fff;margin-top:1px}
 .meal-ico{font-size:36px;line-height:1}
 .meal-lbl{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--ink)}
 .meal-kk{font-size:14px;font-weight:700;font-family:'IBM Plex Mono',monospace}
@@ -627,7 +647,7 @@ textarea:focus{border-color:var(--green)}
   <div class="kcal-progress-bar" id="hdr-pb"><div class="kcal-progress-fill" id="hdr-progress" style="width:0%"></div></div>
   <div class="kcal-progress-bar" id="hdr-pb"><div class="kcal-progress-fill" id="hdr-progress" style="width:0%"></div></div>
   <div class="screen" id="screen"></div>
-  <div class="credits"><b>NutriTrack Pro v10</b> · Dott. Petrolese Giovanni · PetroCorporation © 2025 · <span id="storage-status">localStorage</span></div>
+  <span id="storage-status" style="display:none">localStorage</span>
 </div>
 
 <!-- MODAL -->
@@ -642,14 +662,9 @@ textarea:focus{border-color:var(--green)}
     <span class="bnav-lbl">Home</span>
     <span class="bnav-dot"></span>
   </button>
-  <button class="bnav-btn" id="bnav-diario" onclick="snd();bnavGo(showDiario,'diario')">
-    <span class="bnav-ico">📋</span>
-    <span class="bnav-lbl">Diario</span>
-    <span class="bnav-dot"></span>
-  </button>
   <button class="bnav-btn" id="bnav-workout" onclick="snd();bnavGo(showWorkout,'workout')">
     <span class="bnav-ico">💪</span>
-    <span class="bnav-lbl">Workout</span>
+    <span class="bnav-lbl">Esercizi</span>
     <span class="bnav-dot"></span>
   </button>
   <button class="bnav-btn" id="bnav-profilo" onclick="snd();bnavGo(showProfilo,'profilo')">
@@ -1988,9 +2003,9 @@ async function sbLoad(){
 
 /* ════════ STATE ════════ */
 const TODAY=new Date().toISOString().slice(0,10);
-const MK=['colazione','pranzo','cena','merenda'];
-const MM={colazione:{label:'Colazione',ico:'☕',cls:'col',color:'#d97706'},pranzo:{label:'Pranzo',ico:'🍽',cls:'pran',color:'#16a34a'},cena:{label:'Cena',ico:'🌙',cls:'cena',color:'#2563eb'},merenda:{label:'Merenda',ico:'🍎',cls:'mer',color:'#dc2626'}};
-let S={meals:{colazione:[],pranzo:[],cena:[],merenda:[]},water:0,lastMealDate:TODAY,calPlans:{},workouts:{},mealHistory:{},recentFoods:[],customFoods:[],recipes:[],profile:{entries:[],nome:'',eta:'',sesso:'m',altezza:'',obiettivo:'mantenimento',attivita:'moderata'},settings:{kcal:2000,protPct:25}};
+const MK=['colazione','spuntino','pranzo','merenda','cena'];
+const MM={colazione:{label:'Colazione',ico:'☕',cls:'col',color:'#d97706'},spuntino:{label:'Spuntino',ico:'🥐',cls:'spu',color:'#f59e0b'},pranzo:{label:'Pranzo',ico:'🍽',cls:'pran',color:'#16a34a'},merenda:{label:'Merenda',ico:'🍎',cls:'mer',color:'#dc2626'},cena:{label:'Cena',ico:'🌙',cls:'cena',color:'#2563eb'}};
+let S={meals:{colazione:[],spuntino:[],pranzo:[],merenda:[],cena:[]},water:0,lastMealDate:TODAY,calPlans:{},workouts:{},mealHistory:{},recentFoods:[],customFoods:[],recipes:[],profile:{entries:[],nome:'',eta:'',sesso:'m',altezza:'',obiettivo:'mantenimento',attivita:'moderata'},settings:{kcal:2000,protPct:25}};
 
 function saveState(){
   if(!CUR)return;
@@ -2031,9 +2046,9 @@ function loadState(){
         // Archivia i pasti del giorno precedente
         if(!p.mealHistory)p.mealHistory={};
         p.mealHistory[lastDay]=JSON.parse(JSON.stringify(p.meals));
-        S.meals={colazione:[],pranzo:[],cena:[],merenda:[]};
+        S.meals={colazione:[],spuntino:[],pranzo:[],merenda:[],cena:[]};
       } else {
-        S.meals=Object.assign({colazione:[],pranzo:[],cena:[],merenda:[]},p.meals);
+        S.meals=Object.assign({colazione:[],spuntino:[],pranzo:[],merenda:[],cena:[]},p.meals);
       }
     }
     if(typeof p.water==='number')S.water=p.water;
@@ -2373,12 +2388,26 @@ const SPORT_MET={
   Pilates:3.0,
   Altro:5.0,
 };
-function calcBurnedKcal(type,duration,peso){
-  const met=SPORT_MET[type]||5;
+function calcBurnedKcal(type,duration,peso,sets,reps,load){
   const kg=peso||(S.profile.entries&&S.profile.entries.length?parseFloat(S.profile.entries[S.profile.entries.length-1].peso)||70:70);
+  const s=parseFloat(sets)||0, r=parseFloat(reps)||0, l=parseFloat(load)||0;
+  // Pesistica: formula basata su volume + MET reale
+  const isStrength=(type==='Forza'||type==='Stretching'||type==='Pilates'||type==='Yoga');
+  if(isStrength&&s>0&&r>0){
+    const volume=s*r*l; // volume totale in kg
+    const workTimeSec=s*r*4; // ~4s a rep
+    const restTimeSec=Math.max(0,s-1)*90; // 90s tra serie
+    const totalMin=(workTimeSec+restTimeSec)/60;
+    const metStr=(type==='Forza')?5.8:SPORT_MET[type]||3.5;
+    const directKcal=metStr*kg*totalMin/60;
+    const volumeKcal=l>0?(volume*0.05):(s*r*kg*0.006); // corpo libero se load=0
+    const epoc=1.25; // EPOC post-allenamento +25%
+    return Math.max(1,Math.round((directKcal+volumeKcal)*epoc));
+  }
+  const met=SPORT_MET[type]||5;
   return Math.round(met*kg*(parseFloat(duration)||0)/60);
 }
-function totBurnedToday(){return(S.workouts[TODAY]||[]).reduce((a,w)=>a+calcBurnedKcal(w.type,w.duration,null),0);}
+function totBurnedToday(){return(S.workouts[TODAY]||[]).reduce((a,w)=>a+calcBurnedKcal(w.type,w.duration,null,w.sets,w.reps,w.load),0);}
 
 /* ════════ ONBOARDING (primo accesso) ════════ */
 function checkOnboarding(){
@@ -2528,7 +2557,7 @@ function showRiepilogo(fb){
     // Se è TODAY usa S.meals, altrimenti cerca nell'archivio
     const src=(ds===TODAY)?S.meals:S.mealHistory?.[ds];
     if(src)MK.forEach(k=>(src[k]||[]).forEach(it=>{const r=it.g/100;e+=it.food.e*r;p+=it.food.p*r;c+=it.food.c*r;f+=it.food.f*r;}));
-    const burned=(S.workouts[ds]||[]).reduce((a,w)=>a+calcBurnedKcal(w.type,w.duration,null),0);
+    const burned=(S.workouts[ds]||[]).reduce((a,w)=>a+calcBurnedKcal(w.type,w.duration,null,w.sets,w.reps,w.load),0);
     const net=Math.round(e)-burned;
     const deficit=kcalObj-net;
     return{ds,e:Math.round(e),p:+p.toFixed(1),c:+c.toFixed(1),f:+f.toFixed(1),burned,net,deficit,hasData:e>0};
@@ -2803,7 +2832,7 @@ function showStoricoDiario(fb){
     hasAny=true;
     let e=0,p=0,c=0,f=0;
     MK.forEach(k=>(src[k]||[]).forEach(it=>{const r=it.g/100;e+=it.food.e*r;p+=it.food.p*r;c+=it.food.c*r;f+=it.food.f*r;}));
-    const burned=(S.workouts[ds]||[]).reduce((a,w)=>a+calcBurnedKcal(w.type,w.duration,null),0);
+    const burned=(S.workouts[ds]||[]).reduce((a,w)=>a+calcBurnedKcal(w.type,w.duration,null,w.sets,w.reps,w.load),0);
     const net=Math.round(e)-burned;
     const d=new Date(ds+'T12:00:00');
     const isToday=ds===TODAY;
@@ -2874,7 +2903,7 @@ function showReportMensile(fb){
     let cls='nodata';let e=0;
     if(hasDati){
       MK.forEach(k=>(src[k]||[]).forEach(it=>{e+=it.food.e*it.g/100;}));
-      const burned=(S.workouts[ds]||[]).reduce((a,w)=>a+calcBurnedKcal(w.type,w.duration,null),0);
+      const burned=(S.workouts[ds]||[]).reduce((a,w)=>a+calcBurnedKcal(w.type,w.duration,null,w.sets,w.reps,w.load),0);
       const net=Math.round(e)-burned;
       cls=net<=S.settings.kcal?'ok':'over';
       totE+=net;giorniDati++;if(cls==='ok')giorniOk++;
@@ -2973,7 +3002,7 @@ function showWorkoutStorico(){
     const wos=S.workouts[ds]||[];
     if(!wos.length)return;
     hasAny=true;
-    const totB=wos.reduce((a,w)=>a+calcBurnedKcal(w.type,w.duration,null),0);
+    const totB=wos.reduce((a,w)=>a+calcBurnedKcal(w.type,w.duration,null,w.sets,w.reps,w.load),0);
     const d=new Date(ds+'T12:00:00');
     html+=`<div class="hist-day-card">
       <div class="hist-day-hdr">
@@ -3054,108 +3083,292 @@ function navGoHome(){
   showHome(true);
 }
 
-/* ════════ HOME ════════ */
+/* ════════ LA MIA PAGINA — HOME UNIFICATA ════════ */
 function showHome(fromBack){
-  resetScreen();setHdr('NUTRITRACK','PRO',false);
-  const tot=totDay();const burned=totBurnedToday();
-  const net=Math.max(0,tot.e-burned);
-  const pct=Math.min(100,Math.round(tot.e/S.settings.kcal*100));
-  const remaining=Math.max(0,S.settings.kcal-tot.e+burned);
+  resetScreen();
+  const now=new Date();
+  const h=now.getHours();
+  const greeting=h<12?'Buongiorno 🌅':h<17?'Buon pomeriggio ☀️':'Buonasera 🌙';
+  const timeStr=now.toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'});
+  const dateStr=now.toLocaleDateString('it-IT',{weekday:'long',day:'numeric',month:'long'});
+  const tot=totDay();
+  const burned=totBurnedToday();
+  const net=tot.e-burned;
+  const remaining=Math.max(0,S.settings.kcal-net);
+  const surplus=Math.max(0,net-S.settings.kcal);
+  const pct=Math.min(100,Math.round(net/S.settings.kcal*100));
   const protTarget=Math.round(S.settings.kcal*S.settings.protPct/400);
   const str=calcStreak();
-  // Update header progress bar
-  setTimeout(()=>{
-    const pb=document.getElementById('hdr-progress');
-    if(pb){pb.style.width=pct+'%';pb.className='kcal-progress-fill'+(pct>=100?' over':pct>=85?' warn':'');}
-  },50);
-  document.getElementById('screen').innerHTML=`
-    <!-- HERO STRIP -->
-    <div style="background:var(--ink);color:#fff;padding:14px 16px 12px;">
-      <div style="display:flex;align-items:center;gap:14px">
-        ${buildKcalRing(tot.e,S.settings.kcal)}
-        <div style="flex:1;min-width:0">
-          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;opacity:.45;letter-spacing:.8px;margin-bottom:3px">CALORIE OGGI</div>
-          <div style="font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:700;line-height:1">${tot.e}<span style="font-size:12px;font-weight:400;opacity:.5"> / ${S.settings.kcal}</span>${burned?` <span style="font-size:11px;color:#fbbf24">−${burned}🔥</span>`:''}</div>
-          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;opacity:.5;margin-top:3px">${remaining>0?`Rimangono ${remaining} kcal`:'Obiettivo raggiunto! 🎉'}</div>
-        </div>
-      </div>
-      <div style="display:flex;gap:8px;margin-top:12px">
-        <div class="macro-pill"><div class="macro-pill-v">${tot.p}g</div><div class="macro-pill-l">PROT</div></div>
-        <div class="macro-pill"><div class="macro-pill-v">${tot.c}g</div><div class="macro-pill-l">CARB</div></div>
-        <div class="macro-pill"><div class="macro-pill-v">${tot.f}g</div><div class="macro-pill-l">GRAS</div></div>
-        <div class="macro-pill" style="background:rgba(99,179,237,.2)"><div class="macro-pill-v" style="color:#93c5fd">${S.water*250}ml</div><div class="macro-pill-l">ACQUA</div></div>
-      </div>
-    </div>
-    ${str>=2?`<div class="streak-banner"><div class="streak-fire">🔥</div><div class="streak-txt"><div class="streak-n">${str} giorni</div><div class="streak-lbl">STREAK CONSECUTIVO</div></div><div style="font-family:'IBM Plex Mono',monospace;font-size:28px;font-weight:700;opacity:.25">${str>=30?'🏆':str>=14?'⭐':str>=7?'🔥':''}</div></div>`:''}
-    <!-- QUICK ACTIONS -->
-    <div style="padding:10px 12px 4px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--ink3);text-transform:uppercase">Accesso Rapido</div>
-    <div class="nk-grid">
-      <div class="nk-btn ico-diario" onclick="snd();bnavGo(showDiario,'diario')"><div class="nk-ico-wrap">${ICO.diario}</div><div class="nk-lbl">Diario</div></div>
-      <div class="nk-btn ico-alimenti" onclick="snd();navPush(()=>showAlimenti(null))"><div class="nk-ico-wrap">${ICO.alimenti}</div><div class="nk-lbl">Alimenti</div></div>
-      <div class="nk-btn ico-piano" onclick="snd();navPush(showPiano)"><div class="nk-ico-wrap">${ICO.piano}</div><div class="nk-lbl">Piano</div></div>
-      <div class="nk-btn ico-workout" onclick="snd();bnavGo(showWorkout,'workout')"><div class="nk-ico-wrap">${ICO.workout}</div><div class="nk-lbl">Workout</div></div>
-      <div class="nk-btn" style="grid-column:span 2" onclick="snd();navPush(showRicette)"><div style="display:flex;align-items:center;gap:12px;width:100%;padding:0 8px"><div class="nk-ico-wrap" style="background:linear-gradient(135deg,#fb923c,#ea580c);width:52px;height:52px;border-radius:13px;font-size:26px">👨‍🍳</div><div style="text-align:left"><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.5px;color:var(--ink)">LE MIE RICETTE</div><div style="font-size:10px;color:var(--ink3);margin-top:2px">${S.recipes?.length||0} ricette salvate</div></div><div style="margin-left:auto;font-size:16px;opacity:.3">›</div></div></div>
-      <div class="nk-btn" style="grid-column:span 2" onclick="snd();navPush(showMieiAlimenti)"><div style="display:flex;align-items:center;gap:12px;width:100%;padding:0 8px"><div class="nk-ico-wrap" style="background:linear-gradient(135deg,#a855f7,#7c3aed);width:52px;height:52px;border-radius:13px;font-size:26px">➕</div><div style="text-align:left"><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.5px;color:var(--ink)">I MIEI ALIMENTI</div><div style="font-size:10px;color:var(--ink3);margin-top:2px">${(S.customFoods||[]).length} alimenti personalizzati</div></div><div style="margin-left:auto;font-size:16px;opacity:.3">›</div></div></div>
-    </div>
-    <!-- FEEDBACK CARDS -->
-    ${(()=>{const fb=getDailyFeedback(tot,burned,S.settings.kcal,protTarget);if(!fb.length)return '';return `<div style="padding:0 12px 4px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--ink3);text-transform:uppercase;padding-top:4px">Suggerimenti</div>`+fb.map(m=>`<div style="margin:0 12px 6px;padding:11px 13px;background:var(--card);border:1.5px solid ${m.col};border-radius:var(--rk);display:flex;align-items:flex-start;gap:10px;box-shadow:0 1px 4px rgba(0,0,0,.05)"><span style="font-size:18px;flex-shrink:0;margin-top:1px">${m.ico}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink2);line-height:1.6">${m.txt}</span></div>`).join('');})()}
-    <!-- ACQUA -->
-    <div style="padding:0 12px 8px;margin-top:2px">
-      <div class="card">
-        <div class="card-hdr">💧 ACQUA <span style="color:#86efac">${S.water}/${S.settings.waterGoal||8} bicchieri · ${S.water*250}ml</span></div>
-        <div class="card-body">
-          <div class="water-cups">${Array.from({length:S.settings.waterGoal||8},(_,i)=>`<div class="w-cup ${i<S.water?'filled':''}" onclick="snd();toggleWater(${i})">💧</div>`).join('')}</div>
-          <div style="margin-top:8px;height:4px;background:#e8e3d8;border-radius:2px;overflow:hidden"><div style="height:100%;background:linear-gradient(90deg,#3b82f6,#60a5fa);border-radius:2px;transition:width .4s;width:${Math.min(100,Math.round(S.water/(S.settings.waterGoal||8)*100))}%"></div></div>
-        </div>
-      </div>
-    </div>
-    <!-- QUICK STATS ROW -->
-    <div style="padding:0 12px 12px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
-      <button class="big-btn outline" style="font-size:10px;padding:11px;margin:0;border-radius:var(--rk)" onclick="snd();navPush(showRiepilogo)">📅 SETTIMANA</button>
-      <button class="big-btn outline" style="font-size:10px;padding:11px;margin:0;border-radius:var(--rk)" onclick="snd();navPush(showReportMensile)">📊 MESE</button>
-    </div>`;
-}
+  const lastPeso=S.profile.entries?.slice(-1)[0];
+  const wos=S.workouts[TODAY]||[];
+  const waterGoal=S.settings.waterGoal||8;
 
-/* ════════ DIARIO ════════ */
-function showDiario(fromBack){
-  resetScreen();setHdr('DIARIO','PASTI DI OGGI',true);
-  const tot=totDay();const burned=totBurnedToday();const net=tot.e-burned;
-  const pct=Math.min(100,Math.round(tot.e/S.settings.kcal*100));
-  const remaining=Math.max(0,S.settings.kcal-tot.e+burned);
   setTimeout(()=>{
     const pb=document.getElementById('hdr-progress');
     if(pb){pb.style.width=pct+'%';pb.className='kcal-progress-fill'+(pct>=100?' over':pct>=85?' warn':'');}
   },50);
+
+  // Costruzione icone pasti
+  const mealIcons=MK.map(k=>{
+    const m=MM[k];
+    const items=S.meals[k]||[];
+    const kk=Math.round(items.reduce((a,it)=>a+it.food.e*it.g/100,0));
+    const mealPct=Math.min(100,Math.round(kk/(S.settings.kcal/5)*100));
+    return`<div class="meal-btn ${m.cls}" onclick="snd();navPush(()=>showMeal('${k}'))">
+      <div class="meal-ico">${m.ico}</div>
+      <div class="meal-lbl">${m.label}</div>
+      <div class="meal-kk" style="color:${m.color}">${kk?kk+' kcal':'+ aggiungi'}</div>
+      <div class="meal-n">${items.length?items.length+' alim.':'tocca per aggiungere'}</div>
+      <div style="width:100%;height:3px;background:rgba(0,0,0,.1);border-radius:2px;margin-top:6px;overflow:hidden"><div style="height:100%;width:${mealPct}%;background:${m.color};border-radius:2px;transition:width .5s"></div></div>
+    </div>`;
+  }).join('');
+
+  // Icona Esercizi
+  const exeKcal=burned;
+  const exeIcon=`<div class="meal-btn exe" onclick="snd();bnavGo(showWorkout,'workout')">
+    <div class="meal-ico">💪</div>
+    <div class="meal-lbl">Esercizi</div>
+    <div class="meal-kk" style="color:#10b981">${exeKcal?'−'+exeKcal+' kcal':'+ allena'}</div>
+    <div class="meal-n">${wos.length?wos.length+(wos.length===1?' attività':' attività'):'nessuna oggi'}</div>
+    <div style="width:100%;height:3px;background:rgba(0,0,0,.1);border-radius:2px;margin-top:6px;overflow:hidden"><div style="height:100%;width:${Math.min(100,wos.length*25)}%;background:#10b981;border-radius:2px;transition:width .5s"></div></div>
+  </div>`;
+
+  // Icona Il Mio Peso
+  const pesoIcon=`<div class="meal-btn pes" onclick="snd();navPush(showDiarioPeso)">
+    <div class="meal-ico">⚖️</div>
+    <div class="meal-lbl">Il Mio Peso</div>
+    <div class="meal-kk" style="color:#0ea5e9">${lastPeso?.peso?lastPeso.peso+' kg':'— kg'}</div>
+    <div class="meal-n">${S.profile.entries?.some(e=>e.date===TODAY)?'aggiornato oggi':'tocca per misurare'}</div>
+    <div style="width:100%;height:3px;background:rgba(0,0,0,.1);border-radius:2px;margin-top:6px;overflow:hidden"><div style="height:100%;width:${S.profile.entries?.some(e=>e.date===TODAY)?100:20}%;background:#0ea5e9;border-radius:2px"></div></div>
+  </div>`;
+
+  // Icona Acqua (con bottone + inline)
+  const acquaIcon=`<div class="meal-btn acq" style="position:relative" onclick="snd();showAcquaDetail()">
+    <div class="meal-ico">💧</div>
+    <div class="meal-lbl">Acqua</div>
+    <div class="meal-kk" style="color:#3b82f6">${S.water}/${waterGoal} bicch.</div>
+    <div class="meal-n">${S.water*250} ml assunti</div>
+    <div style="width:100%;height:3px;background:rgba(0,0,0,.1);border-radius:2px;margin-top:6px;overflow:hidden"><div style="height:100%;width:${Math.min(100,Math.round(S.water/waterGoal*100))}%;background:#3b82f6;border-radius:2px;transition:width .5s"></div></div>
+    <button onclick="event.stopPropagation();snd();S.water=Math.min(waterGoal+4,S.water+1);saveState();showHome();" style="position:absolute;top:8px;right:8px;width:26px;height:26px;border-radius:50%;background:#3b82f6;color:#fff;border:none;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(59,130,246,.4)">+</button>
+  </div>`;
+
+  // Feedback giornaliero
+  const fb=getDailyFeedback(tot,burned,S.settings.kcal,protTarget);
+  const fbHtml=fb.length?`
+    <div style="padding:4px 12px 0;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--ink3);text-transform:uppercase">💡 Suggerimenti</div>
+    ${fb.map(m=>`<div style="margin:6px 12px 0;padding:10px 13px;background:var(--card);border:1.5px solid ${m.col};border-radius:var(--rk);display:flex;align-items:flex-start;gap:10px"><span style="font-size:18px;flex-shrink:0">${m.ico}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink2);line-height:1.6">${m.txt}</span></div>`).join('')}`:'';
+
+  setHdr('LA MIA PAGINA',dateStr.toUpperCase(),false);
+
   document.getElementById('screen').innerHTML=`
-    <div class="meal-grid">
-      ${MK.map(k=>{
-        const m=MM[k];
-        const items=S.meals[k]||[];
-        const kk=Math.round(items.reduce((a,it)=>a+it.food.e*it.g/100,0));
-        const mealPct=Math.min(100,Math.round(kk/(S.settings.kcal/4)*100));
-        return`<div class="meal-btn ${m.cls}" onclick="snd();navPush(()=>showMeal('${k}'))">
-          <div class="meal-ico">${m.ico}</div>
-          <div class="meal-lbl">${m.label}</div>
-          <div class="meal-kk" style="color:${m.color}">${kk} kcal</div>
-          <div class="meal-n">${items.length} alim.</div>
-          <div style="width:100%;height:3px;background:rgba(0,0,0,.1);border-radius:2px;margin-top:4px;overflow:hidden"><div style="height:100%;width:${mealPct}%;background:${m.color};border-radius:2px;transition:width .4s"></div></div>
-        </div>`;
-      }).join('')}
+  <!-- HERO BANNER -->
+  <div class="page-hero">
+    <div class="page-hero-top">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:700;opacity:.9">${greeting}</div>
+        <div class="page-time">🕐 ${timeStr} · OBIETTIVO ${S.settings.kcal} kcal</div>
+      </div>
+      <div style="text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+        <div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;opacity:.4;margin-bottom:3px">NET KCAL OGGI</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:700;color:${surplus>0?'#f87171':'#86efac'}">${net}</div>
+        </div>
+        ${(()=>{
+          const entries=S.profile.entries||[];
+          const todayEntry=entries.find(e=>e.date===TODAY);
+          const yEntry=entries.filter(e=>e.date!==TODAY).slice(-1)[0];
+          const peso=todayEntry?.peso||lastPeso?.peso;
+          if(!peso) return `<div style="text-align:right;cursor:pointer;opacity:.4" onclick="snd();navPush(showDiarioPeso)">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:8px;opacity:.7;letter-spacing:.5px">PESO</div>
+            <div style="font-size:20px">⚖️</div>
+          </div>`;
+          const diff=yEntry&&yEntry.peso?+(peso-yEntry.peso).toFixed(1):null;
+          const arrow=diff===null?'':diff<0?'↓':diff>0?'↑':'=';
+          const arrowColor=diff<0?'#4ade80':diff>0?'#f87171':'#fbbf24';
+          const diffLabel=diff===null?'':diff===0?'= stesso':diff<0?diff+' kg':'+'+diff+' kg';
+          return `<div style="text-align:right;cursor:pointer;border-top:1px solid rgba(255,255,255,.12);padding-top:6px" onclick="snd();navPush(showDiarioPeso)">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:8px;opacity:.45;margin-bottom:2px;letter-spacing:.5px">PESO</div>
+            <div style="display:flex;align-items:baseline;justify-content:flex-end;gap:4px">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:38px;font-weight:700;color:#fff;line-height:1">${peso}</span>
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:rgba(255,255,255,.45)">kg</span>
+            </div>
+            ${diff!==null?`<div style="display:flex;align-items:center;justify-content:flex-end;gap:3px;margin-top:2px">
+              <span style="font-size:14px;font-weight:900;color:${arrowColor}">${arrow}</span>
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;color:${arrowColor}">${diffLabel}</span>
+            </div>`:''}
+          </div>`;
+        })()}
+      </div>
     </div>
-    <div style="padding:0 12px 10px">
-      <div class="card"><div class="card-hdr">📊 TOTALE GIORNALIERO</div><div class="card-body">
+    <div class="page-kcal-row">
+      ${buildKcalRing(net,S.settings.kcal)}
+      <div class="page-kcal-info">
+        <div class="page-kcal-big">${tot.e}<span style="font-size:13px;font-weight:400;opacity:.45"> kcal</span>${burned?` <span style="font-size:11px;color:#fbbf24">−${burned}🔥</span>`:''}</div>
+        <div class="page-kcal-sub">${remaining>0?`ancora ${remaining} kcal disponibili`:`surplus di ${surplus} kcal`}</div>
+        ${str>=2?`<div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:#fbbf24;margin-top:4px">🔥 ${str} giorni di streak!</div>`:''}
+      </div>
+    </div>
+    <div class="page-macro-row">
+      <div class="pmac"><div class="pmac-v">${tot.p}g</div><div class="pmac-l">PROT</div></div>
+      <div class="pmac"><div class="pmac-v">${tot.c}g</div><div class="pmac-l">CARB</div></div>
+      <div class="pmac"><div class="pmac-v">${tot.f}g</div><div class="pmac-l">GRAS</div></div>
+      <div class="pmac" style="background:rgba(59,130,246,.25)"><div class="pmac-v" style="color:#93c5fd">${S.water*250}ml</div><div class="pmac-l">ACQUA</div></div>
+      ${burned?`<div class="pmac" style="background:rgba(251,191,36,.15)"><div class="pmac-v" style="color:#fbbf24">${burned}</div><div class="pmac-l">BRUCIATE</div></div>`:''}
+    </div>
+  </div>
+
+  <!-- 8 ICONE PRINCIPALI -->
+  <div class="meal-grid" style="padding:10px 10px 4px">
+    ${mealIcons}
+    ${exeIcon}
+    ${pesoIcon}
+    ${acquaIcon}
+  </div>
+
+  <!-- TOTALE GIORNALIERO -->
+  <div style="padding:4px 12px 8px">
+    <div class="card">
+      <div class="card-hdr">📊 TOTALE GIORNALIERO</div>
+      <div class="card-body">
         ${macroRing(tot.e,tot.p,tot.c,tot.f)}
-        ${mBar('KCAL ASSUNTE',tot.e,S.settings.kcal,'#1a1a2e')}
-        ${burned?`<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid #ede8dc;font-family:'IBM Plex Mono',monospace;font-size:11px"><span style="font-weight:700">🔥 BRUCIATE SPORT</span><span style="color:#d97706;font-weight:700">−${burned} kcal</span></div><div style="display:flex;align-items:center;justify-content:space-between;padding:6px 0;margin-bottom:6px;font-family:'IBM Plex Mono',monospace;font-size:11px"><span style="font-weight:700">⚡ KCAL NETTE</span><span style="color:${net<=S.settings.kcal?'var(--green)':'var(--red)'};font-weight:700">${net} / ${S.settings.kcal}</span></div>`:''}
-        ${mBar('PROTEINE',tot.p,Math.round(S.settings.kcal*S.settings.protPct/400),'#16a34a')}
+        ${mBar('KCAL NETTE',net,S.settings.kcal,'#1a1a2e')}
+        ${burned?`<div style="display:flex;align-items:center;justify-content:space-between;padding:5px 0;border-bottom:1px solid #ede8dc;font-family:'IBM Plex Mono',monospace;font-size:11px"><span>🔥 Bruciate sport</span><span style="color:#d97706;font-weight:700">−${burned} kcal</span></div>`:''}
+        ${mBar('PROTEINE',tot.p,protTarget,'#16a34a')}
         ${mBar('CARBOIDRATI',tot.c,Math.round(S.settings.kcal*.5/4),'#d97706')}
         ${mBar('GRASSI',tot.f,Math.round(S.settings.kcal*.25/9),'#dc2626')}
         ${mBar('FIBRE',tot.fi,25,'#7c3aed')}
-      </div></div>
-    </div>`;
+      </div>
+    </div>
+  </div>
+
+  ${fbHtml}
+
+  <!-- BOTTONI ACCESSO RAPIDO -->
+  <div style="padding:8px 12px 6px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+    <button class="big-btn outline" style="font-size:11px;padding:12px;margin:0;border-radius:var(--rk)" onclick="snd();navPush(showRiepilogo)">📅 SETTIMANA</button>
+    <button class="big-btn outline" style="font-size:11px;padding:12px;margin:0;border-radius:var(--rk)" onclick="snd();navPush(showReportMensile)">📊 MESE</button>
+  </div>
+  <div style="padding:0 12px 16px">
+    <button class="big-btn" style="background:var(--ink);color:#fff;font-size:12px;padding:14px;margin:0;border-radius:var(--rk);width:100%;letter-spacing:1px" onclick="snd();showMoreMenu()">⋯ &nbsp;ALTRO — Alimenti · Piano · Ricette · Storico</button>
+  </div>`;
 }
 
-/* ════════ PASTO ════════ */
+/* showDiario ora coincide con la home */
+function showDiario(fromBack){showHome(fromBack);}
+
+/* Dettaglio acqua */
+function showAcquaDetail(){
+  const waterGoal=S.settings.waterGoal||8;
+  document.getElementById('modal-box').innerHTML=`
+    <div class="modal-handle"></div>
+    <div class="modal-title">💧 Acqua di Oggi</div>
+    <div style="text-align:center;padding:10px 0 16px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:52px;font-weight:700;color:#3b82f6">${S.water}</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink3)">/ ${waterGoal} bicchieri · ${S.water*250} ml</div>
+      <div style="height:6px;background:#e8e3d8;border-radius:3px;margin:12px 0;overflow:hidden"><div style="height:100%;width:${Math.min(100,Math.round(S.water/waterGoal*100))}%;background:linear-gradient(90deg,#3b82f6,#60a5fa);border-radius:3px;transition:width .4s"></div></div>
+    </div>
+    <div class="water-cups" style="justify-content:center;margin-bottom:16px">${Array.from({length:waterGoal},(_,i)=>`<div class="w-cup ${i<S.water?'filled':''}" onclick="snd();S.water=${i+1};saveState();document.getElementById('modal').querySelector('.modal-title').nextElementSibling.querySelector('div').textContent=${i+1};showAcquaDetail()">💧</div>`).join('')}</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <button class="conf-btn" onclick="snd();S.water=Math.max(0,S.water-1);saveState();closeModal();showHome()">− Togli</button>
+      <button class="conf-btn green-btn" onclick="snd('confirm');S.water=Math.min(waterGoal+4,S.water+1);saveState();closeModal();showHome()">+ Bicchiere</button>
+    </div>`;
+  document.getElementById('modal').classList.add('open');
+}
+
+
+
+/* ════════ DIARIO PESO CORPOREO ════════ */
+function showDiarioPeso(fb){
+  resetScreen();setHdr('⚖️ IL MIO PESO','MISURAZIONI',true);
+  const p=S.profile;
+  const last=p.entries&&p.entries.length?p.entries[p.entries.length-1]:null;
+  const todayEntry=p.entries?.find(e=>e.date===TODAY);
+  const bmi=last&&p.altezza?+(parseFloat(last.peso)/(p.altezza/100)**2).toFixed(1):null;
+  const bmiL=bmi?bmi<18.5?'Sottopeso':bmi<25?'Normopeso':bmi<30?'Sovrappeso':'Obeso':'—';
+  const bmiC=bmi?bmi<18.5?'#d97706':bmi<25?'var(--green)':bmi<30?'#d97706':'var(--red)':'var(--ink3)';
+  // Calcola BMR e TDEE
+  let bmr=null,tdee=null,kOb=null;
+  if(p.altezza&&p.eta&&last?.peso){
+    const fAtt={sedentario:1.2,leggera:1.375,moderata:1.55,intensa:1.725,estrema:1.9};
+    bmr=p.sesso==='m'?Math.round(10*parseFloat(last.peso)+6.25*parseFloat(p.altezza)-5*parseFloat(p.eta)+5):Math.round(10*parseFloat(last.peso)+6.25*parseFloat(p.altezza)-5*parseFloat(p.eta)-161);
+    tdee=Math.round(bmr*(fAtt[p.attivita]||1.55));
+    kOb=p.obiettivo==='dimagrimento'?tdee-500:p.obiettivo==='massa'?tdee+300:tdee;
+  }
+  // Grasso e massa magra
+  const grasso=last?.grasso?parseFloat(last.grasso):null;
+  const massaMagra=grasso&&last?.peso?+(parseFloat(last.peso)*(1-grasso/100)).toFixed(1):null;
+  const grassoKg=grasso&&last?.peso?+(parseFloat(last.peso)*grasso/100).toFixed(1):null;
+  let html=`
+  <!-- HERO DATI -->
+  <div style="background:var(--ink);color:#fff;padding:16px;display:flex;flex-wrap:wrap;gap:8px">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;opacity:.4;width:100%;letter-spacing:1px;text-transform:uppercase">Ultima misurazione${last?.date?' — '+last.date:''}</div>
+    ${[
+      ['⚖️','PESO',last?.peso?last.peso+' kg':'—','#86efac'],
+      ['📏','BMI',bmi?bmi+' ('+bmiL+')':'—',bmiC],
+      ['🔥','% GRASSO',last?.grasso?last.grasso+'%':'—','#fb923c'],
+      ['💪','MASSA MAGRA',massaMagra?massaMagra+' kg':'—','#60a5fa'],
+      ['🍖','MASSA GRASSA',grassoKg?grassoKg+' kg':'—','#f87171'],
+      ['👗','VITA',last?.vita?last.vita+' cm':'—','#c084fc'],
+      ['🍑','FIANCHI',last?.fianchi?last.fianchi+' cm':'—','#f472b6'],
+      ['🧬','BMR',bmr?bmr+' kcal/g':'—','#34d399'],
+      ['⚡','TDEE',tdee?tdee+' kcal/g':'—','#fbbf24'],
+      ['🎯','OBJ CALORICO',kOb?kOb+' kcal/g':'—','#a78bfa'],
+    ].map(([ico,lbl,val,col])=>`
+      <div style="background:rgba(255,255,255,.07);border-radius:10px;padding:10px 12px;min-width:calc(50% - 4px);flex:1">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:8px;opacity:.45;letter-spacing:1px;margin-bottom:4px">${ico} ${lbl}</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:700;color:${col}">${val}</div>
+      </div>`).join('')}
+  </div>
+  <!-- INSERISCI OGGI -->
+  <div class="card">
+    <div class="card-hdr">📅 INSERISCI MISURAZIONE DI OGGI</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px 12px">
+      ${[['Peso (kg)','dp-peso','0.1',last?.peso||''],['% Grasso','dp-grasso','0.1',last?.grasso||''],['Vita (cm)','dp-vita','1',last?.vita||''],['Fianchi (cm)','dp-fianchi','1',last?.fianchi||'']].map(([l,id,step,val])=>`
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;color:var(--ink3);margin-bottom:4px">${l}</div>
+        <input class="form-inp" id="${id}" type="number" step="${step}" inputmode="decimal" value="${val}" placeholder="${l}">
+      </div>`).join('')}
+    </div>
+    <div style="padding:0 12px"><textarea id="dp-note" placeholder="Note..." style="height:40px;margin-bottom:8px">${todayEntry?.note||''}</textarea></div>
+    <button class="big-btn success" onclick="snd('confirm');saveDiarioPeso()">💾 SALVA MISURAZIONE DI OGGI</button>
+  </div>
+  <!-- STORICO -->
+  ${p.entries&&p.entries.length?`<div class="card"><div class="card-hdr">📋 STORICO MISURAZIONI (${p.entries.length})</div>
+    ${[...p.entries].reverse().slice(0,10).map((e,i)=>{
+      const bm=p.altezza&&e.peso?+(parseFloat(e.peso)/(parseFloat(p.altezza)/100)**2).toFixed(1):null;
+      return`<div class="hist-row">
+        <div class="hist-date">${e.date===TODAY?'📅 Oggi':e.date}</div>
+        <div class="hist-vals" style="font-size:10px">
+          ${e.peso?`⚖️ <b>${e.peso}kg</b> `:''} 
+          ${bm?`BMI:${bm} `:''}
+          ${e.grasso?`🔥${e.grasso}% `:''}
+          ${e.vita?`👗${e.vita}cm `:''}
+          ${e.fianchi?`🍑${e.fianchi}cm `:''}
+        </div>
+        <button class="hist-del" onclick="snd('delete');delEntry(${p.entries.length-1-i});showDiarioPeso()">✕</button>
+      </div>`;}).join('')}
+  </div>`:''}`;
+  document.getElementById('screen').innerHTML=html;
+}
+
+function saveDiarioPeso(){
+  const peso=document.getElementById('dp-peso')?.value||'';
+  const grasso=document.getElementById('dp-grasso')?.value||'';
+  const vita=document.getElementById('dp-vita')?.value||'';
+  const fianchi=document.getElementById('dp-fianchi')?.value||'';
+  const note=document.getElementById('dp-note')?.value||'';
+  if(!peso){showToast('⚠ Inserisci almeno il peso','red');return;}
+  if(!S.profile.entries)S.profile.entries=[];
+  // Rimuovi eventuale voce di oggi e sostituisci
+  S.profile.entries=S.profile.entries.filter(e=>e.date!==TODAY);
+  S.profile.entries.push({date:TODAY,peso:parseFloat(peso),vita,fianchi,grasso,note});
+  S.profile.entries.sort((a,b)=>a.date.localeCompare(b.date));
+  saveState();
+  showToast('✅ Misurazione salvata!','green');
+  navReplace(showDiarioPeso);
+}
+
+
 function showMeal(mk,fromBack){
   resetScreen();
   const m=MM[mk];const items=S.meals[mk]||[];
@@ -3441,7 +3654,7 @@ let _wd=TODAY,_wt='Tutti';
 function showWorkout(fb){resetScreen();setHdr('WORKOUT','ALLENAMENTI',true);fabShow('workout');renderWo();}
 function renderWo(){
   const wos=(S.workouts[_wd]||[]);const filtered=_wt==='Tutti'?wos:wos.filter(w=>w.type===_wt);
-  const totBurned=wos.reduce((a,w)=>a+calcBurnedKcal(w.type,w.duration,null),0);
+  const totBurned=wos.reduce((a,w)=>a+calcBurnedKcal(w.type,w.duration,null,w.sets,w.reps,w.load),0);
   const totMin=wos.reduce((a,w)=>a+(parseFloat(w.duration)||0),0);
   let html=`
   <div style="background:var(--ink);color:#fff;padding:14px 16px 12px">
@@ -3454,7 +3667,6 @@ function renderWo(){
     </div>
     <button onclick="snd();addWoModal()" style="width:100%;padding:12px;background:var(--green);border:none;border-radius:10px;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;color:#fff;letter-spacing:.8px;cursor:pointer;text-transform:uppercase">+ Aggiungi Allenamento</button>
   </div>
-  <div style="overflow-x:auto;scrollbar-width:none;padding:8px 12px;display:flex;gap:5px;flex-wrap:nowrap;border-bottom:1px solid #ede8dc;background:var(--card);-webkit-overflow-scrolling:touch;">${WT.map(t=>`<div class="cat-pill ${t===_wt?'on':''}" style="flex-shrink:0" onclick="snd();setWT('${t}')">${WI[t]||''} ${t}</div>`).join('')}</div>
   <div style="padding:8px 12px 4px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--ink3);background:var(--paper);text-transform:uppercase">Strumenti Palestra</div>
   <div class="wo-quick-grid">
     <div class="wo-quick-btn" onclick="snd();navPush(showLibreriaEsercizi)"><div class="wo-quick-ico-wrap" style="background:linear-gradient(135deg,#f87171,#dc2626)">💪</div><div class="wo-quick-lbl">Libreria<br>Esercizi</div></div>
@@ -3465,7 +3677,7 @@ function renderWo(){
   <div style="padding:8px 14px 4px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--ink3);background:var(--paper);border-top:1px solid #ede8dc;text-transform:uppercase">Allenamenti di Oggi — ${new Date().toLocaleDateString('it-IT',{weekday:'long',day:'numeric',month:'short'})}</div>`;
   if(!filtered.length)html+=`<div class="empty"><div class="empty-ico">🏋️</div><div class="empty-txt">NESSUN ALLENAMENTO<br>REGISTRATO</div></div>`;
   else filtered.forEach((w,i)=>{
-    const burned=calcBurnedKcal(w.type,w.duration,null);
+    const burned=calcBurnedKcal(w.type,w.duration,null,w.sets,w.reps,w.load);
     html+=`<div class="wo-card"><div class="wo-card-hdr"><span class="wo-card-nm">${WI[w.type]||'🏅'} ${w.name}</span><div style="display:flex;align-items:center;gap:8px"><span class="wo-card-tp">${w.type}</span><button class="wo-del" onclick="snd('delete');rmWo(${i})">✕</button></div></div><div class="wo-card-body">${w.duration?`<div class="wo-badge">⏱ ${w.duration} min</div>`:''}${burned?`<div class="wo-badge" style="background:#fef3c7;border-color:#d97706;color:#92400e">🔥 ${burned} kcal</div>`:''}${w.sets?`<div class="wo-badge">📋 ${w.sets} serie</div>`:''}${w.reps?`<div class="wo-badge">🔁 ${w.reps} rip.</div>`:''}${w.sets?`<button class="wo-badge" style="background:var(--ink);color:#fff;border-color:var(--ink);cursor:pointer;margin-left:auto" onclick="snd();startRestTimer(90,'${w.name.replace(/'/g,'')}')">⏱ RECUPERO</button>`:''}${w.notes?`<div style="width:100%;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink3);padding-top:4px">📝 ${w.notes}</div>`:''}</div></div>`;
   });
   html+=``;
@@ -3500,9 +3712,16 @@ function updWoBurn(){
   const type=document.getElementById('wtp')?.value||'Forza';
   const dur=parseFloat(document.getElementById('wdur')?.value)||0;
   const kg=parseFloat(document.getElementById('wwkg')?.value)||70;
+  const sets=document.getElementById('ws')?.value||0;
+  const reps=document.getElementById('wr')?.value||0;
+  const load=document.getElementById('wload')?.value||0;
   const el=document.getElementById('wo-burn-prev');if(!el)return;
-  if(dur>0){const b=calcBurnedKcal(type,dur,kg);el.style.display='block';el.textContent=`🔥 Stima calorie bruciate: ${b} kcal`;}
-  else el.style.display='none';
+  const isStrength=(type==='Forza'||type==='Stretching'||type==='Pilates'||type==='Yoga');
+  if(dur>0||(isStrength&&sets&&reps)){
+    const b=calcBurnedKcal(type,dur,kg,sets,reps,load);
+    el.style.display='block';
+    el.textContent=`🔥 Stima calorie bruciate: ${b} kcal${isStrength&&sets&&reps?' (calc. su volume reale)':' (calc. su durata)'}`;
+  } else el.style.display='none';
 }
 function saveWo(){
   const type=document.getElementById('wtp').value;
@@ -4091,7 +4310,7 @@ function runTDEE(){
   const res=document.getElementById('tres');res.style.display='block';
   res.innerHTML=`BMR: ${Math.round(bmr)} kcal/gg<br>TDEE: <b>${tdee}</b> kcal/gg<br>Dimagrimento: ${tdee-500}<br>Mantenimento: ${tdee}<br>Massa +300: ${tdee+300}<br><button class="big-btn success" onclick="snd('confirm');applyTDEE(${tdee})" style="margin:10px 0 0">APPLICA TDEE</button>`;
 }
-function resetDay(){if(confirm('Azzera il diario di oggi?')){S.meals={colazione:[],pranzo:[],cena:[],merenda:[]};saveState();navGoHome();}}
+function resetDay(){if(confirm('Azzera il diario di oggi?')){S.meals={colazione:[],spuntino:[],pranzo:[],merenda:[],cena:[]};saveState();navGoHome();}}
 function exportData(){
   try{
     const blob=new Blob([JSON.stringify({nutritrack:true,version:10,slug:CUR.slug,data:S,exported:new Date().toISOString()})],{type:'application/json'});
@@ -4382,27 +4601,126 @@ function bnavSet(id){
   if(el)el.classList.add('active');
 }
 function bnavGo(fn,id){bnavSet(id);navPush(fn);}
-function showMoreMenu(){
+function showMoreMenu(fromBack){
   bnavSet('more');
+  resetScreen();
+  setHdr('📚 ALTRO','Menu principale',false);
   const items=[
-    ['🥗','Alimenti',"navPush(()=>showAlimenti(null))"],
-    ['📅','Piano','navPush(showPiano)'],
-    ['📊','Settimana','navPush(showRiepilogo)'],
-    ['📈','Mese','navPush(showReportMensile)'],
-    ['📖','Storico Pasti','navPush(showStoricoDiario)'],
-    ['💪','Storico Sport','navPush(showWorkoutStorico)'],
-    ['👨‍🍳','Ricette','navPush(showRicette)'],
-    ['➕','Miei Alimenti','navPush(showMieiAlimenti)'],
-    ['⚙️','Impostazioni','navPush(showImpostazioni)'],
-    ['📲','Installa App','showInstallGuide()'],
+    {ico:'🥗',lbl:'Alimenti',sub:'Cerca & aggiungi cibi',cls:'col',fn:"navPush(()=>showAlimenti(null))"},
+    {ico:'📅',lbl:'Piano Alimentare',sub:'Gestisci i tuoi pasti',cls:'pran',fn:'navPush(showPiano)'},
+    {ico:'👨‍🍳',lbl:'Le Mie Ricette',sub:'Ricette personalizzate',cls:'cena',fn:'navPush(showRicette)'},
+    {ico:'➕',lbl:'I Miei Alimenti',sub:'Alimenti custom',cls:'mer',fn:'navPush(showMieiAlimenti)'},
+    {ico:'📊',lbl:'Settimana',sub:'Riepilogo 7 giorni',cls:'spu',fn:'navPush(showRiepilogo)'},
+    {ico:'📈',lbl:'Report Mese',sub:'Analisi mensile',cls:'exe',fn:'navPush(showReportMensile)'},
+    {ico:'📖',lbl:'Storico Pasti',sub:'Diario alimentare',cls:'pes',fn:'navPush(showStoricoDiario)'},
+    {ico:'💪',lbl:'Storico Sport',sub:'Allenamenti passati',cls:'acq',fn:'navPush(showWorkoutStorico)'},
+    {ico:'⚙️',lbl:'Impostazioni',sub:'Configura l\'app',cls:'col',fn:'navPush(showImpostazioni)'},
+    {ico:'📲',lbl:'Installa App',sub:'Aggiungi alla home',cls:'exe',fn:'showInstallGuide()'},
+    {ico:'👨‍⚕️',lbl:'Sviluppata da',sub:'Dott. Petrolese Giovanni',cls:'pes',fn:'navPush(showCreditsPage)'},
   ];
-  document.getElementById('modal-box').innerHTML=`
-    <div class="modal-handle"></div>
-    <div class="modal-title" style="margin-bottom:14px">📚 ALTRO</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px">
-      ${items.map(([ico,lbl,fn])=>`<button onclick="snd();closeModal();${fn}" style="display:flex;align-items:center;gap:10px;padding:12px;border:1.5px solid #e8e3d8;border-radius:var(--rk);background:var(--card);cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:var(--ink);text-align:left;transition:background .1s" onmousedown="this.style.background='var(--greenl)'" onmouseup="this.style.background='var(--card)'" ontouchstart="this.style.background='var(--greenl)'" ontouchend="this.style.background='var(--card)'"><span style="font-size:18px;flex-shrink:0">${ico}</span>${lbl}</button>`).join('')}
+  const scr=document.getElementById('screen');
+  scr.className='screen anim-in';
+  scr.innerHTML=`
+    <div style="padding:14px 12px 6px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--ink3);text-transform:uppercase;margin-bottom:10px">MENU PRINCIPALE</div>
+      <div class="meal-grid" style="padding:0">
+        ${items.map(i=>`
+          <div class="meal-btn ${i.cls}" onclick="snd();${i.fn}" style="padding:16px 12px 14px;gap:6px">
+            <div class="meal-ico" style="font-size:28px">${i.ico}</div>
+            <div class="meal-lbl" style="font-size:10px;font-weight:700">${i.lbl}</div>
+            <div class="meal-n" style="font-size:9px;opacity:.7;line-height:1.3;text-align:center">${i.sub}</div>
+          </div>`).join('')}
+      </div>
     </div>`;
-  document.getElementById('modal').classList.add('open');
+}
+
+function showCreditsPage(fromBack){
+  resetScreen();
+  setHdr('👨‍⚕️ CREDITI','Petro Corporation',true);
+  const scr=document.getElementById('screen');
+  scr.className='screen anim-in';
+  scr.innerHTML=`
+    <div style="padding:20px 16px 32px;display:flex;flex-direction:column;align-items:center">
+
+      <!-- LOGO / AVATAR -->
+      <div style="width:88px;height:88px;border-radius:50%;background:linear-gradient(135deg,#1a1a2e,#16213e);border:3px solid #16a34a;display:flex;align-items:center;justify-content:center;font-size:40px;margin-bottom:14px;box-shadow:0 4px 24px rgba(22,163,74,.25)">
+        👨‍⚕️
+      </div>
+
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:700;color:var(--ink);letter-spacing:.5px;text-align:center;margin-bottom:2px">
+        Dott. Petrolese Giovanni
+      </div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink3);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">
+        Scienze Giuridiche
+      </div>
+      <div style="display:inline-flex;align-items:center;gap:6px;background:var(--greenl);border:1.5px solid #22c55e;border-radius:99px;padding:5px 14px;margin-bottom:22px">
+        <span style="font-size:13px">🏛️</span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;color:var(--greend);letter-spacing:.5px">PETRO CORPORATION</span>
+      </div>
+
+      <!-- SEZIONE: IL MIO PERCORSO -->
+      <div style="width:100%;background:var(--card);border:1.5px solid #e8e3d8;border-radius:var(--rk);overflow:hidden;margin-bottom:12px">
+        <div style="background:var(--ink);color:#fff;padding:10px 14px;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;display:flex;align-items:center;gap:8px">
+          <span>📖</span> Il Mio Percorso
+        </div>
+        <div style="padding:14px;font-size:13px;line-height:1.8;color:var(--ink2)">
+          Il mio percorso nasce da una profonda convinzione: che il diritto e la scienza si incontrino nel rispetto del corpo umano. Attraverso anni di studi in <strong>Scienze Giuridiche</strong>, ho sviluppato una visione rigorosa e sistematica che ho applicato con passione al mondo della nutrizione e del fitness.
+          <br><br>
+          Ho compreso che le stesse discipline metodologiche che governano il diritto — precisione, costanza, analisi dei dati — sono le fondamenta di un percorso di benessere efficace e duraturo.
+        </div>
+      </div>
+
+      <!-- SEZIONE: FILOSOFIA -->
+      <div style="width:100%;background:var(--card);border:1.5px solid #e8e3d8;border-radius:var(--rk);overflow:hidden;margin-bottom:12px">
+        <div style="background:var(--ink);color:#fff;padding:10px 14px;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;display:flex;align-items:center;gap:8px">
+          <span>💡</span> La Mia Filosofia
+        </div>
+        <div style="padding:14px;font-size:13px;line-height:1.8;color:var(--ink2)">
+          <strong>L'alimentazione è il fondamento di un fisico forte e di una mente lucida.</strong> Non si tratta di privazione, ma di strategia. Ogni macronutriente ha un ruolo preciso, ogni pasto è un investimento nel proprio futuro.
+          <br><br>
+          Ho sviluppato NutriTrack PRO per mettere a disposizione di tutti uno strumento professionale che renda semplice ciò che sembra complesso: tracciare, capire e migliorare la propria alimentazione quotidiana.
+        </div>
+      </div>
+
+      <!-- SEZIONE: PERCHÉ QUESTA APP -->
+      <div style="width:100%;background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:1.5px solid #22c55e;border-radius:var(--rk);overflow:hidden;margin-bottom:12px">
+        <div style="background:var(--green);color:#fff;padding:10px 14px;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;display:flex;align-items:center;gap:8px">
+          <span>🎯</span> Perché NutriTrack PRO
+        </div>
+        <div style="padding:14px;font-size:13px;line-height:1.8;color:var(--ink)">
+          Attraverso studi approfonditi e l'esperienza diretta sul campo, ho identificato le tre aree critiche su cui ogni persona dovrebbe concentrarsi:
+          <br><br>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;align-items:flex-start;gap:10px">
+              <span style="font-size:16px;flex-shrink:0">🥩</span>
+              <span><strong>Proteine adeguate</strong> — il mattone di ogni muscolo, spesso sottovalutate nella dieta italiana tradizionale.</span>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:10px">
+              <span style="font-size:16px;flex-shrink:0">⚡</span>
+              <span><strong>Allenamento progressivo</strong> — il corpo si adatta solo se gli chiedi sempre un po' di più.</span>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:10px">
+              <span style="font-size:16px;flex-shrink:0">📊</span>
+              <span><strong>Misurazione costante</strong> — ciò che non si misura non si migliora. I dati sono il tuo alleato più onesto.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- APP INFO -->
+      <div style="width:100%;background:var(--card);border:1.5px solid #e8e3d8;border-radius:var(--rk);padding:14px;margin-bottom:20px;text-align:center">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:700;letter-spacing:2px;color:var(--ink);margin-bottom:2px">NutriTrack PRO</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--ink3);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">by Petro Corporation</div>
+        <div style="height:1px;background:#e8e3d8;margin-bottom:10px"></div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink3);line-height:2">
+          Versione 5.0 · © 2025 Petro Corporation<br>
+          Dott. Petrolese Giovanni — Laurea in Scienze Giuridiche<br>
+          <span style="color:var(--green);font-weight:700">Tutti i diritti riservati</span>
+        </div>
+      </div>
+
+      <div style="font-size:24px;opacity:.3">🏛️</div>
+    </div>`;
 }
 
 /* ════════ TOAST ════════ */
@@ -4549,15 +4867,15 @@ console.log('%c[NutriTrack Pro] v10.0 — Dott. Petrolese Giovanni — PetroCorp
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px">
           <div>
             <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;color:var(--ink3);margin-bottom:4px">SERIE</div>
-            <input class="gram-inp" id="ws" type="number" inputmode="decimal" style="width:100%;text-align:left;font-size:14px;padding:10px 12px">
+            <input class="gram-inp" id="ws" type="number" inputmode="decimal" style="width:100%;text-align:left;font-size:14px;padding:10px 12px" oninput="updWoBurn()">
           </div>
           <div>
-            <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;color:var(--ink3);margin-bottom:4px">RIPS.</div>
-            <input class="gram-inp" id="wr" type="number" inputmode="decimal" style="width:100%;text-align:left;font-size:14px;padding:10px 12px">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;color:var(--ink3);margin-bottom:4px">N. RIPETIZ.</div>
+            <input class="gram-inp" id="wr" type="number" inputmode="decimal" style="width:100%;text-align:left;font-size:14px;padding:10px 12px" oninput="updWoBurn()">
           </div>
           <div>
             <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;color:var(--ink3);margin-bottom:4px">CARICO KG</div>
-            <input class="gram-inp" id="wload" type="number" inputmode="decimal" style="width:100%;text-align:left;font-size:14px;padding:10px 12px" placeholder="0">
+            <input class="gram-inp" id="wload" type="number" inputmode="decimal" style="width:100%;text-align:left;font-size:14px;padding:10px 12px" placeholder="0" oninput="updWoBurn()">
           </div>
         </div>
         <div style="margin-bottom:10px">
@@ -4573,13 +4891,15 @@ console.log('%c[NutriTrack Pro] v10.0 — Dott. Petrolese Giovanni — PetroCorp
     window.saveWo=function(){
       const type=document.getElementById('wtp').value;
       const dur=document.getElementById('wdur').value;
-      if(!dur){showToast('⚠ Inserisci la durata','red');return;}
-      const kg=parseFloat(document.getElementById('wwkg').value)||null;
-      const burned=calcBurnedKcal(type,dur,kg);
-      const nameFld=(document.getElementById('wn').value||'').trim();
       const sets=document.getElementById('ws').value||'';
       const reps=document.getElementById('wr').value||'';
       const load=document.getElementById('wload').value||'';
+      const isStrength=(type==='Forza'||type==='Stretching'||type==='Pilates'||type==='Yoga');
+      // Durata obbligatoria solo se non pesistica con serie/ripetizioni
+      if(!dur&&!(isStrength&&sets&&reps)){showToast('⚠ Inserisci la durata o le serie/ripetizioni','red');return;}
+      const kg=parseFloat(document.getElementById('wwkg').value)||null;
+      const burned=calcBurnedKcal(type,dur,kg,sets,reps,load);
+      const nameFld=(document.getElementById('wn').value||'').trim();
       const wo={name:nameFld||type,type,duration:dur,burned,sets,reps,load,notes:document.getElementById('wno').value};
       if(!S.workouts[_wd])S.workouts[_wd]=[];
       S.workouts[_wd].push(wo);
@@ -4614,7 +4934,7 @@ console.log('%c[NutriTrack Pro] v10.0 — Dott. Petrolese Giovanni — PetroCorp
             <input class="gram-inp" id="ex-sets" type="number" inputmode="numeric" value="${setsDefault}" style="width:100%;text-align:center;padding:10px">
           </div>
           <div>
-            <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;color:var(--ink3);margin-bottom:4px">RIPS.</div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;color:var(--ink3);margin-bottom:4px">N. RIPETIZ.</div>
             <input class="gram-inp" id="ex-reps" type="number" inputmode="numeric" value="${repsDefault}" style="width:100%;text-align:center;padding:10px">
           </div>
           <div>
@@ -4677,7 +4997,7 @@ console.log('%c[NutriTrack Pro] v10.0 — Dott. Petrolese Giovanni — PetroCorp
       // Map filtered back to real indices in wos (needed for rmWo)
       const filteredWithIdx=filtered.map(w=>({w,realIdx:wos.indexOf(w)}));
 
-      const totBurned=wos.reduce((a,w)=>a+calcBurnedKcal(w.type,w.duration,null),0);
+      const totBurned=wos.reduce((a,w)=>a+calcBurnedKcal(w.type,w.duration,null,w.sets,w.reps,w.load),0);
       const totMin=wos.reduce((a,w)=>a+(parseFloat(w.duration)||0),0);
 
       let html=`
@@ -4691,7 +5011,6 @@ console.log('%c[NutriTrack Pro] v10.0 — Dott. Petrolese Giovanni — PetroCorp
         </div>
         <button onclick="snd();addWoModal()" style="width:100%;padding:12px;background:var(--green);border:none;border-radius:10px;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;color:#fff;letter-spacing:.8px;cursor:pointer;text-transform:uppercase">+ Aggiungi Allenamento</button>
       </div>
-      <div style="overflow-x:auto;scrollbar-width:none;padding:8px 12px;display:flex;gap:5px;flex-wrap:nowrap;border-bottom:1px solid #ede8dc;background:var(--card);-webkit-overflow-scrolling:touch;">${WT.map(t=>`<div class="cat-pill ${t===_wt?'on':''}" style="flex-shrink:0" onclick="snd();setWT('${t}')">${WI[t]||''} ${t}</div>`).join('')}</div>
       <div style="padding:8px 12px 4px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--ink3);background:var(--paper);text-transform:uppercase">Strumenti Palestra</div>
       <div class="wo-quick-grid">
         <div class="wo-quick-btn" onclick="snd();navPush(showLibreriaEsercizi)"><div class="wo-quick-ico-wrap" style="background:linear-gradient(135deg,#f87171,#dc2626)">💪</div><div class="wo-quick-lbl">Libreria<br>Esercizi</div></div>
@@ -4706,7 +5025,7 @@ console.log('%c[NutriTrack Pro] v10.0 — Dott. Petrolese Giovanni — PetroCorp
         html+=`<div class="empty"><div class="empty-ico">🏋️</div><div class="empty-txt">NESSUN ALLENAMENTO<br>REGISTRATO</div></div>`;
       }else{
         filteredWithIdx.forEach(({w,realIdx})=>{
-          const burned=calcBurnedKcal(w.type,w.duration,null);
+          const burned=calcBurnedKcal(w.type,w.duration,null,w.sets,w.reps,w.load);
           // Controlla se ha storico carichi per questo esercizio
           const hasHist=S.exerciseLog&&S.exerciseLog[w.name]&&S.exerciseLog[w.name].length>1;
           html+=`<div class="wo-card">
