@@ -11,7 +11,14 @@
 <meta name="mobile-web-app-capable" content="yes">
 <link id="pwa-manifest" rel="manifest">
 <link id="apple-touch-icon" rel="apple-touch-icon" sizes="192x192">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+<style>
+  /* System font stack fallback when Google Fonts unavailable */
+  body{font-family:'IBM Plex Sans','Segoe UI',system-ui,-apple-system,sans-serif;}
+  .hdr-title,.hdr-sub,.nk-lbl,.card-hdr,.modal-title,.ds-label,
+  [style*="IBM Plex Mono"],[class*="mono"]{font-family:'IBM Plex Mono','SF Mono','Fira Code','Cascadia Code',ui-monospace,monospace;}
+</style>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none}
 :root{
@@ -27,20 +34,157 @@ html,body{height:100%;overflow:hidden;background:#1a1a2e;font-family:'IBM Plex S
 #app-wrap{position:fixed;top:0;left:0;right:0;bottom:0;max-width:430px;margin:0 auto;display:flex;flex-direction:column;background:var(--paper);padding-top:var(--safe-top);}
 .hdr{background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:10px 16px;min-height:54px;flex-shrink:0;}
 .hdr-left{display:flex;align-items:center;gap:10px}
-.back-btn{min-width:42px;height:42px;border-radius:10px;padding:0 12px;font-size:13px;background:rgba(255,255,255,.18);border:none;color:#fff;font-size:20px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;letter-spacing:-1px;padding-right:2px;}
+.back-btn{min-width:42px;height:42px;border-radius:10px;padding:0 12px;font-size:13px;background:rgba(255,255,255,.18);border:none;color:#fff;font-size:20px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;letter-spacing:-1px;padding-right:2px;transition:all .15s;}
 .back-btn:active{background:rgba(255,255,255,.35);transform:scale(.93)}
 .hdr-titles{line-height:1.2}
 .hdr-title{font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:700;letter-spacing:1px}
 .hdr-sub{font-size:9px;opacity:.5;font-family:'IBM Plex Mono',monospace;letter-spacing:.5px}
-.hdr-avatar{width:32px;height:32px;border-radius:50%;background:var(--green);border:2px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;cursor:pointer;flex-shrink:0;}
+.hdr-avatar{width:34px;height:34px;border-radius:50%;background:var(--green);border:2px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;cursor:pointer;flex-shrink:0;transition:transform .15s;}
+.hdr-avatar:active{transform:scale(.9)}
 
-/* ══ SCREEN — UNICA zona scrollabile, mai modificata da JS ══ */
-.screen{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;background:var(--paper);padding-bottom:calc(var(--safe-bottom) + 80px);}
+/* ══ SCREEN ══ */
+.screen{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;background:var(--paper);padding-bottom:calc(var(--safe-bottom) + 90px);}
 .screen::-webkit-scrollbar{width:3px}
 .screen::-webkit-scrollbar-thumb{background:var(--ink3)}
 
-.credits{background:var(--ink);color:rgba(255,255,255,.4);text-align:center;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.3px;padding:4px 10px;flex-shrink:0;line-height:1.4;padding-bottom:calc(4px + var(--safe-bottom));}
+/* ══ FADE-IN ANIMATION ══ */
+@keyframes fadeInUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.screen.anim-in>*{animation:fadeInUp .22s ease-out}
+
+/* ══ BOTTOM NAV BAR ══ */
+.bottom-nav{
+  position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+  width:100%;max-width:430px;
+  background:var(--ink);
+  display:flex;align-items:center;justify-content:space-around;
+  padding:8px 0 calc(8px + var(--safe-bottom));
+  z-index:200;
+  border-top:2px solid rgba(255,255,255,.08);
+  box-shadow:0 -4px 20px rgba(0,0,0,.25);
+}
+.bnav-btn{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:4px 10px;border-radius:10px;transition:all .15s;border:none;background:none;color:rgba(255,255,255,.45);}
+.bnav-btn.active{color:#fff;}
+.bnav-btn:active{transform:scale(.9)}
+.bnav-ico{font-size:20px;line-height:1;transition:transform .15s}
+.bnav-btn.active .bnav-ico{transform:translateY(-1px)}
+.bnav-lbl{font-family:'IBM Plex Mono',monospace;font-size:8px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;}
+.bnav-dot{width:4px;height:4px;border-radius:50%;background:var(--green);margin-top:1px;opacity:0;transition:opacity .2s}
+.bnav-btn.active .bnav-dot{opacity:1}
+
+.credits{background:var(--ink);color:rgba(255,255,255,.4);text-align:center;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.3px;padding:4px 10px;flex-shrink:0;line-height:1.4;display:none;}
 .credits b{color:rgba(255,255,255,.7)}
+
+/* ══ KCAL PROGRESS BAR (sotto header) ══ */
+.kcal-progress-bar{height:3px;background:rgba(255,255,255,.15);overflow:hidden;margin:0;flex-shrink:0;}
+.kcal-progress-fill{height:100%;transition:width .6s ease;background:linear-gradient(90deg,#22c55e,#86efac);}
+.kcal-progress-fill.over{background:linear-gradient(90deg,#f87171,#dc2626);}
+.kcal-progress-fill.warn{background:linear-gradient(90deg,#fbbf24,#f59e0b);}
+
+/* ══ MACRO PILLS (home day strip) ══ */
+.macro-pill{background:rgba(255,255,255,.1);border-radius:8px;padding:5px 10px;text-align:center;min-width:54px;}
+.macro-pill-v{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:700;color:#fff}
+.macro-pill-l{font-size:8px;opacity:.55;font-family:'IBM Plex Mono',monospace;letter-spacing:.3px;color:#fff}
+
+/* ══ REST TIMER OVERLAY ══ */
+.rest-timer-overlay{
+  position:fixed;inset:0;z-index:1000;
+  background:rgba(13,17,23,.97);
+  display:none;flex-direction:column;align-items:center;justify-content:center;
+}
+.rest-timer-overlay.open{display:flex;animation:fadeInUp .2s ease}
+.rest-timer-ring{position:relative;width:170px;height:170px;margin-bottom:16px;}
+.rest-timer-ring svg{width:170px;height:170px;transform:rotate(-90deg)}
+.rest-timer-circle-bg{fill:none;stroke:rgba(255,255,255,.1);stroke-width:8}
+.rest-timer-circle{fill:none;stroke:#22c55e;stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset 1s linear;}
+.rest-timer-num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;color:#fff}
+.rest-timer-sec{font-size:52px;font-weight:700;line-height:1}
+.rest-timer-lbl{font-size:9px;opacity:.4;letter-spacing:2px;text-transform:uppercase;margin-top:3px}
+.rest-timer-title{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:rgba(255,255,255,.4);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+.rest-timer-name{font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:700;color:#fff;margin-bottom:28px;text-align:center;padding:0 24px;line-height:1.3}
+.rest-timer-btns{display:flex;gap:12px}
+.rest-timer-btn{padding:13px 30px;border:none;border-radius:12px;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1px;cursor:pointer;text-transform:uppercase;transition:transform .1s}
+.rest-timer-btn.skip{background:rgba(255,255,255,.1);color:#fff}
+.rest-timer-btn.stop{background:var(--red);color:#fff}
+.rest-timer-btn:active{transform:scale(.93)}
+
+/* ══ TOAST NOTIFICATION ══ */
+.toast{
+  position:fixed;bottom:calc(88px + var(--safe-bottom));left:50%;transform:translateX(-50%) translateY(16px);
+  background:var(--ink);color:#fff;
+  padding:10px 20px;border-radius:99px;
+  font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.5px;
+  z-index:800;opacity:0;transition:all .28s cubic-bezier(.34,1.56,.64,1);pointer-events:none;white-space:nowrap;
+  box-shadow:0 4px 20px rgba(0,0,0,.4);
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.green{background:var(--green)}
+.toast.red{background:var(--red)}
+
+/* ══ SKELETON LOADING ══ */
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+.skeleton{background:linear-gradient(90deg,#e8e3d8 25%,#f0ebe0 50%,#e8e3d8 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;border-radius:var(--r);}
+
+/* ══ IMPROVED EMPTY STATE ══ */
+.empty{padding:48px 24px;text-align:center;color:var(--ink3);display:flex;flex-direction:column;align-items:center}
+.empty-ico{font-size:52px;margin-bottom:14px;opacity:.5}
+.empty-txt{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.5px;line-height:1.9;opacity:.7}
+
+/* ══ KCAL RING (home day strip) ══ */
+@keyframes ring-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+@keyframes ring-celebrate{0%{transform:scale(1) rotate(0deg)}25%{transform:scale(1.12) rotate(-3deg)}75%{transform:scale(1.12) rotate(3deg)}100%{transform:scale(1) rotate(0deg)}}
+.kcal-ring-wrap{position:relative;width:64px;height:64px;flex-shrink:0}
+.kcal-ring-wrap svg{width:64px;height:64px;transform:rotate(-90deg)}
+.kcal-ring-bg{fill:none;stroke:rgba(255,255,255,.12);stroke-width:5}
+.kcal-ring-fill{fill:none;stroke:#22c55e;stroke-width:5;stroke-linecap:round;transition:stroke-dashoffset .8s ease;}
+.kcal-ring-fill.over{stroke:#f87171}
+.kcal-ring-fill.warn{stroke:#fbbf24}
+.kcal-ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;color:#fff}
+.kcal-ring-pct{font-size:13px;font-weight:700;line-height:1}
+.kcal-ring-sub{font-size:7px;opacity:.45;letter-spacing:.2px}
+
+/* ══ BMI GAUGE ══ */
+.bmi-gauge{display:flex;gap:3px;height:6px;border-radius:3px;overflow:hidden;margin:6px 0}
+.bmi-seg{flex:1;border-radius:2px}
+
+/* ══ CARD & BUTTON POLISH ══ */
+.nk-btn{transition:transform .12s,box-shadow .12s}
+.nk-btn:active{transform:scale(.94)!important;box-shadow:0 1px 3px rgba(0,0,0,.08)!important}
+.scheda-card{transition:transform .12s,box-shadow .12s}
+.ex-card{transition:background .1s}
+.big-btn{transition:all .15s}
+.conf-btn{transition:all .15s}
+.conf-btn:active{transform:scale(.97)}
+.cat-pill{transition:all .15s}
+mark{background:#fef3c7;color:var(--ink);border-radius:2px;padding:0 1px;}
+/* ══ FAB (Floating Action Button) ══ */
+.fab{
+  position:fixed;bottom:calc(72px + var(--safe-bottom));right:calc(50% - 215px + 16px);
+  width:52px;height:52px;border-radius:50%;
+  background:var(--green);color:#fff;border:none;
+  font-size:24px;cursor:pointer;
+  box-shadow:0 4px 16px rgba(22,163,74,.45);
+  display:none;align-items:center;justify-content:center;
+  z-index:190;transition:transform .15s,box-shadow .15s;
+}
+.fab:active{transform:scale(.91);box-shadow:0 2px 8px rgba(22,163,74,.3);}
+.fab.visible{display:flex;}
+/* On narrow screens FAB right edge */
+@media(max-width:430px){.fab{right:16px;}}
+/* ══ SEARCH BAR IMPROVEMENT ══ */
+.srch-inp{transition:border-color .15s,box-shadow .15s;}
+.srch-inp:focus{box-shadow:0 0 0 3px rgba(22,163,74,.15);}
+/* ══ FORM INPUTS ══ */
+.form-inp:focus,.gram-inp:focus{box-shadow:0 0 0 3px rgba(22,163,74,.12);}
+/* ══ LOG ITEM SWIPE INDICATOR ══ */
+.log-item{transition:background .1s;}
+.log-item:active{background:var(--greenl);}
+/* ══ BETTER SCROLLBAR ══ */
+.screen::-webkit-scrollbar{width:2px}
+/* ══ SECTION HEADERS ══ */
+.section-hdr{padding:10px 14px 4px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--ink3);text-transform:uppercase;background:var(--paper);}
+/* ══ WATER BAR ══ */
+.water-bar{height:4px;background:#e8e3d8;border-radius:2px;overflow:hidden;margin-top:8px;}
+.water-bar-fill{height:100%;background:linear-gradient(90deg,#3b82f6,#60a5fa);border-radius:2px;transition:width .4s;}
 
 /* LOGIN */
 #login-scr{
@@ -218,9 +362,9 @@ html,body{height:100%;overflow:hidden;background:#1a1a2e;font-family:'IBM Plex S
 .add-btn:active{border-color:var(--green);color:var(--green);background:var(--greenl)}
 
 /* MODAL */
-.modal-ov{position:fixed;inset:0;background:rgba(15,15,26,.75);z-index:500;display:none;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px)}
+.modal-ov{position:fixed;inset:0;background:rgba(15,15,26,.75);z-index:500;display:none;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px);padding-bottom:0}
 .modal-ov.open{display:flex}
-.modal-box{background:var(--card);border:2px solid var(--ink);border-radius:18px 18px 0 0;padding:18px 18px calc(18px + var(--safe-bottom));width:100%;max-width:430px;max-height:90vh;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+.modal-box{background:var(--card);border:2px solid var(--ink);border-radius:18px 18px 0 0;padding:18px 18px calc(18px + var(--safe-bottom));width:100%;max-width:430px;max-height:88vh;overflow-y:auto;-webkit-overflow-scrolling:touch;}
 .modal-handle{width:36px;height:4px;background:#ccc;border-radius:2px;margin:0 auto 16px}
 .modal-title{font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:700;margin-bottom:3px}
 .modal-sub{font-size:11px;color:var(--ink3);margin-bottom:14px;font-family:'IBM Plex Mono',monospace}
@@ -296,9 +440,9 @@ textarea:focus{border-color:var(--green)}
 .w-cup{width:36px;height:36px;border:2px solid #ccc;border-radius:var(--r);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;background:var(--paper);transition:all .15s}
 .w-cup.filled{background:#dbeafe;border-color:#3b82f6}
 .w-cup:active{transform:scale(.9)}
-.home-pill{display:flex;justify-content:center;padding:20px 12px 10px;}
-.home-pill button{background:var(--ink);color:#fff;border:none;border-radius:99px;padding:10px 32px;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.8px;cursor:pointer;box-shadow:0 4px 14px rgba(26,26,46,.4);}
-.home-pill button:active{transform:scale(.96);}
+.home-pill{display:flex;justify-content:center;padding:16px 12px 8px;}
+.home-pill button{background:rgba(26,26,46,.07);color:var(--ink);border:1.5px solid rgba(26,26,46,.15);border-radius:99px;padding:9px 28px;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.8px;cursor:pointer;transition:all .15s;}
+.home-pill button:active{transform:scale(.96);background:var(--ink);color:#fff;}
 .install-step{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid #ede8dc}
 .install-step:last-child{border:none}
 .install-num{width:28px;height:28px;border-radius:50%;background:var(--ink);color:#fff;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
@@ -363,15 +507,16 @@ textarea:focus{border-color:var(--green)}
 .goal-progress-fill{height:100%;border-radius:5px;background:linear-gradient(90deg,#16a34a,#22c55e);transition:width .5s}
 /* ══ WORKOUT EXTRA: LIBRERIA ESERCIZI & SCHEDE ══ */
 .wo-quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px 12px 6px}
-.wo-quick-btn{border-radius:var(--rk);padding:13px 8px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;border:1.5px solid #e8e3d8;background:var(--card);transition:transform .1s;box-shadow:0 2px 6px rgba(0,0,0,.07)}
-.wo-quick-btn:active{transform:scale(.95);background:var(--greenl)}
-.wo-quick-ico{font-size:26px}
-.wo-quick-lbl{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;text-align:center;text-transform:uppercase;letter-spacing:.3px;color:var(--ink);line-height:1.3}
+.wo-quick-btn{border-radius:var(--rk);padding:16px 10px 14px;display:flex;flex-direction:column;align-items:center;gap:10px;cursor:pointer;border:1.5px solid rgba(0,0,0,.08);background:var(--card);transition:transform .1s;box-shadow:0 2px 8px rgba(0,0,0,.09);min-height:116px;justify-content:center}
+.wo-quick-btn:active{transform:scale(.95)}
+.wo-quick-ico-wrap{width:58px;height:58px;border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 3px 10px rgba(0,0,0,.2)}
+.wo-quick-lbl{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;text-align:center;text-transform:uppercase;letter-spacing:.5px;color:var(--ink);line-height:1.3}
 .muscle-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px}
-.muscle-btn{border-radius:var(--rk);padding:14px 10px 12px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;transition:transform .1s;box-shadow:0 2px 8px rgba(0,0,0,.08);border:1.5px solid #e8e3d8;background:var(--card)}
+.muscle-btn{border-radius:var(--rk);padding:16px 10px 14px;display:flex;flex-direction:column;align-items:center;gap:10px;cursor:pointer;transition:transform .1s;box-shadow:0 2px 8px rgba(0,0,0,.08);border:1.5px solid rgba(0,0,0,.08);background:var(--card);min-height:116px;justify-content:center}
 .muscle-btn:active{transform:scale(.95)}
+.muscle-ico-wrap{width:58px;height:58px;border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 3px 10px rgba(0,0,0,.2)}
 .muscle-ico{font-size:30px}
-.muscle-lbl{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.5px;text-align:center;text-transform:uppercase;color:var(--ink)}
+.muscle-lbl{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.5px;text-align:center;text-transform:uppercase;color:var(--ink)}
 .muscle-cnt{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--ink3);margin-top:1px}
 .ex-card{margin:0 12px 7px;border:1.5px solid #e8e3d8;border-radius:var(--rk);overflow:hidden;background:var(--card);cursor:pointer;transition:background .15s}
 .ex-card:active{background:var(--greenl)}
@@ -388,9 +533,11 @@ textarea:focus{border-color:var(--green)}
 .ex-tag-diff-i{background:#fffbeb;color:#92400e;border:1px solid #fde047}
 .ex-tag-diff-a{background:#fff1f2;color:#991b1b;border:1px solid #fecdd3}
 .ex-chevron{font-size:14px;color:var(--ink3);flex-shrink:0}
-.scheda-card{margin:0 12px 10px;border:1.5px solid #e8e3d8;border-radius:var(--rk);overflow:hidden;cursor:pointer;transition:transform .1s;box-shadow:0 2px 6px rgba(0,0,0,.07)}
+.scheda-card{margin:0 12px 10px;border:1.5px solid rgba(0,0,0,.08);border-radius:var(--rk);overflow:hidden;cursor:pointer;transition:transform .1s;box-shadow:0 2px 8px rgba(0,0,0,.09)}
 .scheda-card:active{transform:scale(.98)}
-.scheda-hdr{padding:12px 14px;color:#fff;display:flex;align-items:center;justify-content:space-between}
+.scheda-hdr{padding:14px 14px;color:#fff;display:flex;align-items:center;gap:14px}
+.scheda-ico-wrap{width:52px;height:52px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:26px;background:rgba(255,255,255,.18);box-shadow:0 2px 8px rgba(0,0,0,.2);flex-shrink:0}
+.scheda-hdr-info{flex:1}
 .scheda-nm{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:700}
 .scheda-sub{font-size:10px;opacity:.8;font-family:'IBM Plex Mono',monospace;margin-top:2px}
 .scheda-body{padding:10px 14px;background:var(--card);display:flex;flex-wrap:wrap;gap:5px}
@@ -477,6 +624,8 @@ textarea:focus{border-color:var(--green)}
     </div>
     <div class="hdr-avatar" id="hdr-avatar" onclick="snd();showAvatarMenu()" title="Profilo / Esci">?</div>
   </div>
+  <div class="kcal-progress-bar" id="hdr-pb"><div class="kcal-progress-fill" id="hdr-progress" style="width:0%"></div></div>
+  <div class="kcal-progress-bar" id="hdr-pb"><div class="kcal-progress-fill" id="hdr-progress" style="width:0%"></div></div>
   <div class="screen" id="screen"></div>
   <div class="credits"><b>NutriTrack Pro v10</b> · Dott. Petrolese Giovanni · PetroCorporation © 2025 · <span id="storage-status">localStorage</span></div>
 </div>
@@ -485,6 +634,55 @@ textarea:focus{border-color:var(--green)}
 <div class="modal-ov" id="modal" onclick="modalBg(event)">
   <div class="modal-box" id="modal-box"></div>
 </div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav" id="bottom-nav">
+  <button class="bnav-btn active" id="bnav-home" onclick="snd();navGoHome()">
+    <span class="bnav-ico">🏠</span>
+    <span class="bnav-lbl">Home</span>
+    <span class="bnav-dot"></span>
+  </button>
+  <button class="bnav-btn" id="bnav-diario" onclick="snd();bnavGo(showDiario,'diario')">
+    <span class="bnav-ico">📋</span>
+    <span class="bnav-lbl">Diario</span>
+    <span class="bnav-dot"></span>
+  </button>
+  <button class="bnav-btn" id="bnav-workout" onclick="snd();bnavGo(showWorkout,'workout')">
+    <span class="bnav-ico">💪</span>
+    <span class="bnav-lbl">Workout</span>
+    <span class="bnav-dot"></span>
+  </button>
+  <button class="bnav-btn" id="bnav-profilo" onclick="snd();bnavGo(showProfilo,'profilo')">
+    <span class="bnav-ico">👤</span>
+    <span class="bnav-lbl">Profilo</span>
+    <span class="bnav-dot"></span>
+  </button>
+  <button class="bnav-btn" id="bnav-more" onclick="snd();showMoreMenu()">
+    <span class="bnav-ico">⋯</span>
+    <span class="bnav-lbl">Altro</span>
+    <span class="bnav-dot"></span>
+  </button>
+</nav>
+
+<!-- REST TIMER -->
+<div class="rest-timer-overlay" id="rest-timer">
+  <div class="rest-timer-title">RECUPERO</div>
+  <div class="rest-timer-name" id="rt-name">—</div>
+  <div class="rest-timer-ring">
+    <svg><circle class="rest-timer-circle-bg" cx="85" cy="85" r="70"/><circle class="rest-timer-circle" id="rt-circle" cx="85" cy="85" r="70" stroke-dasharray="439.8" stroke-dashoffset="0"/></svg>
+    <div class="rest-timer-num"><div class="rest-timer-sec" id="rt-sec">60</div><div class="rest-timer-lbl">secondi</div></div>
+  </div>
+  <div class="rest-timer-btns">
+    <button class="rest-timer-btn skip" onclick="snd();skipRestTimer()">⏭ SALTA</button>
+    <button class="rest-timer-btn stop" onclick="snd('delete');stopRestTimer()">✕ STOP</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- FAB -->
+<button class="fab" id="fab-main" onclick="snd();fabAction()">＋</button>
 
 <script>
 const DB=[
@@ -1629,17 +1827,31 @@ function loginOk(slug,name){
 }
 
 function showAvatarMenu(){
+  const tot=totDay();const burned=totBurnedToday();const pct=Math.min(100,Math.round(tot.e/(S.settings.kcal||2000)*100));
+  const str=calcStreak();
   document.getElementById('modal-box').innerHTML=`
     <div class="modal-handle"></div>
-    <div style="text-align:center;padding:8px 0 16px">
-      <div style="width:56px;height:56px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:#fff;margin:0 auto 8px">${CUR.name.trim()[0].toUpperCase()}</div>
-      <div style="font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:700;color:var(--ink)">${CUR.name}</div>
-      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink3);margin-top:2px">PROFILO ATTIVO</div>
+    <div style="background:var(--ink);margin:-18px -18px 16px;padding:20px 18px;border-radius:16px 16px 0 0;display:flex;align-items:center;gap:14px">
+      <div style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#22c55e,#16a34a);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:#fff;flex-shrink:0;border:2px solid rgba(255,255,255,.2)">${CUR.name.trim()[0].toUpperCase()}</div>
+      <div><div style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:700;color:#fff">${CUR.name}</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:rgba(255,255,255,.4);margin-top:2px">${str>=2?'🔥 '+str+' giorni streak · ':'' }${tot.e} kcal oggi</div></div>
     </div>
-    <button class="big-btn" style="margin:0 0 8px" onclick="closeModal();snd();navPush(showProfilo)">👤 VAI AL PROFILO</button>
-    <button class="big-btn" style="margin:0 0 8px" onclick="closeModal();snd();navPush(showImpostazioni)">⚙️ IMPOSTAZIONI</button>
-    <button class="big-btn outline" style="margin:0 0 8px" onclick="closeModal();snd();exportData()">💾 BACKUP DATI</button>
-    <button class="big-btn danger" style="margin:0" onclick="closeModal();snd('delete');showLogout()">🚪 ESCI DALL'APP</button>`;
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+      <div style="background:var(--greenl);border:1.5px solid #86efac;border-radius:var(--rk);padding:12px;text-align:center">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:700;color:var(--greend)">${pct}%</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--greend);opacity:.7">OBIETTIVO KCAL</div>
+      </div>
+      <div style="background:#eff6ff;border:1.5px solid #93c5fd;border-radius:var(--rk);padding:12px;text-align:center">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:700;color:#1d4ed8">${tot.p}g</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:#1d4ed8;opacity:.7">PROTEINE OGGI</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:7px">
+      <button class="big-btn" style="margin:0;border-radius:var(--rk)" onclick="closeModal();snd();bnavGo(showProfilo,'profilo')">👤 VAI AL PROFILO</button>
+      <button class="big-btn" style="margin:0;border-radius:var(--rk)" onclick="closeModal();snd();navPush(showImpostazioni)">⚙️ IMPOSTAZIONI</button>
+      <button class="big-btn outline" style="margin:0;border-radius:var(--rk)" onclick="closeModal();snd();exportData()">💾 BACKUP DATI</button>
+      <button class="big-btn danger" style="margin:0;border-radius:var(--rk)" onclick="closeModal();snd('delete');showLogout()">🚪 ESCI</button>
+    </div>`;
   document.getElementById('modal').classList.add('open');
 }
 
@@ -1859,14 +2071,24 @@ function setHdr(title,sub,back){
   document.getElementById('hdr-title').textContent=title;
   document.getElementById('hdr-sub').textContent=sub||'';
   document.getElementById('back-btn').style.display=back?'flex':'none';
+  // Bottom nav always visible
 }
 function resetScreen(){
   const s=document.getElementById('screen');
-  // FIX: always restore scroll — NEVER set overflow:hidden on screen
   s.style.display='';s.style.flexDirection='';s.style.overflow='';
   s.scrollTop=0;
+  fabHide();
+  // Always keep header progress bar current
+  setTimeout(()=>{
+    const pb=document.getElementById('hdr-progress');
+    if(!pb||!S||!S.settings)return;
+    const tot=totDay();const burned=totBurnedToday();
+    const pct=Math.min(100,Math.round(tot.e/S.settings.kcal*100));
+    pb.style.width=pct+'%';
+    pb.className='kcal-progress-fill'+(pct>=100?' over':pct>=85?' warn':'');
+  },30);
 }
-function toggleWater(i){S.water=(S.water===i+1)?i:i+1;saveState();navReplace(showHome);}
+function toggleWater(i){S.water=(S.water===i+1)?i:i+1;saveState();const ml=S.water*250;showToast(S.water===0?"💧 Acqua azzerata":"💧 "+ml+"ml — "+S.water+" bicchieri");navReplace(showHome);}
 
 /* ════════ SPORT / CALORIE ════════ */
 const WT=['Tutti','Forza','Cardio','HIIT','Stretching','Yoga','Calcio','Nuoto','Ciclismo','Tennis','Basket','Corsa','Camminata','Boxe','Pilates','Altro'];
@@ -2132,6 +2354,25 @@ function buildYtBlock(exId,exName,muscleName){
   </div>`;
   return html;
 }
+/* MET values basati su Compendium of Physical Activities (Ainsworth 2011)
+   Corretti con fattore 0.8 per sovrastima MET in contesto reale */
+const SPORT_MET={
+  Forza:3.5,    // strength training moderato-intenso
+  Cardio:6.0,   // cardio generico (ellittica, step)
+  HIIT:8.0,     // high intensity interval training
+  Stretching:2.3,
+  Yoga:2.5,
+  Calcio:7.0,
+  Nuoto:7.0,
+  Ciclismo:6.8,
+  Tennis:6.5,
+  Basket:6.5,
+  Corsa:9.0,    // ~10km/h
+  Camminata:3.5,
+  Boxe:8.0,
+  Pilates:3.0,
+  Altro:5.0,
+};
 function calcBurnedKcal(type,duration,peso){
   const met=SPORT_MET[type]||5;
   const kg=peso||(S.profile.entries&&S.profile.entries.length?parseFloat(S.profile.entries[S.profile.entries.length-1].peso)||70:70);
@@ -2333,8 +2574,7 @@ function showRiepilogo(fb){
     <div style="margin-top:10px;padding:10px;background:${giorniDeficit>=4?'var(--greenl)':'#fff7ed'};border:1.5px solid ${giorniDeficit>=4?'#86efac':'#fde68a'};border-radius:var(--r);font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink2)">
       ${giorniDeficit>=5?'🏆 Settimana eccellente! Sei in deficit la maggior parte dei giorni.':giorniDeficit>=3?'👍 Buona settimana! Continua così.':giorniDeficit>=1?'💪 Inizia bene. Prova ad aumentare i giorni in deficit.':'📝 Inizia a registrare i tuoi pasti per monitorare i progressi!'}
     </div>
-  </div></div>
-  <div class="home-pill"><button onclick="navGoHome()">← HOME</button></div>`;
+  </div></div>`;
   document.getElementById('screen').innerHTML=html;
 }
 
@@ -2426,7 +2666,7 @@ function saveCustomFood(){
   const id=9000+S.customFoods.length+1;
   const food={id,name,cat:document.getElementById('cf-cat').value||'Personalizzati',e,p:parseFloat(document.getElementById('cf-p').value)||0,c:parseFloat(document.getElementById('cf-c').value)||0,f:parseFloat(document.getElementById('cf-f').value)||0,fi:parseFloat(document.getElementById('cf-fi').value)||0,s:0,sa:0,na:0,emoji:'🍽',custom:true};
   S.customFoods.push(food);saveState();closeModal();
-  alert(`✅ "${name}" aggiunto al database!`);
+  showToast('✅ '+name+' aggiunto!','green');
 }
 function getDB(){return [...DB,...(S.customFoods||[])];}
 
@@ -2463,7 +2703,7 @@ function showRicette(fb){
       </div>`;
     });
   }
-  html+=`<div class="home-pill"><button onclick="navGoHome()">← HOME</button></div>`;
+  html+=``;
   document.getElementById('screen').innerHTML=html;
 }
 function showCreaRicetta(){
@@ -2493,8 +2733,7 @@ function editRicetta(i){
         ${[['KCAL',Math.round(tot.e),'var(--ink)'],['PROT',tot.p.toFixed(1)+'g','#16a34a'],['CARB',tot.c.toFixed(1)+'g','#d97706'],['GRAS',tot.f.toFixed(1)+'g','#dc2626']].map(([l,v,c])=>`<div class="stat-cell"><div class="stat-val" style="font-size:15px;color:${c}">${v}</div><div class="stat-lbl">${l}</div></div>`).join('')}
       </div>
       <div style="margin-top:8px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink3)">Per porzione: ${Math.round(tot.e/(r.portions||1))} kcal</div>
-    </div></div>`:''}
-    <div class="home-pill"><button onclick="navPush(showRicette)">← RICETTE</button></div>`;
+    </div></div>`:''}`;
   document.getElementById('screen').innerHTML=html;
 }
 function addIngredient(recipeIdx){
@@ -2583,7 +2822,7 @@ function showStoricoDiario(fb){
     </div>`;
   });
   if(!hasAny)html+=`<div class="empty"><div class="empty-ico">📅</div><div class="empty-txt">NESSUN DATO<br>Inizia a registrare i pasti!</div></div>`;
-  html+=`<div class="home-pill"><button onclick="navGoHome()">← HOME</button></div>`;
+  html+=``;
   document.getElementById('screen').innerHTML=html;
 }
 function showGiornoStorico(ds){
@@ -2609,7 +2848,7 @@ function showGiornoStorico(ds){
   html=`<div class="card"><div class="card-hdr">📊 RIEPILOGO — ${Math.round(totE)} kcal</div><div class="card-body">
     ${macroRing(Math.round(totE),+totP.toFixed(1),+totC.toFixed(1),+totF.toFixed(1))}
   </div></div>`+html;
-  html+=`<div class="home-pill"><button onclick="navBack()">← STORICO</button></div>`;
+  html+=``;
   document.getElementById('screen').innerHTML=html;
 }
 
@@ -2677,7 +2916,7 @@ function showReportMensile(fb){
       </div>`;
     }
   }
-  html+=`<div class="home-pill"><button onclick="navGoHome()">← HOME</button></div>`;
+  html+=``;
   document.getElementById('screen').innerHTML=html;
 }
 
@@ -2750,7 +2989,7 @@ function showWorkoutStorico(){
     </div>`;
   });
   if(!hasAny)html+=`<div class="empty"><div class="empty-ico">💪</div><div class="empty-txt">NESSUN WORKOUT<br>Inizia ad allenarti!</div></div>`;
-  html+=`<div class="home-pill"><button onclick="navGoHome()">← HOME</button></div>`;
+  html+=``;
   document.getElementById('screen').innerHTML=html;
 }
 
@@ -2784,7 +3023,13 @@ window.addEventListener('popstate',function(e){
     try{history.replaceState({nt:true,idx:0},'','');}catch{}
   }
 });
-function navPush(fn){_navIdx++;_navStack.push(fn);try{history.pushState({nt:true,idx:_navIdx},'','');}catch{}fn(false);}
+function navPush(fn){
+  _navIdx++;_navStack.push(fn);
+  try{history.pushState({nt:true,idx:_navIdx},'','');}catch{}
+  const s=document.getElementById('screen');
+  if(s){s.classList.add('anim-in');setTimeout(()=>s.classList.remove('anim-in'),350);}
+  fn(false);
+}
 function navReplace(fn){if(_navStack.length>0)_navStack[_navStack.length-1]=fn;else _navStack.push(fn);fn(false);}
 function navBack(){
   if(_navLock)return;_navLock=true;setTimeout(()=>_navLock=false,400);
@@ -2796,10 +3041,18 @@ function navBack(){
   } else {
     _navStack=[];_navIdx=0;
     try{history.replaceState({nt:true,idx:0},'','');}catch(e){}
+    bnavSet('home');
     showHome(true);
   }
 }
-function navGoHome(){_navStack=[];_navIdx=0;try{history.replaceState({nt:true,idx:0},'','');}catch(e){}showHome(true);}
+function navGoHome(){
+  _navStack=[];_navIdx=0;
+  try{history.replaceState({nt:true,idx:0},'','');}catch(e){}
+  bnavSet('home');
+  const s=document.getElementById('screen');
+  if(s){s.classList.add('anim-in');setTimeout(()=>s.classList.remove('anim-in'),350);}
+  showHome(true);
+}
 
 /* ════════ HOME ════════ */
 function showHome(fromBack){
@@ -2807,44 +3060,59 @@ function showHome(fromBack){
   const tot=totDay();const burned=totBurnedToday();
   const net=Math.max(0,tot.e-burned);
   const pct=Math.min(100,Math.round(tot.e/S.settings.kcal*100));
+  const remaining=Math.max(0,S.settings.kcal-tot.e+burned);
+  const protTarget=Math.round(S.settings.kcal*S.settings.protPct/400);
+  const str=calcStreak();
+  // Update header progress bar
+  setTimeout(()=>{
+    const pb=document.getElementById('hdr-progress');
+    if(pb){pb.style.width=pct+'%';pb.className='kcal-progress-fill'+(pct>=100?' over':pct>=85?' warn':'');}
+  },50);
   document.getElementById('screen').innerHTML=`
-    <div class="day-strip">
-      <div>
-        <div class="ds-kcal">${tot.e}<span style="font-size:13px;font-weight:400;opacity:.6"> kcal</span>${burned?' <span style="font-size:12px;font-weight:700;color:#fbbf24">−'+burned+'🔥</span>':''}
+    <!-- HERO STRIP -->
+    <div style="background:var(--ink);color:#fff;padding:14px 16px 12px;">
+      <div style="display:flex;align-items:center;gap:14px">
+        ${buildKcalRing(tot.e,S.settings.kcal)}
+        <div style="flex:1;min-width:0">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;opacity:.45;letter-spacing:.8px;margin-bottom:3px">CALORIE OGGI</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:700;line-height:1">${tot.e}<span style="font-size:12px;font-weight:400;opacity:.5"> / ${S.settings.kcal}</span>${burned?` <span style="font-size:11px;color:#fbbf24">−${burned}🔥</span>`:''}</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;opacity:.5;margin-top:3px">${remaining>0?`Rimangono ${remaining} kcal`:'Obiettivo raggiunto! 🎉'}</div>
         </div>
-        <div class="ds-label">OGGI · OBJ ${S.settings.kcal} · ${pct}%${burned?' · NET '+net:''}</div>
       </div>
-      <div class="ds-macros">
-        <div class="ds-mac"><div class="ds-mv">${tot.p}g</div><div class="ds-ml">PROT</div></div>
-        <div class="ds-mac"><div class="ds-mv">${tot.c}g</div><div class="ds-ml">CARB</div></div>
-        <div class="ds-mac"><div class="ds-mv">${tot.f}g</div><div class="ds-ml">GRAS</div></div>
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <div class="macro-pill"><div class="macro-pill-v">${tot.p}g</div><div class="macro-pill-l">PROT</div></div>
+        <div class="macro-pill"><div class="macro-pill-v">${tot.c}g</div><div class="macro-pill-l">CARB</div></div>
+        <div class="macro-pill"><div class="macro-pill-v">${tot.f}g</div><div class="macro-pill-l">GRAS</div></div>
+        <div class="macro-pill" style="background:rgba(99,179,237,.2)"><div class="macro-pill-v" style="color:#93c5fd">${S.water*250}ml</div><div class="macro-pill-l">ACQUA</div></div>
       </div>
     </div>
-    ${(()=>{const str=calcStreak();if(str<2)return '';return '<div class="streak-banner"><div class="streak-fire">🔥</div><div class="streak-txt"><div class="streak-n">'+str+' giorni</div><div class="streak-lbl">STREAK CONSECUTIVO</div></div></div>';})()}
+    ${str>=2?`<div class="streak-banner"><div class="streak-fire">🔥</div><div class="streak-txt"><div class="streak-n">${str} giorni</div><div class="streak-lbl">STREAK CONSECUTIVO</div></div><div style="font-family:'IBM Plex Mono',monospace;font-size:28px;font-weight:700;opacity:.25">${str>=30?'🏆':str>=14?'⭐':str>=7?'🔥':''}</div></div>`:''}
+    <!-- QUICK ACTIONS -->
+    <div style="padding:10px 12px 4px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--ink3);text-transform:uppercase">Accesso Rapido</div>
     <div class="nk-grid">
-      <div class="nk-btn ico-diario" onclick="snd();navPush(showDiario)"><div class="nk-ico-wrap">${ICO.diario}</div><div class="nk-lbl">Diario</div></div>
+      <div class="nk-btn ico-diario" onclick="snd();bnavGo(showDiario,'diario')"><div class="nk-ico-wrap">${ICO.diario}</div><div class="nk-lbl">Diario</div></div>
       <div class="nk-btn ico-alimenti" onclick="snd();navPush(()=>showAlimenti(null))"><div class="nk-ico-wrap">${ICO.alimenti}</div><div class="nk-lbl">Alimenti</div></div>
       <div class="nk-btn ico-piano" onclick="snd();navPush(showPiano)"><div class="nk-ico-wrap">${ICO.piano}</div><div class="nk-lbl">Piano</div></div>
-      <div class="nk-btn ico-workout" onclick="snd();navPush(showWorkout)"><div class="nk-ico-wrap">${ICO.workout}</div><div class="nk-lbl">Workout</div></div>
-      <div class="nk-btn ico-profilo" onclick="snd();navPush(showProfilo)"><div class="nk-ico-wrap">${ICO.profilo}</div><div class="nk-lbl">Profilo</div></div>
-      <div class="nk-btn ico-setting" onclick="snd();navPush(showImpostazioni)"><div class="nk-ico-wrap">${ICO.setting}</div><div class="nk-lbl">Impostazioni</div></div>
-      <div class="nk-btn" style="grid-column:span 2" onclick="snd();navPush(showRicette)"><div style="display:flex;align-items:center;gap:12px;width:100%;padding:0 8px"><div class="nk-ico-wrap" style="background:linear-gradient(135deg,#fb923c,#ea580c);width:48px;height:48px;border-radius:12px">👨‍🍳</div><div style="text-align:left"><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.5px;color:var(--ink)">LE MIE RICETTE</div><div style="font-size:10px;color:var(--ink3);margin-top:2px">${S.recipes?.length||0} ricette salvate</div></div></div></div>
-      <div class="nk-btn" style="grid-column:span 2" onclick="snd();navPush(showMieiAlimenti)"><div style="display:flex;align-items:center;gap:12px;width:100%;padding:0 8px"><div class="nk-ico-wrap" style="background:linear-gradient(135deg,#7c3aed,#6d28d9);width:48px;height:48px;border-radius:12px">➕</div><div style="text-align:left"><div style="font-family:IBM Plex Mono,monospace;font-size:12px;font-weight:700;letter-spacing:.5px;color:var(--ink)">I MIEI ALIMENTI</div><div style="font-size:10px;color:var(--ink3);margin-top:2px">${(S.customFoods||[]).length} alimenti personalizzati</div></div></div></div>
+      <div class="nk-btn ico-workout" onclick="snd();bnavGo(showWorkout,'workout')"><div class="nk-ico-wrap">${ICO.workout}</div><div class="nk-lbl">Workout</div></div>
+      <div class="nk-btn" style="grid-column:span 2" onclick="snd();navPush(showRicette)"><div style="display:flex;align-items:center;gap:12px;width:100%;padding:0 8px"><div class="nk-ico-wrap" style="background:linear-gradient(135deg,#fb923c,#ea580c);width:52px;height:52px;border-radius:13px;font-size:26px">👨‍🍳</div><div style="text-align:left"><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.5px;color:var(--ink)">LE MIE RICETTE</div><div style="font-size:10px;color:var(--ink3);margin-top:2px">${S.recipes?.length||0} ricette salvate</div></div><div style="margin-left:auto;font-size:16px;opacity:.3">›</div></div></div>
+      <div class="nk-btn" style="grid-column:span 2" onclick="snd();navPush(showMieiAlimenti)"><div style="display:flex;align-items:center;gap:12px;width:100%;padding:0 8px"><div class="nk-ico-wrap" style="background:linear-gradient(135deg,#a855f7,#7c3aed);width:52px;height:52px;border-radius:13px;font-size:26px">➕</div><div style="text-align:left"><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.5px;color:var(--ink)">I MIEI ALIMENTI</div><div style="font-size:10px;color:var(--ink3);margin-top:2px">${(S.customFoods||[]).length} alimenti personalizzati</div></div><div style="margin-left:auto;font-size:16px;opacity:.3">›</div></div></div>
     </div>
-    ${(()=>{const fb=getDailyFeedback(tot,burned,S.settings.kcal,Math.round(S.settings.kcal*S.settings.protPct/400));return fb.map(m=>`<div style="margin:0 12px 6px;padding:12px 14px;background:var(--card);border:1.5px solid ${m.col};border-radius:var(--rk);display:flex;align-items:flex-start;gap:10px"><span style="font-size:20px;flex-shrink:0">${m.ico}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink2);line-height:1.5">${m.txt}</span></div>`).join('');})()}
-    <div style="padding:0 12px 4px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
-      <button class="big-btn outline" style="font-size:10px;padding:10px;margin:0" onclick="snd();navPush(showRiepilogo)">📅 SETTIMANA</button>
-      <button class="big-btn outline" style="font-size:10px;padding:10px;margin:0" onclick="snd();navPush(showReportMensile)">📊 MESE</button>
-    </div>
-    <div style="padding:0 12px 4px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
-      <button class="big-btn outline" style="font-size:10px;padding:10px;margin:0" onclick="snd();navPush(showStoricoDiario)">📖 STORICO PASTI</button>
-      <button class="big-btn outline" style="font-size:10px;padding:10px;margin:0" onclick="snd();navPush(showWorkoutStorico)">💪 STORICO SPORT</button>
-    </div>
-    <div style="padding:0 12px 8px">
+    <!-- FEEDBACK CARDS -->
+    ${(()=>{const fb=getDailyFeedback(tot,burned,S.settings.kcal,protTarget);if(!fb.length)return '';return `<div style="padding:0 12px 4px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--ink3);text-transform:uppercase;padding-top:4px">Suggerimenti</div>`+fb.map(m=>`<div style="margin:0 12px 6px;padding:11px 13px;background:var(--card);border:1.5px solid ${m.col};border-radius:var(--rk);display:flex;align-items:flex-start;gap:10px;box-shadow:0 1px 4px rgba(0,0,0,.05)"><span style="font-size:18px;flex-shrink:0;margin-top:1px">${m.ico}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink2);line-height:1.6">${m.txt}</span></div>`).join('');})()}
+    <!-- ACQUA -->
+    <div style="padding:0 12px 8px;margin-top:2px">
       <div class="card">
-        <div class="card-hdr">💧 ACQUA OGGI <span style="color:#86efac">${S.water}/${S.settings.waterGoal||8} · ${S.water*250}ml</span></div>
-        <div class="card-body"><div class="water-cups">${Array.from({length:S.settings.waterGoal||8},(_,i)=>`<div class="w-cup ${i<S.water?'filled':''}" onclick="snd();toggleWater(${i})">💧</div>`).join('')}</div></div>
+        <div class="card-hdr">💧 ACQUA <span style="color:#86efac">${S.water}/${S.settings.waterGoal||8} bicchieri · ${S.water*250}ml</span></div>
+        <div class="card-body">
+          <div class="water-cups">${Array.from({length:S.settings.waterGoal||8},(_,i)=>`<div class="w-cup ${i<S.water?'filled':''}" onclick="snd();toggleWater(${i})">💧</div>`).join('')}</div>
+          <div style="margin-top:8px;height:4px;background:#e8e3d8;border-radius:2px;overflow:hidden"><div style="height:100%;background:linear-gradient(90deg,#3b82f6,#60a5fa);border-radius:2px;transition:width .4s;width:${Math.min(100,Math.round(S.water/(S.settings.waterGoal||8)*100))}%"></div></div>
+        </div>
       </div>
+    </div>
+    <!-- QUICK STATS ROW -->
+    <div style="padding:0 12px 12px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <button class="big-btn outline" style="font-size:10px;padding:11px;margin:0;border-radius:var(--rk)" onclick="snd();navPush(showRiepilogo)">📅 SETTIMANA</button>
+      <button class="big-btn outline" style="font-size:10px;padding:11px;margin:0;border-radius:var(--rk)" onclick="snd();navPush(showReportMensile)">📊 MESE</button>
     </div>`;
 }
 
@@ -2852,9 +3120,27 @@ function showHome(fromBack){
 function showDiario(fromBack){
   resetScreen();setHdr('DIARIO','PASTI DI OGGI',true);
   const tot=totDay();const burned=totBurnedToday();const net=tot.e-burned;
+  const pct=Math.min(100,Math.round(tot.e/S.settings.kcal*100));
+  const remaining=Math.max(0,S.settings.kcal-tot.e+burned);
+  setTimeout(()=>{
+    const pb=document.getElementById('hdr-progress');
+    if(pb){pb.style.width=pct+'%';pb.className='kcal-progress-fill'+(pct>=100?' over':pct>=85?' warn':'');}
+  },50);
   document.getElementById('screen').innerHTML=`
     <div class="meal-grid">
-      ${MK.map(k=>{const m=MM[k];const kk=Math.round((S.meals[k]||[]).reduce((a,it)=>a+it.food.e*it.g/100,0));return`<div class="meal-btn ${m.cls}" onclick="snd();navPush(()=>showMeal('${k}'))"><div class="meal-ico">${m.ico}</div><div class="meal-lbl">${m.label}</div><div class="meal-kk" style="color:${m.color}">${kk} kcal</div><div class="meal-n">${(S.meals[k]||[]).length} alim.</div></div>`}).join('')}
+      ${MK.map(k=>{
+        const m=MM[k];
+        const items=S.meals[k]||[];
+        const kk=Math.round(items.reduce((a,it)=>a+it.food.e*it.g/100,0));
+        const mealPct=Math.min(100,Math.round(kk/(S.settings.kcal/4)*100));
+        return`<div class="meal-btn ${m.cls}" onclick="snd();navPush(()=>showMeal('${k}'))">
+          <div class="meal-ico">${m.ico}</div>
+          <div class="meal-lbl">${m.label}</div>
+          <div class="meal-kk" style="color:${m.color}">${kk} kcal</div>
+          <div class="meal-n">${items.length} alim.</div>
+          <div style="width:100%;height:3px;background:rgba(0,0,0,.1);border-radius:2px;margin-top:4px;overflow:hidden"><div style="height:100%;width:${mealPct}%;background:${m.color};border-radius:2px;transition:width .4s"></div></div>
+        </div>`;
+      }).join('')}
     </div>
     <div style="padding:0 12px 10px">
       <div class="card"><div class="card-hdr">📊 TOTALE GIORNALIERO</div><div class="card-body">
@@ -2866,8 +3152,7 @@ function showDiario(fromBack){
         ${mBar('GRASSI',tot.f,Math.round(S.settings.kcal*.25/9),'#dc2626')}
         ${mBar('FIBRE',tot.fi,25,'#7c3aed')}
       </div></div>
-    </div>
-    <div class="home-pill"><button onclick="navGoHome()">← HOME</button></div>`;
+    </div>`;
 }
 
 /* ════════ PASTO ════════ */
@@ -2880,13 +3165,78 @@ function showMeal(mk,fromBack){
   if(!items.length){html=`<div class="empty"><div class="empty-ico">${m.ico}</div><div class="empty-txt">NESSUN ALIMENTO<br>AGGIUNTO</div></div>`;}
   else items.forEach((it,i)=>{
     const k=Math.round(it.food.e*it.g/100);
-    html+=`<div class="log-item"><div class="log-emo">${it.food.emoji||'🍽'}</div><div class="log-inf"><div class="log-nm">${it.food.name}</div><div class="log-dt">${it.g}g · P:${(it.food.p*it.g/100).toFixed(1)} C:${(it.food.c*it.g/100).toFixed(1)} G:${(it.food.f*it.g/100).toFixed(1)}</div></div><div class="log-kk">${k}</div><button class="log-del" onclick="snd('delete');rmMeal('${mk}',${i})">✕</button></div>`;
+    html+=`<div class="log-item" onclick="snd();editMealItem('${mk}',${i})" style="cursor:pointer">
+      <div class="log-emo">${it.food.emoji||'🍽'}</div>
+      <div class="log-inf">
+        <div class="log-nm">${it.food.name}</div>
+        <div class="log-dt">${it.g}g · P:${(it.food.p*it.g/100).toFixed(1)} C:${(it.food.c*it.g/100).toFixed(1)} G:${(it.food.f*it.g/100).toFixed(1)}</div>
+      </div>
+      <div class="log-kk">${k}</div>
+      <button class="log-del" onclick="event.stopPropagation();snd('delete');rmMeal('${mk}',${i})">✕</button>
+    </div>`;
   });
   html+=`<div class="add-btn-row"><button class="add-btn" onclick="snd();navPush(()=>showAlimenti('${mk}'))">+ AGGIUNGI ALIMENTO</button></div>`;
-  html+=`<div class="home-pill"><button onclick="navGoHome()">← HOME</button></div>`;
+  html+=``;
   document.getElementById('screen').innerHTML=html;
 }
-function rmMeal(mk,i){S.meals[mk].splice(i,1);saveState();navReplace(()=>showMeal(mk,false));}
+let _undoMeal=null,_undoTimer=null;
+function editMealItem(mk,i){
+  const it=S.meals[mk]&&S.meals[mk][i];if(!it)return;
+  const f=it.food;
+  document.getElementById('modal-box').innerHTML=`
+    <div class="modal-handle"></div>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+      <span style="font-size:36px">${f.emoji||'🍽'}</span>
+      <div>
+        <div class="modal-title" style="margin-bottom:2px">${f.name}</div>
+        <div class="modal-sub">${f.e} kcal/100g</div>
+      </div>
+    </div>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;text-transform:uppercase;color:var(--ink3);margin-bottom:6px">Quantità (grammi)</div>
+    <input class="gram-inp" id="edit-g" type="number" value="${it.g}" min="1" max="2000" inputmode="decimal" style="width:100%;text-align:center;font-size:22px" oninput="updEditPrev(${i},'${mk}')">
+    <div class="prev-box" id="edit-pv" style="margin-top:8px">${it.g}g → ${Math.round(f.e*it.g/100)} kcal · P:${(f.p*it.g/100).toFixed(1)}g · C:${(f.c*it.g/100).toFixed(1)}g · G:${(f.f*it.g/100).toFixed(1)}g</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px">
+      <button class="conf-btn" style="margin-top:0;background:var(--paper);color:var(--ink);border:1.5px solid var(--ink)" onclick="snd('delete');rmMeal('${mk}',${i});closeModal()">🗑 RIMUOVI</button>
+      <button class="conf-btn green-btn" style="margin-top:0" onclick="snd('confirm');saveMealEdit('${mk}',${i})">✓ SALVA</button>
+    </div>`;
+  document.getElementById('modal').classList.add('open');
+}
+function updEditPrev(i,mk){
+  const it=S.meals[mk]&&S.meals[mk][i];if(!it)return;
+  const g=parseFloat(document.getElementById('edit-g').value)||0;
+  const f=it.food;
+  document.getElementById('edit-pv').textContent=`${g}g → ${Math.round(f.e*g/100)} kcal · P:${(f.p*g/100).toFixed(1)}g · C:${(f.c*g/100).toFixed(1)}g · G:${(f.f*g/100).toFixed(1)}g`;
+}
+function saveMealEdit(mk,i){
+  const g=parseFloat(document.getElementById('edit-g').value)||0;
+  if(g<=0){showToast('⚠ Grammi non validi','red');return;}
+  S.meals[mk][i].g=g;saveState();closeModal();
+  showToast('✅ Quantità aggiornata','green');
+  navReplace(()=>showMeal(mk,false));
+}
+function rmMeal(mk,i){
+  const item=S.meals[mk][i];
+  S.meals[mk].splice(i,1);saveState();
+  _undoMeal={mk,i,item};
+  clearTimeout(_undoTimer);
+  // Show undo toast
+  const el=document.getElementById('toast');
+  if(el){
+    el.innerHTML='🗑 Rimosso &nbsp;<b style="text-decoration:underline;cursor:pointer" onclick="undoRmMeal()">ANNULLA</b>';
+    el.className='toast show';
+    _undoTimer=setTimeout(()=>{el.classList.remove('show');_undoMeal=null;},3500);
+  }
+  navReplace(()=>showMeal(mk,false));
+}
+function undoRmMeal(){
+  if(!_undoMeal)return;
+  clearTimeout(_undoTimer);
+  const{mk,i,item}=_undoMeal;_undoMeal=null;
+  if(!S.meals[mk])S.meals[mk]=[];
+  S.meals[mk].splice(i,0,item);saveState();
+  showToast('↩ Ripristinato','green');
+  navReplace(()=>showMeal(mk,false));
+}
 
 /* ════════ ALIMENTI — FIX SCROLL ════════
    La schermata usa la .screen normale che scrolla.
@@ -2911,13 +3261,19 @@ function renderAlimenti(){
     <div class="cats-bar" id="cr">${cats.map(c=>`<div class="cat-pill ${c===_cat?'on':''}" onclick="onCat('${c}')">${c}</div>`).join('')}</div>
     <div id="fl">${foodListHTML()}</div>`;
 }
+function hl(text,q){
+  if(!q||!text)return text||'';
+  try{const re=new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi');return String(text).replace(re,'<mark>$1</mark>');}
+  catch(e){return text;}
+}
 function foodListHTML(){
-  let r=getDB();
+  const _db=getDB(); // single call
+  let r=_db;
   if(_srch)r=r.filter(f=>f.name.toLowerCase().includes(_srch.toLowerCase())||(f.brand||'').toLowerCase().includes(_srch.toLowerCase())||f.cat.toLowerCase().includes(_srch.toLowerCase()));
   if(_cat!=='Tutti')r=r.filter(f=>f.cat===_cat);
   // Mostra recenti se non c'è ricerca e categoria = Tutti
   if(!_srch&&_cat==='Tutti'&&S.recentFoods&&S.recentFoods.length){
-    const recenti=S.recentFoods.map(id=>getDB().find(x=>x.id===id)).filter(Boolean);
+    const recenti=S.recentFoods.map(id=>_db.find(x=>x.id===id)).filter(Boolean);
     if(recenti.length){
       const recHtml=`<div style="padding:8px 14px 4px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--ink3);background:var(--paper)">⏱ USATI DI RECENTE</div>`+
         recenti.map(f=>`<div class="food-row" style="background:#fffef9" onclick="snd();openFoodModal(${f.id})"><div class="food-emo">${f.emoji||'🍽'}</div><div class="food-inf"><div class="food-nm">${f.name}</div><div class="food-ct">${f.cat}</div></div><div class="food-kk">${f.e}<span class="food-kk-u">kcal</span></div></div>`).join('')+
@@ -2925,10 +3281,20 @@ function foodListHTML(){
       return recHtml+r.slice(0,60).map(f=>`<div class="food-row" onclick="snd();openFoodModal(${f.id})"><div class="food-emo">${f.emoji||'🍽'}</div><div class="food-inf"><div class="food-nm">${f.name}${f.brand?` <span style="font-weight:400;font-size:10px;color:var(--ink3)">· ${f.brand}</span>`:''}</div><div class="food-ct">${f.cat} · P:${f.p}g C:${f.c}g G:${f.f}g</div></div><div class="food-kk">${f.e}<span class="food-kk-u">kcal</span></div></div>`).join('');
     }
   }
-  if(!r.length)return`<div class="empty"><div class="empty-ico">🔍</div><div class="empty-txt">NESSUN RISULTATO</div><div style="margin-top:16px"><button onclick="snd();showAddCustomFood()" style="padding:12px 20px;background:var(--green);color:#fff;border:none;border-radius:var(--rk);font-family:IBM Plex Mono,monospace;font-size:11px;font-weight:700;cursor:pointer;letter-spacing:.5px">+ AGGIUNGI ALIMENTO PERSONALIZZATO</button></div></div>`;
-  return r.slice(0,80).map(f=>`<div class="food-row" onclick="snd();openFoodModal(${f.id})"><div class="food-emo">${f.emoji||'🍽'}</div><div class="food-inf"><div class="food-nm">${f.name}${f.brand?` <span style="font-weight:400;font-size:10px;color:var(--ink3)">· ${f.brand}</span>`:''}</div><div class="food-ct">${f.cat} · P:${f.p}g C:${f.c}g G:${f.f}g</div></div><div class="food-kk">${f.e}<span class="food-kk-u">kcal</span></div></div>`).join('')+(r.length>80?`<div style="padding:10px;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink3)">+${r.length-80} · affina la ricerca</div>`:'');
+  if(!r.length)return`<div class="empty"><div class="empty-ico">🔍</div><div class="empty-txt">NESSUN RISULTATO PER<br>"${_srch}"</div><div style="margin-top:16px"><button onclick="snd();showAddCustomFood()" style="padding:12px 20px;background:var(--green);color:#fff;border:none;border-radius:var(--rk);font-family:IBM Plex Mono,monospace;font-size:11px;font-weight:700;cursor:pointer;letter-spacing:.5px">+ AGGIUNGI ALIMENTO PERSONALIZZATO</button></div></div>`;
+  return r.slice(0,80).map(f=>`<div class="food-row" onclick="snd();openFoodModal(${f.id})"><div class="food-emo">${f.emoji||'🍽'}</div><div class="food-inf"><div class="food-nm">${hl(f.name,_srch)}${f.brand?` <span style="font-weight:400;font-size:10px;color:var(--ink3)">· ${hl(f.brand,_srch)}</span>`:''}</div><div class="food-ct">${f.cat} · P:${f.p}g C:${f.c}g G:${f.f}g</div></div><div class="food-kk">${f.e}<span class="food-kk-u">kcal</span></div></div>`).join('')+(r.length>80?`<div style="padding:10px;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink3)">+${r.length-80} · affina la ricerca</div>`:'');
 }
-function onSrch(v){_srch=v;_cat='Tutti';document.getElementById('fl').innerHTML=foodListHTML();document.querySelectorAll('#cr .cat-pill').forEach(p=>p.classList.toggle('on',p.textContent==='Tutti'));}
+let _srchTimer=null;
+function onSrch(v){
+  _srch=v;
+  clearTimeout(_srchTimer);
+  _srchTimer=setTimeout(()=>{
+    _cat='Tutti';
+    const fl=document.getElementById('fl');
+    if(fl)fl.innerHTML=foodListHTML();
+    document.querySelectorAll('#cr .cat-pill').forEach(p=>p.classList.toggle('on',p.textContent==='Tutti'));
+  },160);
+}
 function onCat(c){_cat=c;document.getElementById('fl').innerHTML=foodListHTML();document.querySelectorAll('#cr .cat-pill').forEach(p=>p.classList.toggle('on',p.textContent===c));}
 
 /* ════════ FOOD MODAL ════════ */
@@ -2972,7 +3338,8 @@ function addFood(id){
   const mk=document.getElementById('ms').value;
   if(!S.meals[mk])S.meals[mk]=[];
   S.meals[mk].push({food:f,g});addToRecent(f);saveState();closeModal();
-  // torna al pasto di provenienza
+  const kcal=Math.round(f.e*g/100);
+  showToast('✅ '+f.name+' · '+kcal+' kcal','green');
   if(_navStack.length>1)_navStack.pop();
   navReplace(()=>showMeal(_mt||mk,false));
 }
@@ -3016,7 +3383,7 @@ function renderPiano(){
       </div></div>`;
   });
   html+=`<div style="padding:10px 12px"><textarea placeholder="Note del giorno..." oninput="getPlan('${_pd}').note=this.value;saveState()">${plan.note||''}</textarea></div>`;
-  html+=`<div class="home-pill"><button onclick="navGoHome()">← HOME</button></div>`;
+  html+=``;
   document.getElementById('screen').innerHTML=html;
 }
 function applyDietPlan(key){
@@ -3028,7 +3395,7 @@ function copyDayToDiary(){
   if(!confirm('Copia il piano di '+fmtDate(_pd)+' nel diario di OGGI?'))return;
   const plan=getPlan(_pd);
   MK.forEach(k=>{(plan[k]||[]).forEach(it=>{const fd=getDB().find(x=>x.id===it.foodId);if(fd){if(!S.meals[k])S.meals[k]=[];S.meals[k].push({food:fd,g:it.g});}});});
-  saveState();alert('✅ Piano copiato nel diario di oggi!');
+  saveState();showToast('✅ Piano copiato!','green');
 }
 function getPlan(d){if(!S.calPlans[d])S.calPlans[d]={colazione:[],pranzo:[],cena:[],merenda:[],note:''};return S.calPlans[d];}
 function planTot(d){const p=getPlan(d);let t={e:0,p:0,c:0,f:0};MK.forEach(k=>(p[k]||[]).forEach(it=>{const fd=getDB().find(x=>x.id===it.foodId);if(fd){const r=it.g/100;t.e+=fd.e*r;t.p+=fd.p*r;t.c+=fd.c*r;t.f+=fd.f*r;}}));return{e:Math.round(t.e),p:+(t.p.toFixed(1)),c:+(t.c.toFixed(1)),f:+(t.f.toFixed(1))};}
@@ -3071,35 +3438,42 @@ function confirmPlanAdd(id){
 
 /* ════════ WORKOUT ════════ */
 let _wd=TODAY,_wt='Tutti';
-function showWorkout(fb){resetScreen();setHdr('WORKOUT','ALLENAMENTI',true);renderWo();}
+function showWorkout(fb){resetScreen();setHdr('WORKOUT','ALLENAMENTI',true);fabShow('workout');renderWo();}
 function renderWo(){
   const wos=(S.workouts[_wd]||[]);const filtered=_wt==='Tutti'?wos:wos.filter(w=>w.type===_wt);
   const totBurned=wos.reduce((a,w)=>a+calcBurnedKcal(w.type,w.duration,null),0);
+  const totMin=wos.reduce((a,w)=>a+(parseFloat(w.duration)||0),0);
   let html=`
-  <div style="background:var(--ink);color:#fff;padding:10px 16px;display:flex;align-items:center;justify-content:space-between">
-    <div><div style="font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:700">🔥 ${totBurned} <span style="font-size:13px;font-weight:400;opacity:.6">kcal bruciate</span></div>
-    <div style="font-size:9px;opacity:.5;font-family:'IBM Plex Mono',monospace">${wos.length} ALLENAMENTI</div></div>
+  <div style="background:var(--ink);color:#fff;padding:14px 16px 12px">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:10px">
+      <div style="width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,#f87171,#dc2626);display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0">🏋️</div>
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:24px;font-weight:700">🔥 ${totBurned} <span style="font-size:12px;font-weight:400;opacity:.5">kcal</span></div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;opacity:.45;margin-top:2px">${wos.length} allenamenti · ${totMin} minuti totali</div>
+      </div>
+    </div>
+    <button onclick="snd();addWoModal()" style="width:100%;padding:12px;background:var(--green);border:none;border-radius:10px;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;color:#fff;letter-spacing:.8px;cursor:pointer;text-transform:uppercase">+ Aggiungi Allenamento</button>
   </div>
-  <div style="overflow-x:auto;scrollbar-width:none;padding:8px 12px;display:flex;gap:5px;flex-wrap:nowrap;border-bottom:1px solid #ede8dc;background:var(--card)">${WT.map(t=>`<div class="cat-pill ${t===_wt?'on':''}" style="flex-shrink:0" onclick="snd();setWT('${t}')">${WI[t]||''} ${t}</div>`).join('')}</div>
-  <button class="big-btn success" onclick="snd();addWoModal()">+ AGGIUNGI ALLENAMENTO</button>
-  <div style="padding:10px 12px 4px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--ink3);background:var(--paper);border-top:1px solid #ede8dc">STRUMENTI PALESTRA</div>
+  <div style="overflow-x:auto;scrollbar-width:none;padding:8px 12px;display:flex;gap:5px;flex-wrap:nowrap;border-bottom:1px solid #ede8dc;background:var(--card);-webkit-overflow-scrolling:touch;">${WT.map(t=>`<div class="cat-pill ${t===_wt?'on':''}" style="flex-shrink:0" onclick="snd();setWT('${t}')">${WI[t]||''} ${t}</div>`).join('')}</div>
+  <div style="padding:8px 12px 4px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--ink3);background:var(--paper);text-transform:uppercase">Strumenti Palestra</div>
   <div class="wo-quick-grid">
-    <div class="wo-quick-btn" onclick="snd();navPush(showLibreriaEsercizi)"><div class="wo-quick-ico">💪</div><div class="wo-quick-lbl">Libreria<br>Esercizi</div></div>
-    <div class="wo-quick-btn" onclick="snd();navPush(showSchede)"><div class="wo-quick-ico">📋</div><div class="wo-quick-lbl">Schede<br>Allenamento</div></div>
-    <div class="wo-quick-btn" onclick="snd();navPush(showMuscleGroups)"><div class="wo-quick-ico">🫀</div><div class="wo-quick-lbl">Muscoli<br>& Anatomia</div></div>
-    <div class="wo-quick-btn" onclick="snd();navPush(showWorkoutStorico)"><div class="wo-quick-ico">📜</div><div class="wo-quick-lbl">Storico<br>Workout</div></div>
+    <div class="wo-quick-btn" onclick="snd();navPush(showLibreriaEsercizi)"><div class="wo-quick-ico-wrap" style="background:linear-gradient(135deg,#f87171,#dc2626)">💪</div><div class="wo-quick-lbl">Libreria<br>Esercizi</div></div>
+    <div class="wo-quick-btn" onclick="snd();navPush(showSchede)"><div class="wo-quick-ico-wrap" style="background:linear-gradient(135deg,#60a5fa,#2563eb)">📋</div><div class="wo-quick-lbl">Schede<br>Allenamento</div></div>
+    <div class="wo-quick-btn" onclick="snd();navPush(showMuscleGroups)"><div class="wo-quick-ico-wrap" style="background:linear-gradient(135deg,#c084fc,#7c3aed)">🫀</div><div class="wo-quick-lbl">Muscoli<br>&amp; Anatomia</div></div>
+    <div class="wo-quick-btn" onclick="snd();navPush(showWorkoutStorico)"><div class="wo-quick-ico-wrap" style="background:linear-gradient(135deg,#94a3b8,#1a1a2e)">📜</div><div class="wo-quick-lbl">Storico<br>Workout</div></div>
   </div>
-  <div style="padding:6px 14px 4px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--ink3);background:var(--paper);border-top:1px solid #ede8dc;border-bottom:1px solid #ede8dc">ALLENAMENTI DI OGGI</div>`;
+  <div style="padding:8px 14px 4px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--ink3);background:var(--paper);border-top:1px solid #ede8dc;text-transform:uppercase">Allenamenti di Oggi — ${new Date().toLocaleDateString('it-IT',{weekday:'long',day:'numeric',month:'short'})}</div>`;
   if(!filtered.length)html+=`<div class="empty"><div class="empty-ico">🏋️</div><div class="empty-txt">NESSUN ALLENAMENTO<br>REGISTRATO</div></div>`;
   else filtered.forEach((w,i)=>{
     const burned=calcBurnedKcal(w.type,w.duration,null);
-    html+=`<div class="wo-card"><div class="wo-card-hdr"><span class="wo-card-nm">${WI[w.type]||'🏅'} ${w.name}</span><div style="display:flex;align-items:center;gap:8px"><span class="wo-card-tp">${w.type}</span><button class="wo-del" onclick="snd('delete');rmWo(${i})">✕</button></div></div><div class="wo-card-body">${w.duration?`<div class="wo-badge">⏱ ${w.duration} min</div>`:''}${burned?`<div class="wo-badge" style="background:#fef3c7;border-color:#d97706;color:#92400e">🔥 ${burned} kcal</div>`:''}${w.sets?`<div class="wo-badge">📋 ${w.sets} serie</div>`:''}${w.reps?`<div class="wo-badge">🔁 ${w.reps} rip.</div>`:''}${w.notes?`<div style="width:100%;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink3);padding-top:4px">📝 ${w.notes}</div>`:''}</div></div>`;
+    html+=`<div class="wo-card"><div class="wo-card-hdr"><span class="wo-card-nm">${WI[w.type]||'🏅'} ${w.name}</span><div style="display:flex;align-items:center;gap:8px"><span class="wo-card-tp">${w.type}</span><button class="wo-del" onclick="snd('delete');rmWo(${i})">✕</button></div></div><div class="wo-card-body">${w.duration?`<div class="wo-badge">⏱ ${w.duration} min</div>`:''}${burned?`<div class="wo-badge" style="background:#fef3c7;border-color:#d97706;color:#92400e">🔥 ${burned} kcal</div>`:''}${w.sets?`<div class="wo-badge">📋 ${w.sets} serie</div>`:''}${w.reps?`<div class="wo-badge">🔁 ${w.reps} rip.</div>`:''}${w.sets?`<button class="wo-badge" style="background:var(--ink);color:#fff;border-color:var(--ink);cursor:pointer;margin-left:auto" onclick="snd();startRestTimer(90,'${w.name.replace(/'/g,'')}')">⏱ RECUPERO</button>`:''}${w.notes?`<div style="width:100%;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink3);padding-top:4px">📝 ${w.notes}</div>`:''}</div></div>`;
   });
-  html+=`<div class="home-pill"><button onclick="navGoHome()">← HOME</button></div>`;
+  html+=``;
   document.getElementById('screen').innerHTML=html;
+  fabShow('workout');
 }
 function setWT(t){_wt=t;renderWo();}
-function rmWo(i){(S.workouts[_wd]||[]).splice(i,1);saveState();renderWo();}
+function rmWo(i){const w=(S.workouts[_wd]||[])[i];(S.workouts[_wd]||[]).splice(i,1);saveState();if(w)showToast("🗑 "+w.name+" rimosso");renderWo();}
 function addWoModal(){
   const pesoAttuale=S.profile.entries&&S.profile.entries.length?S.profile.entries[S.profile.entries.length-1].peso||'':'';
   document.getElementById('modal-box').innerHTML=`
@@ -3133,13 +3507,15 @@ function updWoBurn(){
 function saveWo(){
   const type=document.getElementById('wtp').value;
   const dur=document.getElementById('wdur').value;
-  if(!dur){alert('Inserisci la durata!');return;}
+  if(!dur){showToast('⚠ Inserisci la durata','red');return;}
   const kg=parseFloat(document.getElementById('wwkg').value)||null;
   const burned=calcBurnedKcal(type,dur,kg);
   const nameFld=(document.getElementById('wn').value||'').trim();
   const wo={name:nameFld||type,type,duration:dur,burned,sets:document.getElementById('ws').value,reps:document.getElementById('wr').value,notes:document.getElementById('wno').value};
   if(!S.workouts[_wd])S.workouts[_wd]=[];
-  S.workouts[_wd].push(wo);saveState();closeModal();renderWo();
+  S.workouts[_wd].push(wo);saveState();closeModal();
+  showToast('✅ '+wo.name+' salvato!','green');
+  renderWo();
 }
 
 /* ════════════════════════════════════════════════════
@@ -3190,7 +3566,7 @@ function renderLibreria(){
       </div>`;
     });
   }
-  html+=`<div class="home-pill"><button onclick="navGoHome()">← HOME</button></div>`;
+  html+=``;
   document.getElementById('screen').innerHTML=html;
 }
 function setLibMuscle(m){_libMuscle=m;renderLibreria();}
@@ -3254,10 +3630,10 @@ function showEsercizio(id,fb){
     </div>
   </div>`:''}
   ${buildYtBlock(ex.id, ex.name, ex.muscle)}
-  <div style="padding:12px 12px 0">
-    <button class="big-btn success" onclick="snd();addEsercizioToWorkout(${ex.id})">+ AGGIUNGI A WORKOUT OGGI</button>
-  </div>
-  <div class="home-pill"><button onclick="navGoHome()">← HOME</button></div>`;
+  <div style="padding:12px 12px 0;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+    <button class="big-btn success" style="margin:0;border-radius:var(--rk)" onclick="snd();addEsercizioToWorkout(${ex.id})">+ WORKOUT</button>
+    <button class="big-btn outline" style="margin:0;border-radius:var(--rk)" onclick="snd();startRestTimer(${parseInt(ex.rest)||90},'${ex.name.replace(/'/g,"\'")}')">⏱ RECUPERO</button>
+  </div>`;
   document.getElementById('screen').innerHTML=html;
 }
 
@@ -3303,10 +3679,10 @@ function confirmAddEsercizio(exId){
   const sets=document.getElementById('ex-sets').value;
   const reps=document.getElementById('ex-reps').value;
   const note=document.getElementById('ex-note').value;
-  const wo={name:ex.name,type:'Forza',duration:dur,burned,sets,reps,notes:note+`${note?' · ':''}[${ex.muscle}]`};
+  const wo={name:ex.name,type:'Forza',duration:dur,burned,sets,reps,notes:note+(note?' · ':'')+`[${ex.muscle}]`};
   if(!S.workouts[TODAY])S.workouts[TODAY]=[];
   S.workouts[TODAY].push(wo);saveState();closeModal();
-  alert('✅ '+ex.name+' aggiunto al workout di oggi!');
+  showToast('✅ '+ex.name+' aggiunto!','green');
 }
 
 /* ════════════════════════════════════════════════════
@@ -3320,11 +3696,23 @@ function showMuscleGroups(fb){
     <div style="font-size:13px;opacity:.7;font-family:'IBM Plex Mono',monospace">per vedere gli esercizi specifici</div>
   </div>
   <div class="muscle-grid">`;
+  const muscleGrad={
+    'Petto':'linear-gradient(135deg,#f87171,#dc2626)',
+    'Schiena':'linear-gradient(135deg,#60a5fa,#2563eb)',
+    'Spalle':'linear-gradient(135deg,#fbbf24,#d97706)',
+    'Bicipiti':'linear-gradient(135deg,#34d399,#16a34a)',
+    'Tricipiti':'linear-gradient(135deg,#c084fc,#7c3aed)',
+    'Addome':'linear-gradient(135deg,#22d3ee,#0891b2)',
+    'Gambe':'linear-gradient(135deg,#fb923c,#ea580c)',
+    'Glutei':'linear-gradient(135deg,#f472b6,#db2777)',
+    'Polpacci':'linear-gradient(135deg,#6ee7b7,#059669)',
+    'Avambracci':'linear-gradient(135deg,#fde68a,#92400e)',
+  };
   MUSCLE_GROUPS.forEach(mg=>{
     const count=EXDB.filter(e=>e.muscle===mg.name||e.sec.includes(mg.name)).length;
-    html+=`<div class="muscle-btn" style="border-color:${mg.border};background:${mg.bg}" onclick="snd();showEserciziPerMuscolo('${mg.name}')">
-      <div class="muscle-ico">${mg.emoji}</div>
-      <div class="muscle-lbl" style="color:${mg.color}">${mg.name}</div>
+    html+=`<div class="muscle-btn" onclick="snd();showEserciziPerMuscolo('${mg.name}')">
+      <div class="muscle-ico-wrap" style="background:${muscleGrad[mg.name]||'linear-gradient(135deg,#94a3b8,#1a1a2e)'}">${mg.emoji}</div>
+      <div class="muscle-lbl">${mg.name}</div>
       <div class="muscle-cnt">${count} esercizi</div>
     </div>`;
   });
@@ -3342,8 +3730,7 @@ function showMuscleGroups(fb){
       <b>🍑 Glutei:</b> Grande, medio, piccolo. I muscoli più forti del corpo.<br>
       <b>🦶 Polpacci:</b> Gastrocnemio e soleo. Resistono a carichi enormi quotidiani.
     </div>
-  </div>
-  <div class="home-pill"><button onclick="navGoHome()">← HOME</button></div>`;
+  </div>`;
   document.getElementById('screen').innerHTML=html;
 }
 
@@ -3385,7 +3772,7 @@ function showEserciziPerMuscolo(muscleName,fb){
     html+=`<div style="padding:8px 14px 4px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--ink3);background:var(--paper);border-top:1px solid #ede8dc">🔸 COINVOLTO ANCHE IN (${secondari.length})</div>`;
     html+=renderExList(secondari);
   }
-  html+=`<div class="home-pill"><button onclick="navGoHome()">← HOME</button></div>`;
+  html+=``;
   document.getElementById('screen').innerHTML=html;
 }
 
@@ -3401,11 +3788,12 @@ function showSchede(fb){
   SCHEDE_DB.forEach(s=>{
     html+=`<div class="scheda-card" onclick="snd();navPush(()=>showSchedaDetail(${s.id}))">
       <div class="scheda-hdr" style="background:${s.color}">
-        <div>
-          <div class="scheda-nm">${s.emoji} ${s.name}</div>
+        <div class="scheda-ico-wrap">${s.emoji}</div>
+        <div class="scheda-hdr-info">
+          <div class="scheda-nm">${s.name}</div>
           <div class="scheda-sub">${s.level} · ${s.freq}×/sett. · ${s.goal}</div>
         </div>
-        <div style="font-size:22px">›</div>
+        <div style="font-size:22px;opacity:.7">›</div>
       </div>
       <div class="scheda-body">
         ${s.days.map(d=>`<span class="scheda-badge">${d.name}</span>`).join('')}
@@ -3413,7 +3801,7 @@ function showSchede(fb){
       </div>
     </div>`;
   });
-  html+=`<div class="home-pill"><button onclick="navGoHome()">← HOME</button></div>`;
+  html+=``;
   document.getElementById('screen').innerHTML=html;
 }
 
@@ -3454,8 +3842,7 @@ function showSchedaDetail(id,fb){
   // Pulsante avvia scheda
   html+=`<div style="padding:12px 12px 0">
     <button class="big-btn success" onclick="snd();avviaScheda(${s.id})">🚀 AVVIA QUESTA SCHEDA</button>
-  </div>
-  <div class="home-pill"><button onclick="navGoHome()">← HOME</button></div>`;
+  </div>`;
   document.getElementById('screen').innerHTML=html;
 }
 function toggleDayScheda(id){
@@ -3493,7 +3880,7 @@ function aggiungiSchedaADiario(schedaId,dayIdx){
     S.workouts[TODAY].push({name:ex.name,type:'Forza',duration:dur,burned,sets:item.sets,reps:item.reps,notes:`[Scheda: ${s.name} — ${day.name}]`});
   });
   saveState();closeModal();
-  alert(`✅ ${day.exs.length} esercizi di "${day.name}" aggiunti al workout di oggi!`);
+  showToast('✅ '+day.exs.length+' esercizi aggiunti!','green');
   navGoHome();
 }
 
@@ -3504,11 +3891,32 @@ function renderProfilo(){
   const bmi=last&&p.altezza?+(last.peso/(p.altezza/100)**2).toFixed(1):null;
   const bmiC=bmi?bmi<18.5?'#d97706':bmi<25?'#16a34a':bmi<30?'#d97706':'#dc2626':'var(--ink3)';
   const bmiL=bmi?bmi<18.5?'SOTTOPESO':bmi<25?'NORMALE':bmi<30?'SOVRAPPESO':'OBESO':'--';
+  // BMI scale 16-40 (24 units): sottopeso 2.5, normale 6.5, sovrappeso 5, obeso 10
+  const bmiGauge=bmi?`<div class="bmi-gauge"><div class="bmi-seg" style="background:#60a5fa;flex:2.5"></div><div class="bmi-seg" style="background:#22c55e;flex:6.5"></div><div class="bmi-seg" style="background:#fbbf24;flex:5"></div><div class="bmi-seg" style="background:#f87171;flex:10"></div></div><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--ink3);display:flex;justify-content:space-between;margin-top:2px"><span>16</span><span>18.5</span><span>25</span><span>30</span><span>40+</span></div><div style="margin-top:6px;height:10px;position:relative"><div style="position:absolute;left:${Math.min(96,Math.max(2,(bmi-16)/(40-16)*100))}%;top:0;transform:translateX(-50%);width:3px;height:10px;background:${bmiC};border-radius:1px;box-shadow:0 0 4px ${bmiC}"></div></div>`:'';
   let html=`
-    <div class="stat-grid">
-      <div class="stat-cell"><div class="stat-val" style="color:var(--green)">${last?last.peso:'--'}</div><div class="stat-unit">kg</div><div class="stat-lbl">PESO</div></div>
-      <div class="stat-cell"><div class="stat-val" style="color:#2563eb">${p.altezza||'--'}</div><div class="stat-unit">cm</div><div class="stat-lbl">ALTEZZA</div></div>
-      <div class="stat-cell"><div class="stat-val" style="color:${bmiC}">${bmi||'--'}</div><div class="stat-unit">${bmiL}</div><div class="stat-lbl">BMI</div></div>
+    <div style="background:var(--ink);color:#fff;padding:16px 16px 12px">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:12px">
+        <div style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#22c55e,#16a34a);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:#fff;flex-shrink:0">${(p.nome||CUR.name||'?').trim()[0].toUpperCase()}</div>
+        <div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:700">${p.nome||CUR.name||'—'}</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;opacity:.45;margin-top:2px">${p.sesso==='m'?'Maschio':p.sesso==='f'?'Femmina':'—'} · ${p.eta?p.eta+' anni':'—'}</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+        <div style="background:rgba(255,255,255,.08);border-radius:var(--r);padding:10px 6px;text-align:center">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:700;color:#86efac">${last?last.peso:'--'}</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:8px;opacity:.5;margin-top:2px">KG PESO</div>
+        </div>
+        <div style="background:rgba(255,255,255,.08);border-radius:var(--r);padding:10px 6px;text-align:center">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:700;color:#93c5fd">${p.altezza||'--'}</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:8px;opacity:.5;margin-top:2px">CM ALTEZZA</div>
+        </div>
+        <div style="background:rgba(255,255,255,.08);border-radius:var(--r);padding:10px 6px;text-align:center">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:700;color:${bmiC}">${bmi||'--'}</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:8px;opacity:.5;margin-top:2px">BMI</div>
+        </div>
+      </div>
+      ${bmi?`<div style="margin-top:10px;padding:10px;background:rgba(255,255,255,.06);border-radius:var(--r)">${bmiGauge}<div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:${bmiC};font-weight:700;margin-top:6px;text-align:center">BMI ${bmi} — ${bmiL}</div></div>`:''}
     </div>
     <div class="card"><div class="card-hdr">👤 DATI ANAGRAFICI</div>
       <div class="form-row"><div class="form-lbl">Nome</div><input class="form-inp" value="${p.nome||''}" placeholder="Nome..." oninput="S.profile.nome=this.value;saveState()"></div>
@@ -3550,7 +3958,7 @@ function renderProfilo(){
     [...p.entries].reverse().forEach((e,i)=>{const bm=p.altezza?+(e.peso/(p.altezza/100)**2).toFixed(1):'';html+=`<div class="hist-row"><div class="hist-date">${e.date}</div><div class="hist-vals">${e.peso?`⚖️${e.peso}kg `:''}${bm?`BMI:${bm} `:''}${e.vita?`👗${e.vita}cm `:''}${e.grasso?`🔥${e.grasso}% `:''}${e.note?`<br><span style="color:var(--ink3);font-size:10px">${e.note}</span>`:''}</div><button class="hist-del" onclick="snd('delete');delEntry(${p.entries.length-1-i})">✕</button></div>`;});
     html+=`</div>`;
   }
-  html+=`<div class="home-pill"><button onclick="navGoHome()">← HOME</button></div>`;
+  html+=``;
   document.getElementById('screen').innerHTML=html;
   // Renderizza grafico dopo inserimento nel DOM
   if(p.entries&&p.entries.length>=2){setTimeout(()=>showChart('peso',document.querySelector('.chart-tab.on')),100);}
@@ -3616,15 +4024,15 @@ function showChart(type,el){
 
 function saveEntry(){
   const peso=parseFloat(document.getElementById('ep').value);
-  if(!peso){alert('Inserisci il peso!');return;}
+  if(!peso){showToast('⚠ Inserisci il peso','red');return;}
   const entry={date:TODAY,peso,vita:document.getElementById('ev').value,fianchi:document.getElementById('ef').value,grasso:document.getElementById('eg').value,note:document.getElementById('en').value};
   S.profile.entries=S.profile.entries.filter(e=>e.date!==TODAY);
   S.profile.entries.push(entry);
   S.profile.entries.sort((a,b)=>a.date.localeCompare(b.date));
-  saveState();renderProfilo();
+  saveState();showToast('✅ '+peso+'kg salvato!','green');renderProfilo();
 }
-function delEntry(i){if(confirm('Elimina questa misurazione?')){S.profile.entries.splice(i,1);saveState();renderProfilo();}}
-function applyTDEE(k){S.settings.kcal=k;saveState();alert('✅ Obiettivo aggiornato a '+k+' kcal!');}
+function delEntry(i){if(confirm('Elimina questa misurazione?')){S.profile.entries.splice(i,1);saveState();showToast('🗑 Misurazione eliminata');renderProfilo();}}
+function applyTDEE(k){S.settings.kcal=k;saveState();showToast('✅ Obiettivo: '+k+' kcal','green');}
 
 /* ════════ IMPOSTAZIONI ════════ */
 function showImpostazioni(fb){resetScreen();setHdr('IMPOSTAZIONI','OBIETTIVI & DATI',true);renderImpostazioni();}
@@ -3670,8 +4078,7 @@ function renderImpostazioni(){
     <div class="card"><div class="card-hdr">⚠️ GESTIONE DATI</div>
       <button class="big-btn outline" onclick="snd();resetDay()">AZZERA DIARIO OGGI</button>
       <button class="big-btn danger" onclick="snd('delete');showLogout()">ESCI DALL'APP</button>
-    </div>
-    <div class="home-pill"><button onclick="navGoHome()">← HOME</button></div>`;
+    </div>`;
   setTimeout(renderImpostazioniSbStatus,50);
 }
 function runTDEE(){
@@ -3701,7 +4108,7 @@ function doImport(input){
       if(!d.nutritrack){alert('File non valido');return;}
       if(!confirm('Importa il backup? Sovrascriverà i dati attuali.'))return;
       if(d.data.meals)S.meals=d.data.meals;if(d.data.profile)S.profile=d.data.profile;if(d.data.settings)S.settings=d.data.settings;if(d.data.workouts)S.workouts=d.data.workouts;if(d.data.calPlans)S.calPlans=d.data.calPlans;if(typeof d.data.water==='number')S.water=d.data.water;
-      saveState();alert('✅ Backup importato!');navGoHome();
+      saveState();showToast('✅ Backup importato!','green');navGoHome();
     }catch(err){alert('Errore importazione: '+err.message);}
   };
   reader.readAsText(file);input.value='';
@@ -3718,7 +4125,7 @@ function saveSupabaseConfig(){
   // Testa connessione
   sbRequest('GET','nutritrack_data?limit=1').then(r=>{
     if(r!==null){
-      alert('✅ Supabase connesso! Sincronizzazione attiva.');
+      showToast('✅ Supabase connesso!','green');
       saveState(); // prima sync
       renderImpostazioni();
     } else {
@@ -3815,7 +4222,7 @@ function showMieiAlimenti(fb){
       </div>`;
     });
   }
-  html+=`<div class="home-pill"><button onclick="navGoHome()">← HOME</button></div>`;
+  html+=``;
   document.getElementById('screen').innerHTML=html;
 }
 
@@ -3949,7 +4356,572 @@ function renderInstallModal(os){
     console.warn('[NT] localStorage non disponibile');
   }
 })();
+
+/* ════════ FAB ════════ */
+let _fabCtx=null; // 'workout' | null
+function fabShow(ctx){
+  _fabCtx=ctx;
+  const el=document.getElementById('fab-main');
+  if(el){el.classList.add('visible');el.textContent=ctx==='workout'?'＋':'＋';}
+}
+function fabHide(){
+  _fabCtx=null;
+  const el=document.getElementById('fab-main');
+  if(el)el.classList.remove('visible');
+}
+function fabAction(){
+  if(_fabCtx==='workout') addWoModal();
+}
+
+/* ════════ BOTTOM NAV ════════ */
+let _bnavCur='home';
+function bnavSet(id){
+  _bnavCur=id;
+  document.querySelectorAll('.bnav-btn').forEach(b=>b.classList.remove('active'));
+  const el=document.getElementById('bnav-'+id);
+  if(el)el.classList.add('active');
+}
+function bnavGo(fn,id){bnavSet(id);navPush(fn);}
+function showMoreMenu(){
+  bnavSet('more');
+  const items=[
+    ['🥗','Alimenti',"navPush(()=>showAlimenti(null))"],
+    ['📅','Piano','navPush(showPiano)'],
+    ['📊','Settimana','navPush(showRiepilogo)'],
+    ['📈','Mese','navPush(showReportMensile)'],
+    ['📖','Storico Pasti','navPush(showStoricoDiario)'],
+    ['💪','Storico Sport','navPush(showWorkoutStorico)'],
+    ['👨‍🍳','Ricette','navPush(showRicette)'],
+    ['➕','Miei Alimenti','navPush(showMieiAlimenti)'],
+    ['⚙️','Impostazioni','navPush(showImpostazioni)'],
+    ['📲','Installa App','showInstallGuide()'],
+  ];
+  document.getElementById('modal-box').innerHTML=`
+    <div class="modal-handle"></div>
+    <div class="modal-title" style="margin-bottom:14px">📚 ALTRO</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px">
+      ${items.map(([ico,lbl,fn])=>`<button onclick="snd();closeModal();${fn}" style="display:flex;align-items:center;gap:10px;padding:12px;border:1.5px solid #e8e3d8;border-radius:var(--rk);background:var(--card);cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:var(--ink);text-align:left;transition:background .1s" onmousedown="this.style.background='var(--greenl)'" onmouseup="this.style.background='var(--card)'" ontouchstart="this.style.background='var(--greenl)'" ontouchend="this.style.background='var(--card)'"><span style="font-size:18px;flex-shrink:0">${ico}</span>${lbl}</button>`).join('')}
+    </div>`;
+  document.getElementById('modal').classList.add('open');
+}
+
+/* ════════ TOAST ════════ */
+let _toastTimer=null;
+function showToast(msg,type,duration){
+  duration=duration||2200;
+  const el=document.getElementById('toast');
+  if(!el)return;
+  el.textContent=msg;
+  el.className='toast'+(type?' '+type:'');
+  void el.offsetWidth;
+  el.classList.add('show');
+  clearTimeout(_toastTimer);
+  _toastTimer=setTimeout(function(){el.classList.remove('show')},duration);
+}
+
+/* ════════ REST TIMER ════════ */
+let _rtInterval=null,_rtTotal=60,_rtLeft=60;
+const RT_CIRC=439.8;
+function startRestTimer(seconds,exName){
+  _rtTotal=seconds;_rtLeft=seconds;
+  document.getElementById('rt-name').textContent=exName||'Prossima serie';
+  document.getElementById('rt-sec').textContent=seconds;
+  document.getElementById('rt-circle').style.strokeDashoffset='0';
+  document.getElementById('rest-timer').classList.add('open');
+  clearInterval(_rtInterval);
+  _rtInterval=setInterval(function(){
+    _rtLeft--;
+    const el=document.getElementById('rt-sec');
+    const circ=document.getElementById('rt-circle');
+    if(el)el.textContent=_rtLeft;
+    if(circ){const pct=1-(_rtLeft/_rtTotal);circ.style.strokeDashoffset=(RT_CIRC*pct).toFixed(1);}
+    if(_rtLeft<=0){
+      clearInterval(_rtInterval);
+      snd('confirm');
+      document.getElementById('rest-timer').classList.remove('open');
+      showToast('✅ Recupero completato!','green');
+    }
+  },1000);
+}
+function skipRestTimer(){clearInterval(_rtInterval);document.getElementById('rest-timer').classList.remove('open');showToast('⏭ Recupero saltato');}
+function stopRestTimer(){clearInterval(_rtInterval);document.getElementById('rest-timer').classList.remove('open');}
+
+/* ════════ KCAL RING HELPER ════════ */
+function buildKcalRing(eaten,goal){
+  const pct=Math.min(100,Math.round(eaten/goal*100));
+  const r=27;const circ=2*Math.PI*r;
+  const fill=circ*(pct/100);
+  const cls=pct>=100?'over':pct>=85?'warn':'';
+  const wrapStyle=pct>=100?'animation:ring-celebrate .6s ease .1s both':'';
+  return `<div class="kcal-ring-wrap" style="${wrapStyle}"><svg viewBox="0 0 64 64"><circle class="kcal-ring-bg" cx="32" cy="32" r="${r}"/><circle class="kcal-ring-fill ${cls}" cx="32" cy="32" r="${r}" stroke-dasharray="${circ.toFixed(1)}" stroke-dashoffset="${(circ-fill).toFixed(1)}"/></svg><div class="kcal-ring-center"><div class="kcal-ring-pct">${pct>=100?'🎯':pct+'%'}</div><div class="kcal-ring-sub">${pct>=100?'meta!':'kcal'}</div></div></div>`;
+}
+
 console.log('%c[NutriTrack Pro] v10.0 — Dott. Petrolese Giovanni — PetroCorporation © 2025','color:#16a34a;font-weight:bold;font-size:12px');
 </script>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   NUTRITRACK PRO — UPGRADE INTEGRATO (Claude Edition v2)
+   Fix: banner sincrono · badge carico inline · storico accessibile
+   ═══════════════════════════════════════════════════════════════ */
+(function NutriTrackPRO(){
+
+  function whenReady(fn){
+    if(typeof S!=='undefined'&&typeof saveState==='function'&&typeof showToast==='function'){
+      fn();
+    }else{
+      setTimeout(()=>whenReady(fn),120);
+    }
+  }
+
+  whenReady(function(){
+
+    /* ════════════════════════════════════════════
+       1. PROGRESSIVE OVERLOAD — TRACKING CARICHI
+       ════════════════════════════════════════════ */
+
+    function ensureExLog(){
+      if(!S.exerciseLog)S.exerciseLog={};
+    }
+
+    function getLastSession(name){
+      ensureExLog();
+      const log=(S.exerciseLog[name]||[]).filter(e=>e.date<TODAY);
+      return log.length?log[log.length-1]:null;
+    }
+
+    function saveExSession(name,sets,reps,load){
+      ensureExLog();
+      if(!S.exerciseLog[name])S.exerciseLog[name]=[];
+      S.exerciseLog[name]=S.exerciseLog[name].filter(e=>e.date!==TODAY);
+      S.exerciseLog[name].push({date:TODAY,sets:+sets||0,reps:+reps||0,load:+load||0});
+      if(S.exerciseLog[name].length>60)S.exerciseLog[name]=S.exerciseLog[name].slice(-60);
+    }
+
+    function overloadTag(prev,curLoad,curReps){
+      if(!prev||!prev.load)return '<span style="font-family:\'IBM Plex Mono\',monospace;font-size:9px;background:#f3f4f6;color:#6b7280;padding:2px 7px;border-radius:4px">PRIMA VOLTA</span>';
+      if(+curLoad>+prev.load) return '<span style="font-family:\'IBM Plex Mono\',monospace;font-size:9px;background:#dcfce7;color:#16a34a;padding:2px 7px;border-radius:4px;font-weight:700">↑ PESO</span>';
+      if(+curReps>+prev.reps&&+curLoad>=+prev.load) return '<span style="font-family:\'IBM Plex Mono\',monospace;font-size:9px;background:#eff6ff;color:#2563eb;padding:2px 7px;border-radius:4px;font-weight:700">↑ REPS</span>';
+      return '<span style="font-family:\'IBM Plex Mono\',monospace;font-size:9px;background:#fef3c7;color:#92400e;padding:2px 7px;border-radius:4px">STABILE</span>';
+    }
+
+    function overloadTagText(prev,curLoad,curReps){
+      return overloadTag(prev,curLoad,curReps).replace(/<[^>]+>/g,'').trim();
+    }
+
+    function lastSessionLine(name){
+      const prev=getLastSession(name);
+      if(!prev)return '';
+      const parts=[];
+      if(prev.load)parts.push(prev.load+'kg');
+      if(prev.sets)parts.push(prev.sets+'×');
+      if(prev.reps)parts.push(prev.reps+' reps');
+      return`<div style="background:#f0fdf4;border:1px solid #86efac;border-radius:6px;padding:6px 10px;margin-bottom:10px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#166534">
+        💾 ULTIMA SESSIONE (${prev.date.slice(5).replace('-','/')}): ${parts.join(' · ')||'—'}
+      </div>`;
+    }
+
+    /* ── Override addWoModal — campo CARICO KG ── */
+    window.addWoModal=function(){
+      const pw=S.profile.entries&&S.profile.entries.length?S.profile.entries[S.profile.entries.length-1].peso||'':'';
+      document.getElementById('modal-box').innerHTML=`
+        <div class="modal-handle"></div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:700;margin-bottom:14px;text-transform:uppercase">Nuovo Allenamento</div>
+        <div style="margin-bottom:10px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;text-transform:uppercase;color:var(--ink3);margin-bottom:4px">SPORT / TIPO *</div>
+          <select class="meal-sel" id="wtp" style="width:100%;margin-bottom:8px" onchange="updWoBurn()">${WT.filter(t=>t!=='Tutti').map(t=>`<option value="${t}">${WI[t]||''} ${t}</option>`).join('')}</select>
+        </div>
+        <div style="margin-bottom:10px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;text-transform:uppercase;color:var(--ink3);margin-bottom:4px">NOME (opzionale)</div>
+          <input class="gram-inp" id="wn" placeholder="es. Squat 5×5" style="width:100%;text-align:left;font-size:14px">
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+          <div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;color:var(--ink3);margin-bottom:4px">DURATA (MIN) *</div>
+            <input class="gram-inp" id="wdur" type="number" inputmode="decimal" style="width:100%;text-align:left;font-size:14px;padding:10px 12px" oninput="updWoBurn()" placeholder="45">
+          </div>
+          <div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;color:var(--ink3);margin-bottom:4px">PESO CORPO KG</div>
+            <input class="gram-inp" id="wwkg" type="number" inputmode="decimal" style="width:100%;text-align:left;font-size:14px;padding:10px 12px" value="${pw}" placeholder="70" oninput="updWoBurn()">
+          </div>
+        </div>
+        <div id="wo-burn-prev" style="background:#fef3c7;border:1px solid #d97706;border-radius:var(--r);padding:10px 12px;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;color:#92400e;margin-bottom:10px;text-align:center;display:none"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px">
+          <div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;color:var(--ink3);margin-bottom:4px">SERIE</div>
+            <input class="gram-inp" id="ws" type="number" inputmode="decimal" style="width:100%;text-align:left;font-size:14px;padding:10px 12px">
+          </div>
+          <div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;color:var(--ink3);margin-bottom:4px">RIPS.</div>
+            <input class="gram-inp" id="wr" type="number" inputmode="decimal" style="width:100%;text-align:left;font-size:14px;padding:10px 12px">
+          </div>
+          <div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;color:var(--ink3);margin-bottom:4px">CARICO KG</div>
+            <input class="gram-inp" id="wload" type="number" inputmode="decimal" style="width:100%;text-align:left;font-size:14px;padding:10px 12px" placeholder="0">
+          </div>
+        </div>
+        <div style="margin-bottom:10px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;color:var(--ink3);margin-bottom:4px">NOTE</div>
+          <textarea id="wno" style="height:50px" placeholder="Carico usato, sensazioni..."></textarea>
+        </div>
+        <button class="conf-btn" onclick="snd('confirm');saveWo()">✓ SALVA ALLENAMENTO</button>`;
+      document.getElementById('modal').classList.add('open');
+      setTimeout(()=>updWoBurn(),100);
+    };
+
+    /* ── Override saveWo — salva load in exerciseLog ── */
+    window.saveWo=function(){
+      const type=document.getElementById('wtp').value;
+      const dur=document.getElementById('wdur').value;
+      if(!dur){showToast('⚠ Inserisci la durata','red');return;}
+      const kg=parseFloat(document.getElementById('wwkg').value)||null;
+      const burned=calcBurnedKcal(type,dur,kg);
+      const nameFld=(document.getElementById('wn').value||'').trim();
+      const sets=document.getElementById('ws').value||'';
+      const reps=document.getElementById('wr').value||'';
+      const load=document.getElementById('wload').value||'';
+      const wo={name:nameFld||type,type,duration:dur,burned,sets,reps,load,notes:document.getElementById('wno').value};
+      if(!S.workouts[_wd])S.workouts[_wd]=[];
+      S.workouts[_wd].push(wo);
+      let toastSuffix='';
+      if(nameFld&&(load||reps)){
+        const prev=getLastSession(nameFld);
+        saveExSession(nameFld,sets,reps,load);
+        toastSuffix=' — '+overloadTagText(prev,load,reps);
+      }
+      saveState();closeModal();
+      showToast('✅ '+wo.name+toastSuffix,'green');
+      renderWo();
+    };
+
+    /* ── Override addEsercizioToWorkout — carico + ultima sessione ── */
+    window.addEsercizioToWorkout=function(exId){
+      const ex=EXDB.find(e=>e.id===exId);
+      if(!ex)return;
+      const setsDefault=ex.sets.includes('-')?ex.sets.split('-')[0]:ex.sets.replace(/[^0-9]/g,'')||'3';
+      const repsDefault=ex.reps.split('×').pop().split('-')[0].replace(/[^0-9]/g,'')||'10';
+      const prev=getLastSession(ex.name);
+      const lastLine=lastSessionLine(ex.name);
+      const loadDefault=prev&&prev.load?prev.load:'';
+      document.getElementById('modal-box').innerHTML=`
+        <div class="modal-handle"></div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:700;margin-bottom:4px">${ex.emoji} ${ex.name}</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--ink3);margin-bottom:10px">${ex.muscle} · ${ex.equip}</div>
+        ${lastLine}
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px">
+          <div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;color:var(--ink3);margin-bottom:4px">SERIE</div>
+            <input class="gram-inp" id="ex-sets" type="number" inputmode="numeric" value="${setsDefault}" style="width:100%;text-align:center;padding:10px">
+          </div>
+          <div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;color:var(--ink3);margin-bottom:4px">RIPS.</div>
+            <input class="gram-inp" id="ex-reps" type="number" inputmode="numeric" value="${repsDefault}" style="width:100%;text-align:center;padding:10px">
+          </div>
+          <div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;color:var(--ink3);margin-bottom:4px">CARICO KG</div>
+            <input class="gram-inp" id="ex-load" type="number" inputmode="decimal" value="${loadDefault}" style="width:100%;text-align:center;padding:10px" placeholder="0">
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+          <div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;color:var(--ink3);margin-bottom:4px">DURATA (MIN)</div>
+            <input class="gram-inp" id="ex-dur" type="number" inputmode="numeric" value="45" style="width:100%;text-align:center;padding:10px" oninput="updWoBurnEx()">
+          </div>
+          <div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;color:var(--ink3);margin-bottom:4px">PESO CORPO KG</div>
+            <input class="gram-inp" id="ex-kg" type="number" inputmode="decimal" value="${S.profile.entries?.slice(-1)[0]?.peso||70}" style="width:100%;text-align:center;padding:10px" oninput="updWoBurnEx()">
+          </div>
+        </div>
+        <div id="ex-burn-prev" style="background:#fef3c7;border:1px solid #d97706;border-radius:var(--r);padding:8px 12px;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#92400e;margin-bottom:10px;text-align:center"></div>
+        <div style="margin-bottom:10px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;color:var(--ink3);margin-bottom:4px">NOTE</div>
+          <textarea id="ex-note" style="height:50px" placeholder="Carico usato, sensazioni..."></textarea>
+        </div>
+        <button class="conf-btn green-btn" onclick="snd('confirm');confirmAddEsercizio(${exId})">✓ AGGIUNGI AL DIARIO</button>`;
+      document.getElementById('modal').classList.add('open');
+      setTimeout(()=>{
+        const kg=parseFloat(document.getElementById('ex-kg').value)||70;
+        const dur=parseFloat(document.getElementById('ex-dur').value)||45;
+        document.getElementById('ex-burn-prev').textContent=`🔥 Stima: ${calcBurnedKcal('Forza',dur,kg)} kcal bruciate`;
+      },50);
+    };
+
+    /* ── Override confirmAddEsercizio — salva log + badge ── */
+    window.confirmAddEsercizio=function(exId){
+      const ex=EXDB.find(e=>e.id===exId);if(!ex)return;
+      const dur=document.getElementById('ex-dur').value||'45';
+      const kg=parseFloat(document.getElementById('ex-kg').value)||null;
+      const burned=calcBurnedKcal('Forza',dur,kg);
+      const sets=document.getElementById('ex-sets').value||'';
+      const reps=document.getElementById('ex-reps').value||'';
+      const load=document.getElementById('ex-load').value||'';
+      const note=document.getElementById('ex-note').value;
+      const wo={name:ex.name,type:'Forza',duration:dur,burned,sets,reps,load,notes:note+(note?' · ':'')+`[${ex.muscle}]`};
+      if(!S.workouts[TODAY])S.workouts[TODAY]=[];
+      S.workouts[TODAY].push(wo);
+      const prev=getLastSession(ex.name);
+      saveExSession(ex.name,sets,reps,load);
+      saveState();closeModal();
+      showToast('✅ '+ex.name+' — '+overloadTagText(prev,load,reps),'green');
+    };
+
+    /* ════════════════════════════════════════════════════════
+       2. RENDERWO — OVERRIDE COMPLETO
+       Load badge inline nel HTML (non post-DOM) + quick button
+       storico carichi. Indice reale usato per rmWo e badge.
+       ════════════════════════════════════════════════════════ */
+
+    window.renderWo=function(){
+      const wos=(S.workouts[_wd]||[]);
+      const filtered=_wt==='Tutti'?wos:wos.filter(w=>w.type===_wt);
+      // Map filtered back to real indices in wos (needed for rmWo)
+      const filteredWithIdx=filtered.map(w=>({w,realIdx:wos.indexOf(w)}));
+
+      const totBurned=wos.reduce((a,w)=>a+calcBurnedKcal(w.type,w.duration,null),0);
+      const totMin=wos.reduce((a,w)=>a+(parseFloat(w.duration)||0),0);
+
+      let html=`
+      <div style="background:var(--ink);color:#fff;padding:14px 16px 12px">
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:10px">
+          <div style="width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,#f87171,#dc2626);display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0">🏋️</div>
+          <div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:24px;font-weight:700">🔥 ${totBurned} <span style="font-size:12px;font-weight:400;opacity:.5">kcal</span></div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;opacity:.45;margin-top:2px">${wos.length} allenamenti · ${totMin} minuti totali</div>
+          </div>
+        </div>
+        <button onclick="snd();addWoModal()" style="width:100%;padding:12px;background:var(--green);border:none;border-radius:10px;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;color:#fff;letter-spacing:.8px;cursor:pointer;text-transform:uppercase">+ Aggiungi Allenamento</button>
+      </div>
+      <div style="overflow-x:auto;scrollbar-width:none;padding:8px 12px;display:flex;gap:5px;flex-wrap:nowrap;border-bottom:1px solid #ede8dc;background:var(--card);-webkit-overflow-scrolling:touch;">${WT.map(t=>`<div class="cat-pill ${t===_wt?'on':''}" style="flex-shrink:0" onclick="snd();setWT('${t}')">${WI[t]||''} ${t}</div>`).join('')}</div>
+      <div style="padding:8px 12px 4px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--ink3);background:var(--paper);text-transform:uppercase">Strumenti Palestra</div>
+      <div class="wo-quick-grid">
+        <div class="wo-quick-btn" onclick="snd();navPush(showLibreriaEsercizi)"><div class="wo-quick-ico-wrap" style="background:linear-gradient(135deg,#f87171,#dc2626)">💪</div><div class="wo-quick-lbl">Libreria<br>Esercizi</div></div>
+        <div class="wo-quick-btn" onclick="snd();navPush(showSchede)"><div class="wo-quick-ico-wrap" style="background:linear-gradient(135deg,#60a5fa,#2563eb)">📋</div><div class="wo-quick-lbl">Schede<br>Allenamento</div></div>
+        <div class="wo-quick-btn" onclick="snd();navPush(showMuscleGroups)"><div class="wo-quick-ico-wrap" style="background:linear-gradient(135deg,#c084fc,#7c3aed)">🫀</div><div class="wo-quick-lbl">Muscoli<br>&amp; Anatomia</div></div>
+        <div class="wo-quick-btn" onclick="snd();navPush(showWorkoutStorico)"><div class="wo-quick-ico-wrap" style="background:linear-gradient(135deg,#94a3b8,#1a1a2e)">📜</div><div class="wo-quick-lbl">Storico<br>Workout</div></div>
+        <div class="wo-quick-btn" onclick="snd();showStoricoCarichiMenu()"><div class="wo-quick-ico-wrap" style="background:linear-gradient(135deg,#34d399,#16a34a)">📈</div><div class="wo-quick-lbl">Storico<br>Carichi</div></div>
+      </div>
+      <div style="padding:8px 14px 4px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--ink3);background:var(--paper);border-top:1px solid #ede8dc;text-transform:uppercase">Allenamenti di Oggi — ${new Date().toLocaleDateString('it-IT',{weekday:'long',day:'numeric',month:'short'})}</div>`;
+
+      if(!filteredWithIdx.length){
+        html+=`<div class="empty"><div class="empty-ico">🏋️</div><div class="empty-txt">NESSUN ALLENAMENTO<br>REGISTRATO</div></div>`;
+      }else{
+        filteredWithIdx.forEach(({w,realIdx})=>{
+          const burned=calcBurnedKcal(w.type,w.duration,null);
+          // Controlla se ha storico carichi per questo esercizio
+          const hasHist=S.exerciseLog&&S.exerciseLog[w.name]&&S.exerciseLog[w.name].length>1;
+          html+=`<div class="wo-card">
+            <div class="wo-card-hdr">
+              <span class="wo-card-nm">${WI[w.type]||'🏅'} ${w.name}</span>
+              <div style="display:flex;align-items:center;gap:8px">
+                <span class="wo-card-tp">${w.type}</span>
+                <button class="wo-del" onclick="snd('delete');rmWo(${realIdx})">✕</button>
+              </div>
+            </div>
+            <div class="wo-card-body">
+              ${w.duration?`<div class="wo-badge">⏱ ${w.duration} min</div>`:''}
+              ${burned?`<div class="wo-badge" style="background:#fef3c7;border-color:#d97706;color:#92400e">🔥 ${burned} kcal</div>`:''}
+              ${w.load?`<div class="wo-badge" style="background:#f0fdf4;border-color:#86efac;color:#16a34a;font-weight:700">🏋️ ${w.load} kg</div>`:''}
+              ${w.sets?`<div class="wo-badge">📋 ${w.sets} serie</div>`:''}
+              ${w.reps?`<div class="wo-badge">🔁 ${w.reps} rip.</div>`:''}
+              ${w.sets?`<button class="wo-badge" style="background:var(--ink);color:#fff;border-color:var(--ink);cursor:pointer;margin-left:auto" onclick="snd();startRestTimer(90,'${w.name.replace(/'/g,'')}')">⏱ RECUPERO</button>`:''}
+              ${hasHist?`<button class="wo-badge" style="background:#eff6ff;border-color:#93c5fd;color:#1d4ed8;cursor:pointer" onclick="snd();showStoricoCarichiEx('${w.name.replace(/'/g,'')}')">📈 storico</button>`:''}
+              ${w.notes?`<div style="width:100%;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink3);padding-top:4px">📝 ${w.notes}</div>`:''}
+            </div>
+          </div>`;
+        });
+      }
+      document.getElementById('screen').innerHTML=html;
+      fabShow('workout');
+    };
+
+    /* ════════════════════════════════════════════
+       3. STORICO CARICHI — ACCESSIBILE DAL MENU
+       showStoricoCarichiMenu: lista esercizi con log
+       showStoricoCarichiEx: dettaglio per esercizio
+       ════════════════════════════════════════════ */
+
+    window.showStoricoCarichiMenu=function(){
+      ensureExLog();
+      const keys=Object.keys(S.exerciseLog).filter(k=>S.exerciseLog[k].length>0).sort();
+      if(!keys.length){
+        showToast('Nessun esercizio tracciato ancora — aggiungi carichi!');
+        return;
+      }
+      document.getElementById('modal-box').innerHTML=`
+        <div class="modal-handle"></div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:700;margin-bottom:14px">📈 STORICO CARICHI</div>
+        <div style="max-height:65vh;overflow-y:auto">
+          ${keys.map(k=>{
+            const log=S.exerciseLog[k];
+            const last=log[log.length-1];
+            const prev=log.length>1?log[log.length-2]:null;
+            const badge=prev?overloadTag(prev,last.load,last.reps):'';
+            return`<div onclick="snd();closeModal();setTimeout(()=>showStoricoCarichiEx('${k.replace(/'/g,'')}'),80)" style="padding:10px 4px;border-bottom:1px solid #ede8dc;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px">
+              <div style="flex:1;min-width:0">
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${k}</div>
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--ink3);margin-top:2px">${log.length} sessioni · ultima ${last.date.slice(5).replace('-','/')}</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+                ${last.load?`<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#16a34a">${last.load}kg</span>`:''}
+                ${badge}
+              </div>
+            </div>`;
+          }).join('')}
+        </div>
+        <button class="conf-btn" onclick="closeModal()" style="margin-top:12px">✓ CHIUDI</button>`;
+      document.getElementById('modal').classList.add('open');
+    };
+
+    window.showStoricoCarichiEx=function(exName){
+      ensureExLog();
+      const log=(S.exerciseLog[exName]||[]).slice().reverse();
+      if(!log.length){showToast('Nessuno storico per '+exName);return;}
+      document.getElementById('modal-box').innerHTML=`
+        <div class="modal-handle"></div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;margin-bottom:14px">${exName}</div>
+        <div style="max-height:60vh;overflow-y:auto">
+          ${log.map((e,i)=>{
+            const next=log[i+1]; // "next" in reverse = previous in time
+            const badge=next?overloadTag(next,e.load,e.reps):'';
+            return`<div style="padding:9px 0;border-bottom:1px solid #ede8dc;display:flex;align-items:center;justify-content:space-between">
+              <div>
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700">${e.date.slice(5).replace('-','/')}</div>
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink3)">${e.sets?e.sets+'×':''} ${e.reps?e.reps+' reps':''} ${e.load?'· '+e.load+'kg':''}</div>
+              </div>
+              ${badge}
+            </div>`;
+          }).join('')}
+        </div>
+        <div style="display:flex;gap:8px;margin-top:12px">
+          <button class="conf-btn" style="flex:1" onclick="closeModal();setTimeout(()=>showStoricoCarichiMenu(),80)">← LISTA</button>
+          <button class="conf-btn green-btn" style="flex:1" onclick="closeModal()">✓ CHIUDI</button>
+        </div>`;
+      document.getElementById('modal').classList.add('open');
+    };
+
+    /* Aggiunge bottone "📈 Storico" nella pagina dettaglio esercizio */
+    const _origShowEsercizio=window.showEsercizio;
+    window.showEsercizio=function(id,fb){
+      _origShowEsercizio(id,fb);
+      // Aggancia dopo il render sincrono della pagina
+      const ex=EXDB.find(e=>e.id===id);
+      if(!ex)return;
+      ensureExLog();
+      const hasLog=S.exerciseLog[ex.name]&&S.exerciseLog[ex.name].length>0;
+      if(!hasLog)return;
+      // Trova la griglia dei bottoni (+ WORKOUT / RECUPERO) e aggiungi STORICO
+      const scrEl=document.getElementById('screen');
+      if(!scrEl)return;
+      const btnGrid=scrEl.querySelector('[style*="grid-template-columns:1fr 1fr"]');
+      if(!btnGrid)return;
+      const histBtn=document.createElement('button');
+      histBtn.className='big-btn outline';
+      histBtn.style.cssText='margin:0;border-radius:var(--rk);grid-column:1/-1';
+      histBtn.innerHTML=`📈 STORICO CARICHI (${S.exerciseLog[ex.name].length} sessioni)`;
+      histBtn.onclick=()=>{ snd(); showStoricoCarichiEx(ex.name); };
+      btnGrid.parentNode.insertBefore(histBtn,btnGrid.nextSibling);
+    };
+
+    /* ════════════════════════════════════════════
+       4. MACRO TARGET g/kg — BANNER SINCRONO
+       Nessun setTimeout: showHome setta innerHTML
+       in modo sincrono, quindi injectMacroBanner
+       può girare subito dopo senza race condition.
+       ════════════════════════════════════════════ */
+
+    function getProteinTarget(){
+      const peso=S.profile.entries?.slice(-1)[0]?.peso;
+      if(!peso)return null;
+      const obj=S.profile.obiettivo||'mantenimento';
+      const gKg=obj==='massa'?2.2:obj==='dimagrimento'?2.0:1.8;
+      return{target:Math.round(peso*gKg),gKg,peso};
+    }
+
+    function getMacroTargets(){
+      const peso=S.profile.entries?.slice(-1)[0]?.peso;
+      const kcal=S.settings.kcal||2000;
+      if(!peso)return null;
+      const pt=getProteinTarget();
+      const protKcal=pt.target*4;
+      const fatG=Math.round(peso*0.9);
+      const carbG=Math.max(0,Math.round((kcal-protKcal-fatG*9)/4));
+      return{prot:pt.target,fat:fatG,carb:carbG,gKg:pt.gKg};
+    }
+
+    function injectMacroBanner(){
+      const old=document.getElementById('nt-macro-banner');
+      if(old)old.remove();
+      const pt=getProteinTarget();
+      if(!pt)return;
+      const scrEl=document.getElementById('screen');
+      if(!scrEl)return;
+      // Verifica che siamo nella home (cerca il ring kcal o il day strip)
+      if(!scrEl.querySelector('.kcal-ring-wrap')&&!scrEl.querySelector('[id^="day-"]')&&!scrEl.innerHTML.includes('kcal-ring'))return;
+
+      const tot=totDay();
+      const mt=getMacroTargets();
+      const pctP=Math.min(100,pt.target>0?Math.round(tot.p/pt.target*100):0);
+      const pctC=mt&&mt.carb>0?Math.min(100,Math.round(tot.c/mt.carb*100)):0;
+      const pctF=mt&&mt.fat>0?Math.min(100,Math.round(tot.f/mt.fat*100)):0;
+      const colP=pctP>=100?'#16a34a':pctP>=70?'#d97706':'#dc2626';
+
+      let msgProt='';
+      if(pctP>=100) msgProt='<div style="font-family:\'IBM Plex Mono\',monospace;font-size:10px;color:#16a34a;font-weight:700;text-align:center;margin-top:8px;padding-top:8px;border-top:1px solid #e8e3d8">✅ TARGET PROTEINE RAGGIUNTO!</div>';
+      else if(pctP>=70) msgProt=`<div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#d97706;font-weight:700;text-align:center;margin-top:8px;padding-top:8px;border-top:1px solid #e8e3d8">💪 Mancano ${pt.target-Math.round(tot.p)}g di proteine</div>`;
+      else msgProt=`<div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#dc2626;font-weight:700;text-align:center;margin-top:8px;padding-top:8px;border-top:1px solid #e8e3d8">⚠ Target proteico basso — mancano ${pt.target-Math.round(tot.p)}g</div>`;
+
+      const banner=document.createElement('div');
+      banner.id='nt-macro-banner';
+      banner.style.cssText='margin:10px 12px 0;border:1.5px solid #e8e3d8;border-radius:12px;background:var(--card);overflow:hidden';
+      banner.innerHTML=`
+        <div style="background:var(--ink);color:#fff;padding:8px 12px;display:flex;align-items:center;justify-content:space-between">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;opacity:.6">TARGET MACRO</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;opacity:.4">${pt.gKg}g/kg · ${pt.peso}kg</span>
+        </div>
+        <div style="padding:10px 12px">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;text-align:center">
+            <div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:700;color:${colP}">${tot.p}g</div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--ink3)">/ ${pt.target}g PROT</div>
+              <div style="height:3px;background:#e8e3d8;border-radius:2px;margin-top:3px;overflow:hidden"><div style="width:${pctP}%;height:100%;background:${colP};border-radius:2px"></div></div>
+            </div>
+            <div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:700;color:#d97706">${tot.c}g</div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--ink3)">/ ${mt?mt.carb:'—'}g CARB</div>
+              <div style="height:3px;background:#e8e3d8;border-radius:2px;margin-top:3px;overflow:hidden"><div style="width:${pctC}%;height:100%;background:#d97706;border-radius:2px"></div></div>
+            </div>
+            <div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:700;color:#dc2626">${tot.f}g</div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--ink3)">/ ${mt?mt.fat:'—'}g GRAS</div>
+              <div style="height:3px;background:#e8e3d8;border-radius:2px;margin-top:3px;overflow:hidden"><div style="width:${pctF}%;height:100%;background:#dc2626;border-radius:2px"></div></div>
+            </div>
+          </div>
+          ${msgProt}
+        </div>`;
+
+      const firstCard=scrEl.querySelector('.card');
+      if(firstCard)firstCard.parentNode.insertBefore(banner,firstCard);
+      else scrEl.prepend(banner);
+    }
+
+    /* FIX: chiamata sincrona, zero setTimeout */
+    const _origShowHome=window.showHome;
+    window.showHome=function(fromBack){
+      _origShowHome(fromBack);
+      injectMacroBanner(); // DOM già aggiornato qui — nessun delay necessario
+    };
+
+    /* ════════════
+       INIT
+       ════════════ */
+    ensureExLog();
+    injectMacroBanner(); // Per il caso in cui home sia già aperta al caricamento
+
+    console.log('%c[NutriTrack PRO v2] ✅ Caricato: progressive overload · macro g/kg · MET corretto · storico carichi','color:#16a34a;font-weight:bold;font-size:11px');
+
+  });
+})();
+</script>
+
 </body>
 </html>
